@@ -13,6 +13,7 @@ drop policy if exists suppliers_select_all on public.suppliers;
 
 -- 4. admin_users: a signed-in user may only see their own row (middleware needs exactly that).
 drop policy if exists admin_users_select_authenticated on public.admin_users;
+drop policy if exists admin_users_select_own on public.admin_users;
 create policy admin_users_select_own on public.admin_users
   for select to authenticated
   using (email = lower(auth.jwt() ->> 'email'));
