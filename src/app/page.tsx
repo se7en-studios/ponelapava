@@ -2,27 +2,19 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
 import TrustBar from "@/components/home/TrustBar";
-import Categories from "@/components/home/Categories";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
-import BrandsSection from "@/components/home/BrandsSection";
-import LocalSection from "@/components/home/LocalSection";
+import Categories from "@/components/home/Categories";
 import AboutSection from "@/components/home/AboutSection";
+import GoogleReviews from "@/components/home/GoogleReviews";
+import LocalSection from "@/components/home/LocalSection";
 import InstagramSection from "@/components/home/InstagramSection";
+import ShopTheLook from "@/components/home/ShopTheLook";
+import RecentlyViewed from "@/components/home/RecentlyViewed";
 import { getLandingContent } from "@/lib/landing";
+import { getProducts } from "@/lib/products";
 
-// Below-the-fold client widgets — code-split so their JS doesn't compete
-// with the Hero for the main thread during LCP/hydration.
-const ComboPacksSection = dynamic(
-  () => import("@/components/home/ComboPacksSection"),
-);
-const CustomKitBuilder = dynamic(
-  () => import("@/components/home/CustomKitBuilder"),
-);
-const MateAnatomy = dynamic(() => import("@/components/home/MateAnatomy"));
-const HowToBuy = dynamic(() => import("@/components/home/HowToBuy"));
-const GoogleReviews = dynamic(() => import("@/components/home/GoogleReviews"));
+// Widget cliente bajo el pliegue — code-split para no competir con el Hero.
 const FAQSection = dynamic(() => import("@/components/home/FAQSection"));
-const FinalCTA = dynamic(() => import("@/components/home/FinalCTA"));
 
 // Products and landing content come from Supabase and are editable from /admin — revalidate
 // periodically instead of baking them in at build time.
@@ -36,25 +28,21 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const landing = await getLandingContent();
+  const [landing, products] = await Promise.all([getLandingContent(), getProducts()]);
 
   return (
     <>
       <Hero content={landing.hero} />
       <TrustBar announcements={landing.announcements} />
-      <Categories />
       <FeaturedProducts />
-      <ComboPacksSection />
-      <CustomKitBuilder />
-      <MateAnatomy />
-      <BrandsSection />
-      <HowToBuy />
-      <LocalSection content={landing.local} />
-      <GoogleReviews reviews={landing.reviews} />
+      <Categories />
+      <ShopTheLook products={products} />
       <AboutSection content={landing.about} />
-      <FAQSection faqs={landing.faqs} />
+      <GoogleReviews reviews={landing.reviews} />
+      <LocalSection content={landing.local} />
       <InstagramSection posts={landing.galleryPosts} />
-      <FinalCTA content={landing.finalCta} />
+      <RecentlyViewed products={products} />
+      <FAQSection faqs={landing.faqs} />
     </>
   );
 }

@@ -1,79 +1,44 @@
 import Image from "next/image";
-import ScrollReveal from "@/components/ui/ScrollReveal";
-import { InstagramIcon } from "@/components/ui/icons";
+import SectionHeader from "@/components/home/SectionHeader";
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from "@/lib/site";
-import { getLandingContent } from "@/lib/landing";
 import { LandingGalleryPost } from "@/types/landing";
 
-export default async function InstagramSection({ posts }: { posts?: LandingGalleryPost[] }) {
-  const content = await getLandingContent();
-  const galleryPosts = posts || content.galleryPosts;
+export default function InstagramSection({
+  posts = [],
+}: {
+  posts?: LandingGalleryPost[];
+}) {
+  if (posts.length === 0) return null;
 
   return (
-    <section className="overflow-hidden bg-pava-cream-dark py-20 sm:py-24 lg:py-32">
+    <section className="bg-pava-cream py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <ScrollReveal
-          direction="up"
-          className="mb-10 flex flex-col gap-6 sm:mb-14 sm:flex-row sm:items-end sm:justify-between"
-        >
-          <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="h-px w-9 bg-pava-gold-deep" />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-pava-gold-deep">
-                La ronda sigue
-              </span>
-            </div>
-            <h2 className="font-display text-4xl font-bold leading-[0.93] tracking-tight text-pava-brown sm:text-5xl lg:text-6xl">
-              Lo que pasa
-              <br />
-              <em className="not-italic text-pava-green">
-                alrededor del mate.
-              </em>
-            </h2>
-          </div>
-          <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-fit items-center gap-2 border-b border-pava-brown pb-1 text-sm font-semibold text-pava-brown transition-colors hover:border-pava-terracotta hover:text-pava-terracotta"
-          >
-            <InstagramIcon /> @{INSTAGRAM_HANDLE}{" "}
-            <span aria-hidden="true">↗</span>
-          </a>
-        </ScrollReveal>
-
-        <ScrollReveal direction="scale">
-          {/* Bento grid — first post gets the hero spot, rest fill around it */}
-          <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4 lg:auto-rows-[180px] lg:gap-4 xl:auto-rows-[220px]">
-            {galleryPosts.map((post, i) => (
-              <a
-                key={post.id}
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group relative block aspect-square overflow-hidden bg-pava-brown lg:aspect-auto ${
-                  i === 0 ? "lg:col-span-2 lg:row-span-2" : ""
-                }`}
-                aria-label={post.alt}
-              >
-                <Image
-                  src={post.image}
-                  alt={post.alt}
-                  fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                  sizes={
-                    i === 0
-                      ? "(max-width: 1024px) 100vw, 40vw"
-                      : "(max-width: 1024px) 50vw, 20vw"
-                  }
-                />
-                <div className="absolute inset-0 flex items-end justify-end bg-gradient-to-t from-pava-brown/80 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-4">
-                  <span className="text-xs text-pava-gold">Ver post ↗</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </ScrollReveal>
+        <SectionHeader
+          title="En la ronda"
+          href={INSTAGRAM_URL}
+          linkLabel={`@${INSTAGRAM_HANDLE}`}
+          external
+        />
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {posts.slice(0, 4).map((post) => (
+            <a
+              key={post.id}
+              href={post.link || INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block aspect-square overflow-hidden rounded-control bg-pava-cream-dark"
+              aria-label={post.alt}
+            >
+              <Image
+                src={post.image}
+                alt={post.alt}
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                sizes="(max-width: 1024px) 50vw, 25vw"
+              />
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { ChevronDown, HelpCircle, MessageCircle, CreditCard, Truck, Sparkles, ShieldCheck } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import { useMemo } from "react";
+import { ChevronDown } from "lucide-react";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
 
@@ -11,14 +10,6 @@ interface FAQItem {
   question: string;
   answer: string;
 }
-
-const CATEGORIES = [
-  { id: "all", label: "Todas las dudas", icon: HelpCircle },
-  { id: "pagos", label: "Pagos", icon: CreditCard },
-  { id: "envios", label: "Envíos & Retiro", icon: Truck },
-  { id: "curado", label: "Curado & Mates", icon: Sparkles },
-  { id: "garantia", label: "Garantía & Local", icon: ShieldCheck },
-] as const;
 
 function buildFaqs(settings: { paymentMethods?: string[] }): FAQItem[] {
   const methods = settings.paymentMethods && settings.paymentMethods.length > 0
@@ -86,17 +77,9 @@ function buildFaqs(settings: { paymentMethods?: string[] }): FAQItem[] {
 import { LandingFAQItem } from "@/types/landing";
 
 export default function FAQSection({ faqs: customFaqs }: { faqs?: LandingFAQItem[] }) {
-  const [activeCat, setActiveCat] = useState<string>("all");
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
   const settings = useSiteSettings();
   const defaultFaqs = useMemo(() => buildFaqs(settings), [settings]);
   const faqs = customFaqs && customFaqs.length > 0 ? customFaqs : defaultFaqs;
-
-  const filteredFaqs = activeCat === "all" ? faqs : faqs.filter((f) => f.category === activeCat);
-
-  const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -104,129 +87,45 @@ export default function FAQSection({ faqs: customFaqs }: { faqs?: LandingFAQItem
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
   };
 
   return (
-    <section
-      id="preguntas-frecuentes"
-      className="bg-pava-cream-dark/40 py-24 sm:py-28 lg:py-32 border-t border-pava-brown/8"
-    >
+    <section id="preguntas-frecuentes" className="bg-pava-cream-dark py-16 sm:py-20 lg:py-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <div className="mx-auto max-w-4xl px-5 sm:px-8 lg:px-10">
-        {/* Header */}
-        <ScrollReveal direction="up" className="text-center mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 rounded-full border border-pava-brown/15 bg-white/80 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.2em] text-pava-gold-deep mb-4 shadow-xs">
-            <HelpCircle size={14} />
-            Dudas frecuentes
-          </div>
-          <h2 className="font-display text-4xl font-bold tracking-tight text-pava-brown sm:text-5xl">
-            Todo lo que necesitás saber
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:px-10">
+        <div className="lg:col-span-4">
+          <h2 className="font-display text-3xl font-semibold tracking-tight text-pava-brown sm:text-4xl">
+            Preguntas frecuentes
           </h2>
-          <p className="mt-3 text-sm text-pava-brown-mid/75 max-w-xl mx-auto leading-relaxed">
-            Respuestas a las preguntas más habituales sobre compras, medios de pago, envíos y cuidados de tus piezas.
-          </p>
-        </ScrollReveal>
-
-        {/* Category Tabs */}
-        <ScrollReveal direction="up" delay={50} className="flex flex-wrap items-center justify-center gap-2 mb-8">
-          {CATEGORIES.map((cat) => {
-            const Icon = cat.icon;
-            const isActive = activeCat === cat.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => {
-                  setActiveCat(cat.id);
-                  setOpenIndex(0);
-                }}
-                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 cursor-pointer ${
-                  isActive
-                    ? "bg-pava-green text-white shadow-md scale-105"
-                    : "bg-white/80 text-pava-brown border border-pava-brown/12 hover:bg-pava-cream-dark hover:border-pava-gold"
-                }`}
-              >
-                <Icon size={13} className={isActive ? "text-pava-gold" : "text-pava-brown/60"} />
-                <span>{cat.label}</span>
-              </button>
-            );
-          })}
-        </ScrollReveal>
-
-        {/* Accordion list */}
-        <div className="space-y-3.5">
-          {filteredFaqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <ScrollReveal
-                key={faq.question}
-                direction="up"
-                delay={index * 40}
-                className="overflow-hidden rounded-card border border-pava-brown/10 bg-white shadow-xs transition-all duration-200"
-              >
-                <button
-                  type="button"
-                  onClick={() => toggle(index)}
-                  aria-expanded={isOpen}
-                  className="focus-ring-inset flex w-full items-center justify-between gap-4 p-5 sm:p-6 text-left transition-colors hover:bg-pava-cream/20 cursor-pointer"
-                >
-                  <span className="font-display text-base sm:text-lg font-bold text-pava-brown">
-                    {faq.question}
-                  </span>
-                  <span
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 ${
-                      isOpen ? "rotate-180 bg-pava-green text-pava-cream shadow-xs" : "bg-pava-brown/5 text-pava-brown"
-                    }`}
-                  >
-                    <ChevronDown size={16} />
-                  </span>
-                </button>
-
-                {isOpen && (
-                  <div className="border-t border-pava-brown/8 px-5 pb-6 pt-4 sm:px-6 sm:pb-7 bg-pava-cream/10">
-                    <p className="text-sm leading-relaxed text-pava-brown-mid/85">
-                      {faq.answer}
-                    </p>
-                  </div>
-                )}
-              </ScrollReveal>
-            );
-          })}
-        </div>
-
-        {/* Support banner */}
-        <ScrollReveal
-          direction="up"
-          delay={200}
-          className="mt-12 rounded-card border border-pava-green/20 bg-pava-green/5 p-6 text-center sm:p-8 backdrop-blur-xs"
-        >
-          <h3 className="font-display text-xl font-bold text-pava-brown mb-2">
-            ¿Tenés alguna consulta específica?
-          </h3>
-          <p className="text-xs sm:text-sm text-pava-brown-mid/75 mb-6 max-w-md mx-auto">
-            Estamos disponibles por WhatsApp para responderte en minutos y ayudarte a elegir tu mate o yerba ideal.
+          <p className="mt-2 text-sm leading-relaxed text-pava-brown-mid/75">
+            Pagos, envíos y cuidado de tus mates. ¿Otra duda?
           </p>
           <a
-            href={whatsappChatUrl(
-              settings.whatsappNumber,
-              "¡Hola Poné La Pava! Tengo una consulta sobre sus productos 🧉",
-            )}
+            href={whatsappChatUrl(settings.whatsappNumber, "¡Hola Poné La Pava! Tengo una consulta sobre sus productos")}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-control bg-whatsapp px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all duration-200 hover:bg-whatsapp-dark active:scale-[0.98]"
+            className="mt-6 inline-flex items-center rounded-control border border-pava-brown/20 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-pava-brown transition-colors hover:bg-pava-brown hover:text-pava-cream"
           >
-            <MessageCircle size={16} />
-            Consultar por WhatsApp
+            Escribinos por WhatsApp
           </a>
-        </ScrollReveal>
+        </div>
+        {/* <details> nativo: accesible y sin estado */}
+        <div className="border-t border-pava-brown/15 lg:col-span-8">
+          {faqs.map((faq) => (
+            <details key={faq.question} className="group border-b border-pava-brown/15">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-[15px] font-medium text-pava-brown [&::-webkit-details-marker]:hidden">
+                {faq.question}
+                <ChevronDown size={16} className="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <p className="pb-5 pr-8 text-sm leading-relaxed text-pava-brown-mid/85">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );

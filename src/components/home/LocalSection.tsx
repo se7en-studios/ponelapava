@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { MapPin, Clock, MessageCircle, ExternalLink } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
 import StoreLivePill from "@/components/ui/StoreLivePill";
 import LocalMapEmbed from "@/components/home/LocalMapEmbed";
 import { whatsappChatUrl } from "@/lib/whatsapp";
@@ -19,25 +18,43 @@ import {
 // Fotos reales del local en Catriel. La dirección no se escribe acá: sale de
 // site_settings (settings.addressLine), que es lo que editan los dueños.
 const LOCAL_PHOTOS = [
-  { src: "/local/local-1.jpg", alt: "Fachada y vidriera del local Poné La Pava" },
+  {
+    src: "/local/local-1.jpg",
+    alt: "Fachada y vidriera del local Poné La Pava",
+  },
   { src: "/local/local-2.jpg", alt: "Estantería de termos Stanley y yerbas" },
   { src: "/local/local-3.jpg", alt: "Sector de mates artesanales y cuero" },
-  { src: "/local/local-4.jpg", alt: "Exhibición de bombillas de alpaca y bolsos" },
-  { src: "/local/local-5.jpg", alt: "Mates camioneros e imperiales en el local" },
+  {
+    src: "/local/local-4.jpg",
+    alt: "Exhibición de bombillas de alpaca y bolsos",
+  },
+  {
+    src: "/local/local-5.jpg",
+    alt: "Mates camioneros e imperiales en el local",
+  },
   { src: "/local/local-6.jpg", alt: "Vista interior del salón matero" },
 ];
 
 import { LandingLocal } from "@/types/landing";
 
-export default async function LocalSection({ content }: { content?: LandingLocal }) {
+export default async function LocalSection({
+  content,
+}: {
+  content?: LandingLocal;
+}) {
   const settings = await getSiteSettings();
   const mapsUrl = buildMapsUrl();
   const mapsEmbedUrl = buildMapsEmbedUrl();
-  const photos = content?.photos && content.photos.length > 0 ? content.photos : LOCAL_PHOTOS;
+  const photos =
+    content?.photos && content.photos.length > 0
+      ? content.photos
+      : LOCAL_PHOTOS;
   const eyebrow = content?.eyebrow || "El local";
   const title = content?.title || "Vení, elegí";
   const titleHighlight = content?.titleHighlight || "y quedate un rato.";
-  const description = content?.description || "Nuestro local físico es el punto de encuentro de los mateadores. Venís, tocás los productos, los olés y encontrás ese detalle que hace propio a tu ritual.";
+  const description =
+    content?.description ||
+    "Nuestro local físico es el punto de encuentro de los mateadores. Venís, tocás los productos, los olés y encontrás ese detalle que hace propio a tu ritual.";
 
   return (
     <section
@@ -46,7 +63,7 @@ export default async function LocalSection({ content }: { content?: LandingLocal
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          <ScrollReveal direction="left" className="relative lg:col-span-7">
+          <div className="relative lg:col-span-7">
             <div className="grid grid-cols-3 gap-3">
               {/* Live map — desaturated + brand-tinted until hovered */}
               <div className="local-map-frame group relative col-span-3 aspect-[16/10] overflow-hidden rounded-card bg-pava-green-dark sm:aspect-[16/9]">
@@ -98,20 +115,14 @@ export default async function LocalSection({ content }: { content?: LandingLocal
                 </a>
               ))}
             </div>
-            <div className="absolute -bottom-5 -right-5 hidden h-28 w-28 border-2 border-pava-gold/30 lg:block" />
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal direction="right" className="lg:col-span-5 lg:pl-8">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="h-px w-9 bg-pava-gold" />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-pava-gold">
-                {eyebrow}
-              </span>
-            </div>
-            <h2 className="font-display text-4xl font-bold leading-[0.95] tracking-tight text-pava-cream sm:text-5xl lg:text-6xl">
-              {title}
-              <br />
-              <em className="not-italic text-pava-gold">{titleHighlight}</em>
+          <div className="lg:col-span-5 lg:pl-8">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-pava-gold">
+              {eyebrow}
+            </span>
+            <h2 className="font-display mt-4 text-3xl font-semibold leading-tight tracking-tight text-pava-cream sm:text-4xl lg:text-5xl">
+              {title} {titleHighlight}
             </h2>
             <p className="mt-6 max-w-md leading-relaxed text-pava-cream/70">
               {description}
@@ -199,7 +210,7 @@ export default async function LocalSection({ content }: { content?: LandingLocal
                 <MessageCircle size={15} /> WhatsApp
               </a>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

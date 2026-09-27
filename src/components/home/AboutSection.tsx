@@ -1,132 +1,49 @@
 import Image from "next/image";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import Link from "next/link";
 import { LandingAbout } from "@/types/landing";
 
+// Banda de color de marca, foto + texto. Mismos campos editables desde /admin.
 export default function AboutSection({ content }: { content?: LandingAbout }) {
   const eyebrow = content?.eyebrow || "Nosotros";
   const title = content?.title || "Más que una yerba.";
   const titleHighlight = content?.titleHighlight || "Una forma de compartir.";
-  const quote = content?.quote || "El mate no se toma solo. Y tampoco se elige solo.";
-  const paragraph1 = content?.paragraph1 || "En Poné La Pava creemos que el mate no es solo una bebida: es un ritual, un pretexto para estar juntos, para bajar el ritmo y conectar.";
-  const paragraph2 = content?.paragraph2 || "Nacimos con la misión de reunir todo lo que necesitás para vivir ese ritual como se merece. Desde la yerba más cuidadosamente seleccionada hasta el mate que se convierte en tuyo con el tiempo.";
+  const paragraph1 =
+    content?.paragraph1 ||
+    "En Poné La Pava creemos que el mate no es solo una bebida: es un ritual, un pretexto para estar juntos, para bajar el ritmo y conectar.";
+  const paragraph2 =
+    content?.paragraph2 ||
+    "Reunimos todo lo que necesitás para vivir ese ritual como se merece: desde la yerba mejor seleccionada hasta el mate que se vuelve tuyo con el tiempo.";
   const image = content?.image || "/local/local-1.jpg";
-  const badgeTop = content?.badgeTop || "Desde Argentina";
-  const badgeBottom = content?.badgeBottom || "Para cada ronda";
-  const stats = content?.stats && content.stats.length > 0 ? content.stats : [
-    { value: "100%", label: "Artesanal" },
-    { value: "Premium", label: "Selección" },
-    { value: "Local", label: "Argentino" },
-    { value: "Ritual", label: "Compartido" },
-  ];
 
   return (
-    <section
-      id="nosotros"
-      className="overflow-hidden bg-pava-cream py-24 sm:py-28 lg:py-36"
-    >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Image column — full height, editorial */}
-          <ScrollReveal
-            direction="left"
-            className="relative order-1 lg:order-1"
+    <section id="nosotros" className="bg-pava-green text-pava-cream">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-24">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-control bg-pava-green-dark sm:aspect-[4/3] lg:aspect-[4/5]">
+          <Image
+            src={image}
+            alt="Local Poné La Pava en Catriel, Río Negro"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </div>
+        <div className="max-w-lg">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-pava-gold">
+            {eyebrow}
+          </span>
+          <h2 className="font-display mt-4 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+            {title} {titleHighlight}
+          </h2>
+          <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-pava-cream/80">
+            <p>{paragraph1}</p>
+            {paragraph2 && <p>{paragraph2}</p>}
+          </div>
+          <Link
+            href="/#el-local"
+            className="mt-8 inline-flex items-center rounded-control border border-pava-cream/30 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors hover:bg-pava-cream hover:text-pava-green"
           >
-            <div className="relative aspect-[3/4] overflow-hidden bg-pava-brown lg:aspect-auto lg:h-full lg:min-h-[580px]">
-              <Image
-                src={image}
-                alt="Local Poné La Pava en Catriel, Río Negro"
-                fill
-                className="object-cover transition-transform duration-700 hover:scale-[1.02]"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              {/* Subtle dark overlay for depth */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-pava-brown/20" />
-            </div>
-
-            {/* Floating card */}
-            <div className="absolute bottom-4 right-3 translate-x-0 border border-pava-cream/30 bg-pava-brown px-4 py-3 text-pava-cream backdrop-blur-sm sm:bottom-8 sm:right-0 sm:translate-x-6 sm:px-5 sm:py-4 lg:translate-x-8">
-              <span className="block text-[9px] font-semibold uppercase tracking-[0.22em] text-pava-gold">
-                {badgeTop}
-              </span>
-              <span className="mt-1 block font-display text-base font-bold sm:text-lg">
-                {badgeBottom}
-              </span>
-            </div>
-
-            {/* Background geometry — desktop only */}
-            <div
-              className="absolute -bottom-6 -left-5 -z-10 hidden h-40 w-40 bg-pava-terracotta/8 lg:block"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute -right-5 -top-5 -z-10 hidden h-24 w-24 bg-pava-olive/15 lg:block"
-              aria-hidden="true"
-            />
-          </ScrollReveal>
-
-          {/* Text column */}
-          <ScrollReveal
-            direction="right"
-            delay={120}
-            className="order-2 flex flex-col justify-center lg:order-2"
-          >
-            {/* Label */}
-            <div className="mb-7 flex items-center gap-3">
-              <span className="h-px w-8 bg-pava-terracotta" />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-pava-terracotta">
-                {eyebrow}
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h2 className="font-display mb-8 text-4xl font-bold leading-[0.96] tracking-tight text-pava-brown sm:text-5xl lg:text-[3.25rem]">
-              {title}{" "}
-              <em className="not-italic text-pava-terracotta">
-                {titleHighlight}
-              </em>
-            </h2>
-
-            {/* Pull quote */}
-            <div className="relative mb-7">
-              <span
-                aria-hidden="true"
-                className="font-display pointer-events-none absolute -left-2 -top-6 select-none text-[5.5rem] leading-none text-pava-gold/20 sm:-top-8 sm:text-[7rem]"
-              >
-                &ldquo;
-              </span>
-              <p className="font-script relative pl-6 text-3xl leading-snug text-pava-brown-mid/85 sm:pl-8 sm:text-4xl">
-                {quote}
-              </p>
-            </div>
-
-            {/* Body text */}
-            <div className="space-y-4 text-[15px] leading-relaxed text-pava-brown-mid/75">
-              <p>{paragraph1}</p>
-              {paragraph2 && <p>{paragraph2}</p>}
-            </div>
-
-            {/* Stats */}
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-6 border-t border-pava-brown/8 pt-8">
-              {stats.map(({ value, label }, i) => (
-                <div key={label} className="flex items-center gap-8">
-                  <div>
-                    <div className="font-display text-2xl font-bold text-pava-brown">
-                      {value}
-                    </div>
-                    <div className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-pava-brown-mid/75">
-                      {label}
-                    </div>
-                  </div>
-                  {i < stats.length - 1 && (
-                    <span
-                      className="hidden h-9 w-px bg-pava-brown/12 sm:block"
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
+            Conocé el local
+          </Link>
         </div>
       </div>
     </section>

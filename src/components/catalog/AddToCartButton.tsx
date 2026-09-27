@@ -10,6 +10,8 @@ interface AddToCartButtonProps {
   disabled?: boolean;
   size?: "sm" | "md";
   overlay?: boolean;
+  /** Botón redondo solo-ícono (cards en pantallas táctiles). */
+  compact?: boolean;
 }
 
 export default function AddToCartButton({
@@ -17,6 +19,7 @@ export default function AddToCartButton({
   disabled = false,
   size = "sm",
   overlay = false,
+  compact = false,
 }: AddToCartButtonProps) {
   const { addItem, setDrawer } = useCart();
   const [added, setAdded] = useState(false);
@@ -49,6 +52,26 @@ export default function AddToCartButton({
     );
   }
 
+  if (compact) {
+    return (
+      <button
+        onClick={handleAdd}
+        className={`flex h-9 w-9 items-center justify-center rounded-full shadow-sm transition-colors ${
+          added
+            ? "bg-pava-green text-pava-cream"
+            : "bg-white/95 text-pava-green"
+        }`}
+        aria-label={
+          added
+            ? "Producto agregado al carrito"
+            : `Agregar ${product.name} al carrito`
+        }
+      >
+        {added ? <Check size={15} /> : <ShoppingBag size={15} />}
+      </button>
+    );
+  }
+
   if (overlay) {
     return (
       <button
@@ -58,7 +81,11 @@ export default function AddToCartButton({
             ? "bg-pava-green text-pava-cream"
             : "bg-pava-cream/95 text-pava-green hover:bg-pava-gold hover:text-pava-brown backdrop-blur-sm"
         }`}
-        aria-label={added ? "Producto agregado al carrito" : `Agregar ${product.name} al carrito`}
+        aria-label={
+          added
+            ? "Producto agregado al carrito"
+            : `Agregar ${product.name} al carrito`
+        }
       >
         {added ? (
           <>
@@ -85,7 +112,11 @@ export default function AddToCartButton({
           ? "bg-pava-green text-pava-cream border-pava-green"
           : "bg-transparent text-pava-green hover:bg-pava-green hover:text-pava-cream"
       } active:scale-[0.98]`}
-      aria-label={added ? "Producto agregado al carrito" : `Agregar ${product.name} al carrito`}
+      aria-label={
+        added
+          ? "Producto agregado al carrito"
+          : `Agregar ${product.name} al carrito`
+      }
     >
       {added ? (
         <>

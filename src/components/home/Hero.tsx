@@ -2,313 +2,82 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { Sparkles } from "lucide-react";
-import MagneticButton from "@/components/ui/MagneticButton";
+import { useEffect, useState } from "react";
 import { LandingHero } from "@/types/landing";
 import { DEFAULT_LANDING_CONTENT } from "@/lib/landing";
-import { useSiteSettings } from "@/context/SiteSettingsContext";
-import { getStorePaymentMethodsSummary } from "@/lib/settings";
 
+// Hero de tienda: foto a sangre, texto chico abajo a la izquierda, un CTA.
+// El H1 es el elemento LCP: se pinta sin esperar hidratación.
 export default function Hero({ content }: { content?: LandingHero }) {
   const hero = content || DEFAULT_LANDING_CONTENT.hero;
-  const settings = useSiteSettings();
-  const paymentSummary = getStorePaymentMethodsSummary(settings.paymentMethods);
-  const [loaded, setLoaded] = useState(false);
   const [allowVideo, setAllowVideo] = useState(false);
-  const bgRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 60);
-    // Skip video on reduced-motion preference
     setAllowVideo(
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     );
-    return () => clearTimeout(timer);
   }, []);
 
-  // Writes both layers' transforms directly to the DOM instead of through
-  // useState — mousemove fires far too often to route through a re-render
-  // of the whole Hero tree.
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    if (bgRef.current) {
-      bgRef.current.style.transform = `scale(1.06) translate(${x * -10}px, ${y * -10}px)`;
-    }
-    if (contentRef.current) {
-      contentRef.current.style.transform = `translate(${x * 6}px, ${y * 6}px)`;
-    }
-  };
-
-  const resetParallax = () => {
-    if (bgRef.current)
-      bgRef.current.style.transform = "scale(1.06) translate(0px, 0px)";
-    if (contentRef.current)
-      contentRef.current.style.transform = "translate(0px, 0px)";
-  };
+  const title = [hero.titleLine1, hero.titleLine2, hero.titleLine3]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <section
       id="inicio"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={resetParallax}
-      className="focus-ring-gold grain-overlay relative flex min-h-[100svh] flex-col overflow-hidden"
+      className="focus-ring-gold relative flex min-h-[88svh] flex-col overflow-hidden bg-pava-green-dark"
       aria-label="Bienvenida a Poné La Pava"
     >
-      {/* Background image — mouse-driven parallax depth layer */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 z-0 transition-transform duration-300 ease-out"
-        style={{ transform: "scale(1.06) translate(0px, 0px)" }}
-      >
-        {/* Ambient color orbs for depth & warmth */}
-        <span className="hero-orb hero-orb-1" aria-hidden="true" />
-        <span className="hero-orb hero-orb-2" aria-hidden="true" />
-        <span className="hero-orb hero-orb-3" aria-hidden="true" />
-
-        {/* La imagen queda montada SIEMPRE como fallback debajo del video */}
-        <Image
-          src={hero.backgroundImage || "/hero_background_1786545961305.png"}
-          alt="Foto de portada Poné La Pava"
-          fill
-          priority
-          quality={92}
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        {allowVideo && hero.videoUrl && (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          >
-            <source src={hero.videoUrl} type="video/mp4" />
-          </video>
-        )}
-        {/* Multi-layer gradient for editorial feel and crystal clear navbar readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-pava-brown via-pava-brown/55 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-pava-brown/85 via-pava-brown/30 to-transparent" />
-        <div className="absolute top-0 inset-x-0 h-52 bg-gradient-to-b from-pava-brown/85 via-pava-brown/40 to-transparent" />
-      </div>
-
-      {/* Vertical brand text — editorial decoration */}
-      <div
-        className={`absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 lg:flex lg:flex-col lg:items-center lg:gap-4
-          transition-all duration-1000 ease-out
-          ${loaded ? "opacity-30 translate-x-0" : "opacity-0 translate-x-4"}`}
-        aria-hidden="true"
-      >
-        <span
-          className="block h-16 w-px bg-pava-cream/40"
-          style={{ writingMode: "vertical-lr" }}
-        />
-        <span
-          className="text-[9px] font-semibold uppercase tracking-[0.35em] text-pava-cream"
-          style={{ writingMode: "vertical-rl", letterSpacing: "0.3em" }}
+      {/* Imagen siempre montada debajo del video (ver CLAUDE.md: nunca `poster`) */}
+      <Image
+        src={hero.backgroundImage || "/hero_background_1786545961305.png"}
+        alt=""
+        fill
+        priority
+        quality={92}
+        className="object-cover object-center"
+        sizes="100vw"
+      />
+      {allowVideo && hero.videoUrl && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover object-center"
         >
-          Argentina · Mate Culture
-        </span>
-        <span className="block h-16 w-px bg-pava-cream/40" />
-      </div>
+          <source src={hero.videoUrl} type="video/mp4" />
+        </video>
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-black/30" />
 
-      {/* Main content — fills screen, with safe top clearance under fixed announcement + navbar */}
-      <div
-        ref={contentRef}
-        className="relative z-10 flex flex-1 flex-col justify-end pt-36 sm:pt-40 lg:pt-44 pb-14 sm:pb-16 lg:pb-20 transition-transform duration-300 ease-out"
-        style={{ transform: "translate(0px, 0px)" }}
-      >
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
-          {/* Tag line — shimmer badge + Live dispatch pill */}
-          <div
-            className={`mb-5 flex flex-wrap items-center gap-3 sm:mb-7
-              transition-all duration-700 ease-out delay-100
-              ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-          >
-            <span className="h-px w-8 sm:w-10 bg-pava-gold" />
-            <span className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-pava-gold/40 bg-pava-cream/5 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-pava-gold backdrop-blur-[2px] sm:text-[11px]">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-pava-gold animate-pulse-dot" />
-              {hero.badge || "Poné La Pava · Tienda Matera"}
-              <span className="shine-sweep" aria-hidden="true" />
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-3 py-1 text-[10px] font-medium text-emerald-300 backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-              <span>🟢 Despachos activos hoy</span>
-            </span>
-          </div>
-
-          <h1
-            className="font-display max-w-4xl leading-[1.05] tracking-[-0.04em] text-pava-cream
-              text-[3.6rem] sm:text-[5.5rem] lg:text-[7.5rem] xl:text-[8.5rem]"
-          >
-            {/* Las líneas se revelan con CSS puro (hero-line-in), nunca
-                gateadas por `loaded`: el H1 es el elemento LCP y esperar la
-                hidratación costaba ~4 s de LCP en 4G. */}
-            <span className="-mb-[0.14em] block overflow-hidden">
-              <span
-                className="hero-line-in block pb-[0.14em]"
-                style={{ animationDelay: "200ms" }}
-              >
-                {hero.titleLine1 || "El ritual"}
-              </span>
-            </span>
-            <span className="-mb-[0.14em] block overflow-hidden">
-              <em
-                className="hero-line-in text-shine not-italic block pb-[0.14em]"
-                style={{ animationDelay: "300ms" }}
-              >
-                {hero.titleLine2 || "del mate"}
-              </em>
-            </span>
-            <span className="-mb-[0.14em] block overflow-hidden">
-              <span
-                className="hero-line-in block pb-[0.14em]"
-                style={{ animationDelay: "400ms" }}
-              >
-                {hero.titleLine3 || "es tuyo."}
-              </span>
-            </span>
+      <div className="relative z-10 mt-auto w-full px-5 pb-12 pt-40 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
+        <div className="mx-auto max-w-7xl">
+          <h1 className="font-display max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
+            {title || "El ritual del mate es tuyo."}
           </h1>
-
-          {/* Body + tagline row */}
-          <div
-            className={`mt-7 flex flex-col gap-6 sm:mt-9 sm:flex-row sm:items-end sm:gap-10 lg:mt-10
-              transition-all duration-700 ease-out delay-300
-              ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-          >
-            <p className="max-w-sm text-base leading-relaxed text-pava-cream/78 sm:text-lg lg:max-w-md">
-              {hero.subtitle || "Yerbas seleccionadas, mates artesanales y accesorios para acompañar cada ronda."}
-            </p>
-            <div className="hidden items-center gap-4 sm:flex">
-              <span className="h-10 w-px bg-pava-cream/20" />
-              <p className="max-w-[7rem] text-[10px] font-medium uppercase leading-relaxed tracking-[0.18em] text-pava-cream/75">
-                Hecho para compartir
-              </p>
-            </div>
-          </div>
-
-          {/* CTAs */}
-          <div
-            className={`mt-9 flex flex-col gap-3 sm:mt-11 sm:flex-row sm:gap-4
-              transition-all duration-700 ease-out delay-400
-              ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-          >
-            <MagneticButton>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
+            {hero.subtitle ||
+              "Yerbas seleccionadas, mates artesanales y accesorios para acompañar cada ronda."}
+          </p>
+          <div className="mt-7 flex flex-wrap items-center gap-5">
+            <Link
+              href={hero.ctaPrimaryLink || "/catalogo"}
+              id="hero-cta-catalogo"
+              className="inline-flex items-center rounded-control bg-pava-cream px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-pava-green transition-colors hover:bg-white"
+            >
+              {hero.ctaPrimaryText || "Comprar ahora"}
+            </Link>
+            {hero.ctaSecondaryText && (
               <Link
-                href={hero.ctaPrimaryLink || "/catalogo"}
-                id="hero-cta-catalogo"
-                className="cta-pulse-ring inline-flex items-center justify-center gap-3 rounded-control bg-pava-gold px-8 py-4 text-sm font-bold tracking-wide text-pava-brown transition-all duration-200 hover:bg-pava-gold-light active:scale-[0.98] sm:px-10 shadow-xl shadow-pava-gold/15"
+                href={hero.ctaSecondaryLink || "/#el-local"}
+                id="hero-cta-secundario"
+                className="text-xs font-semibold uppercase tracking-[0.14em] text-white underline decoration-white/40 underline-offset-[6px] transition-colors hover:decoration-white"
               >
-                {hero.ctaPrimaryText || "Explorar el catálogo"}
-                <span className="text-base" aria-hidden="true">
-                  →
-                </span>
+                {hero.ctaSecondaryText}
               </Link>
-            </MagneticButton>
-            <MagneticButton>
-              <Link
-                href={hero.ctaSecondaryLink || "/#combos"}
-                id="hero-cta-combos"
-                className="inline-flex items-center justify-center gap-2 rounded-control border border-pava-cream/40 bg-pava-brown/20 px-8 py-4 text-sm font-semibold tracking-wide text-pava-cream backdrop-blur-md transition-all duration-200 hover:border-pava-gold hover:bg-pava-gold/15 sm:px-10"
-              >
-                {hero.ctaSecondaryText || "Conocé el local"}
-              </Link>
-            </MagneticButton>
+            )}
           </div>
-
-          {/* Quick Shop Category Chips */}
-          <div
-            className={`mt-7 flex flex-wrap items-center gap-2
-              transition-all duration-700 ease-out delay-450
-              ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-          >
-            <span className="text-[11px] font-bold text-pava-gold uppercase tracking-wider mr-1 hidden sm:inline-block">
-              Acceso rápido:
-            </span>
-            <Link
-              href="/catalogo?cat=mates"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-pava-cream backdrop-blur-sm transition-all hover:bg-pava-gold hover:text-pava-brown hover:border-pava-gold"
-            >
-              <span>🧉 Mates Imperiales</span>
-            </Link>
-            <Link
-              href="/catalogo?cat=yerbas"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-pava-cream backdrop-blur-sm transition-all hover:bg-pava-gold hover:text-pava-brown hover:border-pava-gold"
-            >
-              <span>🌿 Yerbas Seleccionadas</span>
-            </Link>
-            <Link
-              href="/#arma-tu-set"
-              className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-300 backdrop-blur-sm transition-all hover:bg-emerald-400 hover:text-emerald-950 hover:border-emerald-400"
-            >
-              <span>⚡ Armá tu Kit</span>
-            </Link>
-            <Link
-              href="/catalogo?cat=bombillas"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-pava-cream backdrop-blur-sm transition-all hover:bg-pava-gold hover:text-pava-brown hover:border-pava-gold"
-            >
-              <span>✨ Bombillas Alpaca</span>
-            </Link>
-          </div>
-
-          {/* E-commerce Trust Badges */}
-          <div
-            className={`mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3
-              transition-all duration-700 ease-out delay-500
-              ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-          >
-            <div className="inline-flex items-center gap-2 rounded-full border border-pava-gold/40 bg-pava-gold/15 px-3.5 py-1.5 backdrop-blur-md text-xs font-bold text-pava-gold shadow-lg shadow-pava-gold/10">
-              <span className="text-pava-gold text-xs">💳</span>
-              <span>{paymentSummary}</span>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-pava-gold/30 bg-pava-green-dark/60 px-3.5 py-1.5 backdrop-blur-md text-xs text-pava-cream shadow-lg shadow-black/20 transition-transform duration-300 hover:scale-105 hover:border-pava-gold/60">
-              <span className="flex text-pava-gold text-xs tracking-tight" aria-hidden="true">★★★★★</span>
-              <span className="font-bold text-pava-cream">5.0</span>
-              <span className="text-pava-cream/70 text-[11px]">en Google</span>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-pava-cream/20 bg-pava-green-dark/60 px-3.5 py-1.5 backdrop-blur-md text-xs text-pava-cream shadow-lg shadow-black/20 transition-transform duration-300 hover:scale-105 hover:border-pava-gold/40">
-              <span className="text-pava-gold text-xs">🚚</span>
-              <span className="font-medium text-pava-cream/95">Envíos a todo el país</span>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-pava-cream/20 bg-pava-green-dark/60 px-3.5 py-1.5 backdrop-blur-md text-xs text-pava-cream shadow-lg shadow-black/20 transition-transform duration-300 hover:scale-105 hover:border-pava-gold/40">
-              <span className="text-pava-gold text-xs">🧉</span>
-              <span className="font-medium text-pava-cream/95">Garantía Artesanal</span>
-            </div>
-          </div>
-
-          {/* Bottom meta bar */}
-          <div
-            className={`mt-10 flex items-center gap-5 border-t border-pava-cream/15 pt-5 sm:mt-12
-              transition-all duration-700 ease-out delay-500
-              ${loaded ? "opacity-100" : "opacity-0"}`}
-          >
-            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-pava-cream/75">
-              Argentina
-            </span>
-            <span className="h-1 w-1 rounded-full bg-pava-gold/60" />
-            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-pava-cream/75">
-              Yerbas · Mates · Accesorios
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div
-        className={`absolute bottom-7 right-7 z-10 hidden flex-col items-center gap-3 lg:flex
-          transition-all duration-700 ease-out delay-700
-          ${loaded ? "opacity-50" : "opacity-0"}`}
-        aria-hidden="true"
-      >
-        <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-pava-cream">
-          Scroll
-        </span>
-        <div className="flex flex-col items-center gap-1">
-          <span className="h-8 w-px bg-pava-cream/50 animate-scroll-bounce" />
         </div>
       </div>
     </section>

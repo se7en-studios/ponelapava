@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProductById, getRelatedProducts } from "@/lib/products";
+import { getProductById, getProducts, getRelatedProducts } from "@/lib/products";
+import RecentlyViewed from "@/components/home/RecentlyViewed";
 import ProductDetail from "@/components/product/ProductDetail";
 import { SITE_URL } from "@/lib/site";
 
@@ -34,7 +35,7 @@ export default async function ProductPage({ params }: PageProps) {
     notFound();
   }
 
-  const related = await getRelatedProducts(product, 4);
+  const [related, products] = await Promise.all([getRelatedProducts(product, 4), getProducts()]);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -64,6 +65,7 @@ export default async function ProductPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <ProductDetail product={product} related={related} />
+      <RecentlyViewed products={products} currentId={product.id} />
     </>
   );
 }

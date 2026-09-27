@@ -9,9 +9,10 @@ export const NAV_LINKS: NavLink[] = [
   { href: "/catalogo", label: "Catálogo" },
   { href: "/catalogo?cat=mates", label: "Mates" },
   { href: "/catalogo?cat=yerbas", label: "Yerbas" },
-  { href: "/#combos", label: "Combos & Sets" },
-  { href: "/#arma-tu-set", label: "Armá tu Set" },
-  { href: "/#el-local", label: "Local Catriel" },
+  { href: "/catalogo?cat=termos", label: "Termos" },
+  { href: "/catalogo?cat=bombillas", label: "Bombillas" },
+  { href: "/catalogo?cat=combos", label: "Combos" },
+  { href: "/#el-local", label: "Local" },
 ];
 
 // Utility and secondary navigation links for mobile drawer and footer
