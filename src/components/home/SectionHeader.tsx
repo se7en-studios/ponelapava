@@ -25,7 +25,7 @@ export default function SectionHeader({
   }`;
 
   return (
-    <div className="mb-8 flex items-end justify-between gap-6 sm:mb-10">
+    <div className="lp-reveal mb-8 flex items-end justify-between gap-6 sm:mb-10">
       <div className="max-w-xl">
         <h2
           className={`font-display text-3xl font-semibold tracking-tight sm:text-4xl ${

@@ -40,7 +40,7 @@ export default function GoogleReviews({
           linkLabel="Ver reseñas"
           external
         />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="lp-stagger grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.slice(0, 3).map((r) => (
             <figure
               key={r.id}

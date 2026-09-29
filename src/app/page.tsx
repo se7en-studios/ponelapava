@@ -32,6 +32,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <div aria-hidden className="lp-progress" />
       <Hero content={landing.hero} />
       <TrustBar announcements={landing.announcements} />
       <FeaturedProducts />

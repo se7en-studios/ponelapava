@@ -15,7 +15,7 @@ export default async function Categories() {
           href="/catalogo"
           linkLabel="Ver catálogo"
         />
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
+        <div className="lp-stagger grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
           {categories.map((cat) => (
             <Link
               key={cat.id}
@@ -27,13 +27,14 @@ export default async function Categories() {
                   src={cat.image}
                   alt=""
                   fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
-              <span className="absolute bottom-3 left-3 text-sm font-semibold text-white sm:bottom-4 sm:left-4 sm:text-base">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-80" />
+              <span className="absolute bottom-3 left-3 flex items-center gap-1.5 text-sm font-semibold text-white transition-transform duration-300 group-hover:-translate-y-1 sm:bottom-4 sm:left-4 sm:text-base">
                 {cat.name}
+                <span aria-hidden className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
               </span>
             </Link>
           ))}

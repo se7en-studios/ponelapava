@@ -19,7 +19,7 @@ export default function InstagramSection({
           linkLabel={`@${INSTAGRAM_HANDLE}`}
           external
         />
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <div className="lp-stagger grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {posts.slice(0, 4).map((post) => (
             <a
               key={post.id}
@@ -33,7 +33,7 @@ export default function InstagramSection({
                 src={post.image}
                 alt={post.alt}
                 fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                 sizes="(max-width: 1024px) 50vw, 25vw"
               />
             </a>

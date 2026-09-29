@@ -49,7 +49,7 @@ export default function ShopTheLook({ products }: { products: Product[] }) {
       aria-labelledby="look-title"
     >
       <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-12 lg:gap-12 lg:px-10">
-        <div className="relative aspect-square overflow-hidden rounded-control bg-pava-green-dark lg:col-span-7">
+        <div className="lp-reveal relative aspect-square overflow-hidden rounded-control bg-pava-green-dark lg:col-span-7">
           <Image
             src={LOOK.image}
             alt={LOOK.alt}
@@ -70,7 +70,7 @@ export default function ShopTheLook({ products }: { products: Product[] }) {
                 className={`absolute flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
                   active
                     ? "scale-110 border-pava-cream bg-pava-cream text-pava-green"
-                    : "border-white/70 bg-black/25 text-white backdrop-blur-sm hover:bg-pava-cream hover:text-pava-green"
+                    : "lp-ping border-white/70 bg-black/25 text-white backdrop-blur-sm hover:bg-pava-cream hover:text-pava-green"
                 }`}
               >
                 <Plus

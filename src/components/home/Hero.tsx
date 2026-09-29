@@ -29,13 +29,14 @@ export default function Hero({ content }: { content?: LandingHero }) {
       aria-label="Bienvenida a Poné La Pava"
     >
       {/* Imagen siempre montada debajo del video (ver CLAUDE.md: nunca `poster`) */}
+      <div className="lp-hero-img-out absolute inset-0">
       <Image
         src={hero.backgroundImage || "/hero_background_1786545961305.png"}
         alt=""
         fill
         priority
         quality={92}
-        className="object-cover object-center"
+        className="lp-kenburns object-cover object-center"
         sizes="100vw"
       />
       {allowVideo && hero.videoUrl && (
@@ -49,24 +50,26 @@ export default function Hero({ content }: { content?: LandingHero }) {
           <source src={hero.videoUrl} type="video/mp4" />
         </video>
       )}
+      </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-black/30" />
 
-      <div className="relative z-10 mt-auto w-full px-5 pb-12 pt-40 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
+      <div className="lp-hero-out relative z-10 mt-auto w-full px-5 pb-12 pt-40 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
         <div className="mx-auto max-w-7xl">
-          <h1 className="font-display max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="lp-rise font-display max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
             {title || "El ritual del mate es tuyo."}
           </h1>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
+          <p style={{ animationDelay: "150ms" }} className="lp-rise mt-4 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
             {hero.subtitle ||
               "Yerbas seleccionadas, mates artesanales y accesorios para acompañar cada ronda."}
           </p>
-          <div className="mt-7 flex flex-wrap items-center gap-5">
+          <div style={{ animationDelay: "300ms" }} className="lp-rise mt-7 flex flex-wrap items-center gap-5">
             <Link
               href={hero.ctaPrimaryLink || "/catalogo"}
               id="hero-cta-catalogo"
-              className="inline-flex items-center rounded-control bg-pava-cream px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-pava-green transition-colors hover:bg-white"
+              className="group inline-flex items-center gap-2 rounded-control bg-pava-cream px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-pava-green transition-colors hover:bg-white"
             >
               {hero.ctaPrimaryText || "Comprar ahora"}
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
             {hero.ctaSecondaryText && (
               <Link
