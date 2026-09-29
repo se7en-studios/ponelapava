@@ -1159,6 +1159,9 @@ iframe:focus,
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
   padding: 4px;
   background: var(--dash-surface-2);
   border: 1px solid var(--dash-border);

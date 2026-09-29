@@ -587,7 +587,7 @@ export default function AdminShell({
       </aside>
 
       {/* ── MAIN CONTENT AREA ── */}
-      <main className="flex-1 min-h-screen pt-16 pb-24 px-3 sm:px-6 lg:pt-6 lg:pb-12 lg:px-8">
+      <main className="flex-1 min-w-0 min-h-screen pt-16 pb-24 px-3 sm:px-6 lg:pt-6 lg:pb-12 lg:px-8">
         {/* Desktop Sticky Header Bar */}
         <header className="hidden lg:flex items-center justify-between sticky top-4 z-30 mb-8 px-5 py-3 rounded-xl bg-[var(--dash-surface)]/90 backdrop-blur-md border border-[var(--dash-border)] shadow-md">
           {/* Breadcrumb + Status Badge */}

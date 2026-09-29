@@ -471,7 +471,7 @@ export default function OrdersTable() {
           </div>
 
           {/* View Mode Toggle: Table vs Kanban & Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <AdminButton
               variant="primary"
               onClick={() => setCreateModalOpen(true)}
