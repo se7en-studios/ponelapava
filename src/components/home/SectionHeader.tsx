@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-// Encabezado de sección tipo tienda: título a la izquierda, "Ver todo" a la
-// derecha. Mismo patrón en todas las secciones de la home.
+// Encabezado editorial: eyebrow numerado, título grande, botón píldora con flecha.
 export default function SectionHeader({
   title,
   description,
@@ -9,6 +8,7 @@ export default function SectionHeader({
   linkLabel = "Ver todo",
   external = false,
   tone = "light",
+  index,
 }: {
   title: string;
   description?: string;
@@ -16,30 +16,49 @@ export default function SectionHeader({
   linkLabel?: string;
   external?: boolean;
   tone?: "light" | "dark";
+  index?: string;
 }) {
   const dark = tone === "dark";
-  const linkClass = `inline-flex shrink-0 items-center rounded-control border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors ${
+  const linkClass = `group hidden shrink-0 items-center gap-2 rounded-full border px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors sm:inline-flex ${
     dark
       ? "border-pava-cream/30 text-pava-cream hover:bg-pava-cream hover:text-pava-green"
       : "border-pava-brown/20 text-pava-brown hover:bg-pava-brown hover:text-pava-cream"
   }`;
+  const arrow = (
+    <span
+      aria-hidden
+      className="transition-transform duration-300 group-hover:translate-x-1"
+    >
+      →
+    </span>
+  );
 
   return (
-    <div className="lp-reveal mb-8 flex items-end justify-between gap-6 sm:mb-10">
-      <div className="max-w-xl">
+    <div className="lp-reveal mb-10 flex items-end justify-between gap-6 sm:mb-14">
+      <div className="max-w-2xl">
+        {index && (
+          <span
+            className={`mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] ${
+              dark ? "text-pava-gold" : "text-pava-gold-deep"
+            }`}
+          >
+            {index}
+            <span
+              aria-hidden
+              className={`lp-accent block h-px w-12 ${dark ? "bg-pava-gold" : "bg-pava-gold-deep"}`}
+            />
+          </span>
+        )}
         <h2
-          className={`font-display text-3xl font-semibold tracking-tight sm:text-4xl ${
+          className={`font-display text-4xl font-semibold leading-[0.95] tracking-[-0.02em] sm:text-5xl lg:text-6xl ${
             dark ? "text-pava-cream" : "text-pava-brown"
           }`}
         >
           {title}
         </h2>
-        <span aria-hidden className={`lp-accent mt-3 block h-0.5 w-12 rounded-full ${dark ? "bg-pava-gold" : "bg-pava-gold-deep"}`} />
         {description && (
           <p
-            className={`mt-2 text-sm leading-relaxed ${
-              dark ? "text-pava-cream/70" : "text-pava-brown-mid/75"
-            }`}
+            className={`mt-4 max-w-lg text-[15px] leading-relaxed ${dark ? "text-pava-cream/70" : "text-pava-brown-mid/75"}`}
           >
             {description}
           </p>
@@ -54,10 +73,12 @@ export default function SectionHeader({
             className={linkClass}
           >
             {linkLabel}
+            {arrow}
           </a>
         ) : (
           <Link href={href} className={linkClass}>
             {linkLabel}
+            {arrow}
           </Link>
         ))}
     </div>

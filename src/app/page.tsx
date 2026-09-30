@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
+import WordBand from "@/components/home/WordBand";
+import { formatPrice } from "@/lib/utils";
 import TrustBar from "@/components/home/TrustBar";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Categories from "@/components/home/Categories";
@@ -32,16 +34,21 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const [landing, products] = await Promise.all([getLandingContent(), getProducts()]);
+  const pick = products.find((p) => p.stock > 0 && p.images?.[0]);
+  const spotlight = pick
+    ? { id: pick.id, name: pick.name, price: formatPrice(pick.price), image: pick.images[0] }
+    : null;
 
   return (
     <>
       <div aria-hidden className="lp-progress" />
-      <Hero content={landing.hero} />
+      <Hero content={landing.hero} spotlight={spotlight} />
       <TrustBar announcements={landing.announcements} />
       <BenefitsStrip />
       <FeaturedProducts />
       <Categories />
       <ProductSpread />
+      <WordBand />
       <ShopTheLook products={products} />
       <AboutSection content={landing.about} />
       <GoogleReviews reviews={landing.reviews} />

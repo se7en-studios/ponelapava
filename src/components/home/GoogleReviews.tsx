@@ -82,6 +82,7 @@ export default function GoogleReviews({
     <section id="resenas" className="scroll-mt-24 bg-pava-cream py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
+          index="04 — Reseñas"
           title="5,0 en Google"
           description="Lo que dicen quienes ya compraron en el local."
           href={GOOGLE_PLACE_URL}

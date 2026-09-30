@@ -17,7 +17,8 @@ export default async function FeaturedProducts() {
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
-          title="Destacados"
+          index="01 — Destacados"
+          title="Lo más elegido"
           description="Yerbas, mates y accesorios elegidos para usar todos los días."
           href="/catalogo"
         />

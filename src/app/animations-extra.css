@@ -363,3 +363,12 @@
     }
   }
 }
+
+/* ── Indicador de scroll del hero ──────────────── */
+@keyframes lpScrollCue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lp-scroll-cue { animation: lpScrollCue 1.8s cubic-bezier(0.6, 0, 0.4, 1) infinite; }
+}
