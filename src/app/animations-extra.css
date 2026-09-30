@@ -345,5 +345,21 @@
   to { transform: translateX(-50%); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .lp-wave { animation: lpWave 24s linear infinite; }
+  .lp-wave { animation: lpWave var(--wave-dur, 30s) linear infinite; }
+}
+
+/* ── Línea dorada bajo los títulos de sección ──── */
+@keyframes lpAccent {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.lp-accent { transform-origin: 0 50%; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .lp-accent {
+      animation: lpAccent linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 100%;
+    }
+  }
 }

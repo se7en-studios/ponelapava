@@ -34,6 +34,7 @@ export default function SectionHeader({
         >
           {title}
         </h2>
+        <span aria-hidden className={`lp-accent mt-3 block h-0.5 w-12 rounded-full ${dark ? "bg-pava-gold" : "bg-pava-gold-deep"}`} />
         {description && (
           <p
             className={`mt-2 text-sm leading-relaxed ${

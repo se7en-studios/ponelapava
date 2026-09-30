@@ -1,3 +1,4 @@
+import { InstagramIcon } from "@/components/ui/icons";
 import Image from "next/image";
 import SectionHeader from "@/components/home/SectionHeader";
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from "@/lib/site";
@@ -36,6 +37,9 @@ export default function InstagramSection({
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                 sizes="(max-width: 1024px) 50vw, 25vw"
               />
+              <span className="absolute inset-0 flex items-center justify-center bg-pava-green-dark/0 text-white opacity-0 transition-all duration-500 group-hover:bg-pava-green-dark/45 group-hover:opacity-100">
+                <InstagramIcon size={26} />
+              </span>
             </a>
           ))}
         </div>

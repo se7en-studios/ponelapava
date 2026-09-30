@@ -118,7 +118,7 @@ export default function FAQSection({ faqs: customFaqs }: { faqs?: LandingFAQItem
         <div className="border-t border-pava-brown/15 lg:col-span-8">
           {faqs.map((faq) => (
             <details key={faq.question} className="group border-b border-pava-brown/15">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-[15px] font-medium text-pava-brown [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-[15px] font-medium text-pava-brown transition-colors hover:text-pava-green group-open:text-pava-green [&::-webkit-details-marker]:hidden">
                 {faq.question}
                 <ChevronDown size={16} className="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
               </summary>

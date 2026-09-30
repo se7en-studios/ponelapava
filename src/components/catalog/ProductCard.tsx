@@ -123,7 +123,7 @@ export default function ProductCard({
   // Grid view — tarjeta de tienda: foto grande, nombre y precio en texto chico.
   return (
     <article className="product-card group relative">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-control bg-pava-cream-dark">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-control bg-pava-cream-dark transition-shadow duration-500 group-hover:shadow-[0_22px_40px_-24px_rgba(38,64,46,0.55)]">
         <Link
           href={`/producto/${product.id}`}
           aria-label={`Ver ${product.name}`}

@@ -7,6 +7,7 @@ import { INSTAGRAM_URL } from "@/lib/site";
 import { getSiteSettings } from "@/lib/settings";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { formatScheduleSummary } from "@/lib/hours";
+import Waves from "@/components/ui/Waves";
 
 const categories = [
   { href: "/catalogo?cat=yerbas", label: "Yerbas" },
@@ -22,24 +23,10 @@ export default async function Footer() {
   const settings = await getSiteSettings();
 
   return (
-    <footer id="contacto" className="focus-ring-gold relative overflow-hidden bg-gradient-to-b from-pava-brown to-pava-green-dark text-pava-cream/80">
-      {/* Olas animadas de fondo (adaptado de 21st.dev animated-wave-footer). */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[420px] overflow-hidden">
-        <svg
-          className="lp-wave absolute bottom-0 left-0 h-full w-[3600px] text-pava-cream"
-          viewBox="0 0 3600 500"
-          preserveAspectRatio="none"
-        >
-          {[0, 1800].map((dx) => (
-            <g key={dx} transform={`translate(${dx} 0)`}>
-              <path d="M0 250C200 150 400 50 600 100C800 150 1000 350 1200 300C1400 250 1600 150 1800 250V500H0V250Z" fill="currentColor" opacity="0.04" />
-              <path d="M0 250C200 200 400 100 600 150C800 200 1000 350 1200 300C1400 250 1600 200 1800 250V500H0V250Z" fill="currentColor" opacity="0.06" />
-            </g>
-          ))}
-        </svg>
-      </div>
+    <footer id="contacto" className="focus-ring-gold relative overflow-hidden bg-gradient-to-b from-pava-green-dark via-pava-green-dark to-pava-brown text-pava-cream/80">
+      <Waves className="top-0" />
       {/* Main footer */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16 lg:pt-40 lg:pb-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 lg:gap-12">
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
