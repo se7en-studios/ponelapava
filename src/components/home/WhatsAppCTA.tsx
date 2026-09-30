@@ -10,8 +10,8 @@ export default function WhatsAppCTA() {
   const settings = useSiteSettings();
 
   return (
-    <section className="bg-pava-green-dark text-pava-cream">
-      <div className="lp-reveal mx-auto flex max-w-7xl flex-col items-start gap-8 px-5 py-16 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-20">
+    <section className="grain-overlay relative bg-pava-green-dark text-pava-cream">
+      <div className="lp-reveal relative z-[2] mx-auto flex max-w-7xl flex-col items-start gap-8 px-5 py-16 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-20">
         <div className="max-w-xl">
           <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-pava-gold">
             Asesoramiento sin cargo

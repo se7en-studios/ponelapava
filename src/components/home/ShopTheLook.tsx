@@ -45,7 +45,7 @@ export default function ShopTheLook({ products }: { products: Product[] }) {
 
   return (
     <section
-      className="bg-pava-cream py-16 sm:py-20 lg:py-24"
+      className="bg-pava-cream-dark py-16 sm:py-20 lg:py-24"
       aria-labelledby="look-title"
     >
       <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-12 lg:gap-12 lg:px-10">

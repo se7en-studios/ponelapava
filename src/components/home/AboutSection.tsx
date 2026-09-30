@@ -16,28 +16,39 @@ export default function AboutSection({ content }: { content?: LandingAbout }) {
   const image = content?.image || "/local/local-1.jpg";
 
   return (
-    <section id="nosotros" className="bg-pava-green text-pava-cream">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-24">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-control bg-pava-green-dark sm:aspect-[4/3] lg:aspect-[4/5]">
+    <section id="nosotros" className="grain-overlay relative overflow-hidden bg-pava-green text-pava-cream">
+      <div className="relative z-[2] mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-24">
+        <div className="lp-reveal relative aspect-[4/5] overflow-hidden rounded-control bg-pava-green-dark shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] ring-1 ring-pava-cream/10 sm:aspect-[4/3] lg:aspect-[4/5]">
           <Image
             src={image}
             alt="Local Poné La Pava en Catriel, Río Negro"
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-[1.04]"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>
-        <div className="max-w-lg">
+        <div className="lp-reveal max-w-lg">
           <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-pava-gold">
             {eyebrow}
           </span>
           <h2 className="font-display mt-4 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-            {title} {titleHighlight}
+            {title}{" "}
+            <em className="font-display italic text-pava-gold">{titleHighlight}</em>
           </h2>
           <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-pava-cream/80">
             <p>{paragraph1}</p>
             {paragraph2 && <p>{paragraph2}</p>}
           </div>
+          {content?.stats && content.stats.length > 0 && (
+            <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-pava-cream/15 pt-6">
+              {content.stats.slice(0, 3).map((s) => (
+                <div key={s.label} className="flex flex-col">
+                  <dt className="order-2 mt-1 text-[11px] uppercase tracking-[0.14em] text-pava-cream/60">{s.label}</dt>
+                  <dd className="font-display text-2xl font-semibold text-pava-cream sm:text-3xl">{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
           <Link
             href="/#el-local"
             className="mt-8 inline-flex items-center rounded-control border border-pava-cream/30 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors hover:bg-pava-cream hover:text-pava-green"

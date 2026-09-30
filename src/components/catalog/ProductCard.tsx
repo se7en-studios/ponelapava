@@ -135,7 +135,7 @@ export default function ProductCard({
             alt={product.name}
             fill
             className={`object-cover transition-all duration-700 ease-out group-hover:scale-[1.03] ${
-              isOutOfStock ? "opacity-60" : ""
+              isOutOfStock ? "grayscale-[70%] opacity-85" : ""
             } ${product.images[1] ? "[@media(hover:hover)]:group-hover:opacity-0" : ""}`}
             sizes="(max-width: 1024px) 50vw, 25vw"
           />
@@ -152,7 +152,7 @@ export default function ProductCard({
         </Link>
 
         {(isOutOfStock || isLowStock) && (
-          <span className="absolute left-2.5 top-2.5 rounded-chip bg-pava-cream px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-pava-brown">
+          <span className={`absolute left-2.5 top-2.5 rounded-chip px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] backdrop-blur-sm ${isOutOfStock ? "bg-pava-brown/85 text-pava-cream" : "bg-pava-gold text-pava-brown"}`}>
             {isOutOfStock ? "Agotado" : `Últimas ${product.stock}`}
           </span>
         )}

@@ -32,7 +32,7 @@ export default async function Categories() {
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-80" />
-              <span className="absolute bottom-3 left-3 flex items-center gap-1.5 text-sm font-semibold text-white transition-transform duration-300 group-hover:-translate-y-1 sm:bottom-4 sm:left-4 sm:text-base">
+              <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full border border-white/20 bg-black/25 px-3 py-1.5 text-[13px] font-semibold text-white backdrop-blur-md transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-black/40 sm:bottom-4 sm:left-4 sm:text-sm">
                 {cat.name}
                 <span aria-hidden className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
               </span>
