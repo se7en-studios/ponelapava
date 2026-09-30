@@ -339,3 +339,11 @@
   .lp-marquee-x,
   .lp-marquee-y { animation: none !important; }
 }
+
+/* ── Olas del footer ───────────────────────────── */
+@keyframes lpWave {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lp-wave { animation: lpWave 24s linear infinite; }
+}
