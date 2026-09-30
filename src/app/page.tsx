@@ -9,6 +9,7 @@ import GoogleReviews from "@/components/home/GoogleReviews";
 import LocalSection from "@/components/home/LocalSection";
 import InstagramSection from "@/components/home/InstagramSection";
 import ShopTheLook from "@/components/home/ShopTheLook";
+import ProductSpread from "@/components/home/ProductSpread";
 import RecentlyViewed from "@/components/home/RecentlyViewed";
 import { getLandingContent } from "@/lib/landing";
 import { getProducts } from "@/lib/products";
@@ -37,6 +38,7 @@ export default async function HomePage() {
       <TrustBar announcements={landing.announcements} />
       <FeaturedProducts />
       <Categories />
+      <ProductSpread />
       <ShopTheLook products={products} />
       <AboutSection content={landing.about} />
       <GoogleReviews reviews={landing.reviews} />

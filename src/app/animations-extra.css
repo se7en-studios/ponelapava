@@ -325,3 +325,17 @@
     }
   }
 }
+
+/* ── Marquee con gap (components/ui/Marquee.tsx) ─── */
+@keyframes lpMarqueeX {
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+@keyframes lpMarqueeY {
+  to { transform: translateY(calc(-100% - var(--gap))); }
+}
+.lp-marquee-x { animation: lpMarqueeX var(--duration) linear infinite; }
+.lp-marquee-y { animation: lpMarqueeY var(--duration) linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .lp-marquee-x,
+  .lp-marquee-y { animation: none !important; }
+}
