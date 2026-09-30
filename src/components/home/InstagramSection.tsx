@@ -15,7 +15,7 @@ export default function InstagramSection({
     <section className="bg-pava-cream py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
-          index="05 — Instagram"
+          index="06 — Instagram"
           title="En la ronda"
           href={INSTAGRAM_URL}
           linkLabel={`@${INSTAGRAM_HANDLE}`}

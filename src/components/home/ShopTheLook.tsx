@@ -84,7 +84,7 @@ export default function ShopTheLook({ products }: { products: Product[] }) {
 
         <div className="flex flex-col lg:col-span-5">
           <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-pava-gold-deep">
-            Shop the look
+            03 — Shop the look
           </span>
           <h2
             id="look-title"

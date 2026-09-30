@@ -59,14 +59,14 @@ export default async function LocalSection({
   return (
     <section
       id="el-local"
-      className="focus-ring-gold overflow-hidden bg-pava-green py-20 text-pava-cream sm:py-24 lg:py-32"
+      className="focus-ring-gold grain-overlay relative overflow-hidden bg-pava-green py-20 text-pava-cream sm:py-24 lg:py-32"
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+      <div className="relative z-[2] mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="relative lg:col-span-7">
+          <div className="lp-reveal relative lg:col-span-7">
             <div className="grid grid-cols-3 gap-3">
               {/* Live map — desaturated + brand-tinted until hovered */}
-              <div className="local-map-frame group relative col-span-3 aspect-[16/10] overflow-hidden rounded-card bg-pava-green-dark sm:aspect-[16/9]">
+              <div className="local-map-frame group relative col-span-3 aspect-[16/10] overflow-hidden rounded-2xl ring-1 ring-pava-cream/10 bg-pava-green-dark sm:aspect-[16/9]">
                 <LocalMapEmbed
                   src={mapsEmbedUrl}
                   title="Ubicación de Poné La Pava en el mapa"
@@ -102,7 +102,7 @@ export default async function LocalSection({
                   href={mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="img-hover-zoom relative aspect-square overflow-hidden rounded-control bg-pava-green-dark"
+                  className="img-hover-zoom relative aspect-square overflow-hidden rounded-xl bg-pava-green-dark"
                   aria-label={`${photo.alt} — ver más fotos en Google Maps`}
                 >
                   <Image
@@ -117,12 +117,14 @@ export default async function LocalSection({
             </div>
           </div>
 
-          <div className="lg:col-span-5 lg:pl-8">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-pava-gold">
-              {eyebrow}
+          <div className="lp-reveal lg:col-span-5 lg:pl-8">
+            <span className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-pava-gold">
+              05 — {eyebrow}
+              <span aria-hidden className="lp-accent block h-px w-12 bg-pava-gold" />
             </span>
-            <h2 className="font-display mt-4 text-3xl font-semibold leading-tight tracking-tight text-pava-cream sm:text-4xl lg:text-5xl">
-              {title} {titleHighlight}
+            <h2 className="font-display mt-4 text-4xl font-semibold leading-[0.95] tracking-[-0.02em] text-pava-cream sm:text-5xl lg:text-6xl">
+              {title}{" "}
+              <em className="italic text-pava-gold">{titleHighlight}</em>
             </h2>
             <p className="mt-6 max-w-md leading-relaxed text-pava-cream/70">
               {description}
@@ -130,7 +132,7 @@ export default async function LocalSection({
 
             <div className="mt-10 space-y-0 border-y border-pava-cream/15">
               <div className="flex gap-4 py-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-pava-cream/10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pava-cream/10">
                   <MapPin size={18} className="text-pava-gold" />
                 </div>
                 <div>
@@ -146,7 +148,7 @@ export default async function LocalSection({
                 </div>
               </div>
               <div className="flex gap-4 border-t border-pava-cream/15 py-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-pava-cream/10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pava-cream/10">
                   <Clock size={18} className="text-pava-gold" />
                 </div>
                 <div>
@@ -173,7 +175,7 @@ export default async function LocalSection({
                 </div>
               </div>
               <div className="flex gap-4 border-t border-pava-cream/15 py-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-pava-cream/10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pava-cream/10">
                   <MessageCircle size={18} className="text-whatsapp" />
                 </div>
                 <div>
@@ -197,7 +199,7 @@ export default async function LocalSection({
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-control border-2 border-pava-gold bg-pava-gold px-5 py-3 text-sm font-semibold tracking-wide text-pava-brown transition-colors hover:border-pava-gold-light hover:bg-pava-gold-light"
+                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-pava-gold bg-pava-gold px-6 py-3 text-sm font-semibold tracking-wide text-pava-brown transition-colors hover:border-pava-gold-light hover:bg-pava-gold-light"
               >
                 <ExternalLink size={15} /> Cómo llegar
               </a>
@@ -205,7 +207,7 @@ export default async function LocalSection({
                 href={whatsappChatUrl(settings.whatsappNumber)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-control border border-pava-cream/30 px-5 py-3 text-sm font-semibold tracking-wide text-pava-cream transition-colors hover:border-whatsapp hover:bg-whatsapp"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-pava-cream/30 px-6 py-3 text-sm font-semibold tracking-wide text-pava-cream transition-colors hover:border-whatsapp hover:bg-whatsapp"
               >
                 <MessageCircle size={15} /> WhatsApp
               </a>

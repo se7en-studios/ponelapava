@@ -1,6 +1,5 @@
 import type React from "react";
 import { Star } from "lucide-react";
-import SectionHeader from "@/components/home/SectionHeader";
 import { Marquee } from "@/components/ui/Marquee";
 import { LandingReviewItem } from "@/types/landing";
 
@@ -81,16 +80,41 @@ export default function GoogleReviews({
   return (
     <section id="resenas" className="scroll-mt-24 bg-pava-cream py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <SectionHeader
-          index="04 — Reseñas"
-          title="5,0 en Google"
-          description="Lo que dicen quienes ya compraron en el local."
-          href={GOOGLE_PLACE_URL}
-          linkLabel="Ver reseñas"
-          external
-        />
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lp-reveal min-w-0 lg:col-span-5">
+            <span className="mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-pava-gold-deep">
+              04 — Reseñas
+              <span aria-hidden className="lp-accent block h-px w-12 bg-pava-gold-deep" />
+            </span>
+            <p className="font-display flex items-start leading-none text-pava-brown">
+              <span className="text-[7.5rem] font-semibold tracking-[-0.04em] sm:text-[10rem]">5,0</span>
+              <span className="ml-3 mt-6 flex flex-col gap-2 sm:mt-9">
+                <span className="flex gap-1 text-pava-gold-deep" aria-label="5 de 5 estrellas">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} size={22} fill="currentColor" strokeWidth={0} aria-hidden="true" />
+                  ))}
+                </span>
+                <span className="text-sm font-medium uppercase tracking-[0.18em] text-pava-brown-mid/70">
+                  en Google
+                </span>
+              </span>
+            </p>
+            <p className="font-display mt-6 max-w-sm text-2xl italic leading-snug text-pava-brown sm:text-3xl">
+              &ldquo;Lo que dicen quienes ya compraron en el local.&rdquo;
+            </p>
+            <a
+              href={GOOGLE_PLACE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-pava-brown/20 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-pava-brown transition-colors hover:bg-pava-brown hover:text-pava-cream"
+            >
+              Ver reseñas en Google
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          </div>
+          <div className="min-w-0 lg:col-span-7">
         <div
-          className="relative flex h-[30rem] w-full items-center justify-center overflow-hidden rounded-control [perspective:300px] sm:h-[34rem]"
+          className="relative flex h-[28rem] w-full items-center justify-center overflow-hidden rounded-control [perspective:300px] sm:h-[34rem]"
           aria-label="Reseñas de clientes en Google"
         >
           <div
@@ -120,6 +144,8 @@ export default function GoogleReviews({
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-pava-cream" />
           <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-pava-cream" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-pava-cream" />
+        </div>
+          </div>
         </div>
       </div>
     </section>
