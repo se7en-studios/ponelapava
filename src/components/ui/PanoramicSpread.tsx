@@ -133,11 +133,13 @@ function SpreadCard({
   layout,
   z,
   progress,
+  load,
 }: {
   item: SpreadItem;
   layout: Layout;
   z: number;
   progress: MotionValue<number>;
+  load: boolean;
 }) {
   const { stacked, panoramic, size } = layout;
   const ease = useTransform(progress, easeInOutCubic);
@@ -180,17 +182,19 @@ function SpreadCard({
           className="group flex h-full w-full flex-col rounded-md bg-white p-2 pb-0 shadow-2xl shadow-pava-brown/20 ring-1 ring-pava-brown/10 transition-shadow duration-500 hover:shadow-pava-brown/35 max-md:p-1.5 max-md:pb-0"
         >
           <span className="relative block flex-1 overflow-hidden rounded-sm bg-pava-cream-dark">
+            {load && (
             <Image
               src={item.src}
               alt={item.alt}
               fill
               draggable={false}
-              // Lazy-load no detecta bien la intersección con rotateY/perspective en
-              // mobile y algunas fotos nunca cargan. Son 8 miniaturas: eager.
+              // El lazy nativo no detecta la intersección con rotateY/perspective;
+              // se montan cuando la sección está cerca (ver `near`) y cargan ya.
               loading="eager"
               sizes="(max-width: 768px) 40vw, 15vw"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
+            )}
           </span>
           <span className="flex items-baseline justify-between gap-2 px-1 py-2 max-md:py-1.5">
             <span className="truncate text-[11px] font-medium text-pava-brown md:text-xs">
@@ -224,6 +228,23 @@ export default function PanoramicSpread({
   const wrapRef = useRef<HTMLElement>(null);
   const reduce = usePrefersReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "800px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
@@ -281,6 +302,7 @@ export default function PanoramicSpread({
                 layout={isMobile ? mobile : desktop}
                 z={z}
                 progress={progress}
+                load={near}
               />
             );
           })}

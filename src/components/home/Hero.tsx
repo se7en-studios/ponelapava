@@ -26,10 +26,21 @@ export default function Hero({
   const hero = content || DEFAULT_LANDING_CONTENT.hero;
   const [allowVideo, setAllowVideo] = useState(false);
 
+  // Video solo desde tablet, sin Save-Data y después del load: en celu eran
+  // 2 MB compitiendo con el primer render.
   useEffect(() => {
-    setAllowVideo(
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    );
+    const conn = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection;
+    const ok =
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      window.matchMedia("(min-width: 768px)").matches &&
+      !conn?.saveData;
+    if (!ok) return;
+    const start = () => setAllowVideo(true);
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => window.removeEventListener("load", start);
   }, []);
 
   const lines = [hero.titleLine1, hero.titleLine2, hero.titleLine3].filter(

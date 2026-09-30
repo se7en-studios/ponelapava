@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, Heart, Scale } from "lucide-react";
+import { Bell, Eye, Heart, Scale } from "lucide-react";
 import { Product } from "@/types";
 import {
   formatPrice,
@@ -14,6 +14,8 @@ import {
 } from "@/lib/utils";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useComparison } from "@/context/ComparisonContext";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
+import { whatsappChatUrl } from "@/lib/whatsapp";
 import Badge from "@/components/ui/Badge";
 import AddToCartButton from "./AddToCartButton";
 import QuickViewModal from "./QuickViewModal";
@@ -30,6 +32,7 @@ export default function ProductCard({
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { addToComparison, isComparing } = useComparison();
+  const settings = useSiteSettings();
   const favorite = isFavorite(product.id);
   const comparing = isComparing(product.id);
   // Sin stock es sin stock, lo diga el estado o lo diga el número. Gatear sólo
@@ -152,7 +155,9 @@ export default function ProductCard({
         </Link>
 
         {(isOutOfStock || isLowStock) && (
-          <span className={`absolute left-2.5 top-2.5 rounded-chip px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] backdrop-blur-sm ${isOutOfStock ? "bg-pava-brown/85 text-pava-cream" : "bg-pava-gold text-pava-brown"}`}>
+          <span
+            className={`absolute left-2.5 top-2.5 rounded-chip px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] backdrop-blur-sm ${isOutOfStock ? "bg-pava-brown/85 text-pava-cream" : "bg-pava-gold text-pava-brown"}`}
+          >
             {isOutOfStock ? "Agotado" : `Últimas ${product.stock}`}
           </span>
         )}
@@ -202,6 +207,21 @@ export default function ProductCard({
             <Eye size={14} />
           </button>
         </div>
+
+        {isOutOfStock && (
+          <a
+            href={whatsappChatUrl(
+              settings.whatsappNumber,
+              `¡Hola! ¿Me avisan cuando vuelva a entrar "${product.name}"?`,
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-x-2.5 bottom-2.5 flex items-center justify-center gap-1.5 rounded-full bg-pava-cream/95 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-pava-green shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
+          >
+            <Bell size={12} aria-hidden="true" />
+            Avisame
+          </a>
+        )}
 
         {!isOutOfStock && (
           <>

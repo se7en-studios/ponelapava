@@ -2,11 +2,19 @@ import { getFeaturedProducts } from "@/lib/products";
 import ProductCard from "@/components/catalog/ProductCard";
 import SectionHeader from "@/components/home/SectionHeader";
 
+// Agotados solo para completar la grilla mientras se carga stock.
+const MIN_CARDS = 4;
+const MAX_CARDS = 8;
+
 export default async function FeaturedProducts() {
   // En stock primero, así un agotado no le saca el lugar a uno disponible.
-  const displayed = [...(await getFeaturedProducts())]
-    .sort((a, b) => Number(b.stock > 0) - Number(a.stock > 0))
-    .slice(0, 8);
+  const featured = await getFeaturedProducts();
+  const inStock = featured.filter((p) => p.stock > 0);
+  const soldOut = featured.filter((p) => p.stock <= 0);
+  const displayed = [
+    ...inStock,
+    ...soldOut.slice(0, Math.max(0, MIN_CARDS - inStock.length)),
+  ].slice(0, MAX_CARDS);
 
   if (displayed.length === 0) return null;
 

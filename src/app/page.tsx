@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
 import WordBand from "@/components/home/WordBand";
 import { formatPrice } from "@/lib/utils";
-import TrustBar from "@/components/home/TrustBar";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Categories from "@/components/home/Categories";
 import AboutSection from "@/components/home/AboutSection";
@@ -43,7 +42,6 @@ export default async function HomePage() {
     <>
       <div aria-hidden className="lp-progress" />
       <Hero content={landing.hero} spotlight={spotlight} />
-      <TrustBar announcements={landing.announcements} />
       <BenefitsStrip />
       <FeaturedProducts />
       <Categories />
