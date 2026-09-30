@@ -105,7 +105,7 @@ export default function TopAnnouncementBar() {
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="focus-ring-gold relative z-50 bg-[#132519] text-pava-cream border-b border-pava-gold/20 px-3 py-2 text-xs font-medium select-none shadow-sm transition-colors"
+      className="focus-ring-gold relative z-50 bg-[#132519] text-pava-cream border-b border-pava-gold/20 px-2 py-1 text-xs font-medium sm:px-3 sm:py-2 select-none shadow-sm transition-colors"
       role="region"
       aria-label="Anuncios destacados"
     >
@@ -114,7 +114,7 @@ export default function TopAnnouncementBar() {
           a 42 porque a partir de sm el texto sube a 12px, ≥768 todos en una
           línea). Sin esto la barra cambiaba de altura en cada rotación de
           4,5 s y el navbar saltaba 13,7 px en mobile. */}
-      <div className="mx-auto max-w-7xl flex items-center justify-between gap-2 min-h-[53px] min-[480px]:min-h-[40px] sm:min-h-[42px] md:min-h-0">
+      <div className="mx-auto max-w-7xl flex items-center justify-between gap-2 min-h-[34px] sm:min-h-[42px] md:min-h-0">
         {/* Prev button */}
         <button
           onClick={handlePrev}
@@ -130,14 +130,14 @@ export default function TopAnnouncementBar() {
             href={current.link || "/catalogo"}
             className="focus-ring-inset group flex items-center justify-center gap-2 text-center transition-all duration-300 max-w-full hover:opacity-95"
           >
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-pava-gold/20 text-pava-gold shrink-0 transition-transform duration-200 group-hover:scale-110">
+            <span className="hidden sm:flex items-center justify-center w-5 h-5 rounded-full bg-pava-gold/20 text-pava-gold shrink-0 transition-transform duration-200 group-hover:scale-110">
               <Icon size={12} />
             </span>
-            <div className="flex items-center gap-1.5 flex-wrap justify-center text-[11px] sm:text-xs leading-tight">
-              <span className="inline-block rounded bg-pava-gold/15 border border-pava-gold/30 px-1.5 py-0.5 font-bold text-pava-gold tracking-wide uppercase text-[10px] sm:text-[11px]">
+            <div className="flex min-w-0 items-center gap-1.5 justify-center text-[11px] sm:flex-wrap sm:text-xs leading-tight">
+              <span className="hidden sm:inline-block rounded bg-pava-gold/15 border border-pava-gold/30 px-1.5 py-0.5 font-bold text-pava-gold tracking-wide uppercase text-[10px] sm:text-[11px]">
                 {current.badge}
               </span>
-              <span className="text-pava-cream/90 font-normal">
+              <span className="truncate text-pava-cream/90 font-normal">
                 {current.text}
               </span>
             </div>

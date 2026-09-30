@@ -258,7 +258,7 @@ export default function PanoramicSpread({
     <section
       ref={wrapRef}
       aria-label={title}
-      className={`relative w-full bg-pava-cream text-pava-brown ${reduce ? "h-[100svh]" : "h-[300vh]"}`}
+      className={`relative w-full bg-pava-cream text-pava-brown ${reduce ? "h-[100svh]" : "h-[220vh] md:h-[300vh]"}`}
     >
       <div
         className="sticky top-0 flex h-[100svh] w-full items-center justify-center overflow-hidden"

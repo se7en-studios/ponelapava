@@ -114,7 +114,7 @@ export default function GoogleReviews({
           </div>
           <div className="min-w-0 lg:col-span-7">
         <div
-          className="relative flex h-[28rem] w-full items-center justify-center overflow-hidden rounded-control [perspective:300px] sm:h-[34rem]"
+          className="relative flex h-[22rem] w-full sm:h-[28rem] items-center justify-center overflow-hidden rounded-control [perspective:300px] sm:h-[34rem]"
           aria-label="Reseñas de clientes en Google"
         >
           <div

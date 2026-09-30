@@ -96,13 +96,13 @@ export default async function LocalSection({
               </div>
 
               {/* Real photos of the store */}
-              {photos.map((photo) => (
+              {photos.map((photo, i) => (
                 <a
                   key={photo.src}
                   href={mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="img-hover-zoom relative aspect-square overflow-hidden rounded-xl bg-pava-green-dark"
+                  className={`img-hover-zoom relative aspect-square overflow-hidden rounded-xl bg-pava-green-dark ${i >= 3 ? "hidden sm:block" : ""}`}
                   aria-label={`${photo.alt} — ver más fotos en Google Maps`}
                 >
                   <Image
@@ -117,7 +117,7 @@ export default async function LocalSection({
             </div>
           </div>
 
-          <div className="lp-reveal lg:col-span-5 lg:pl-8">
+          <div className="lp-reveal order-first lg:order-none lg:col-span-5 lg:pl-8">
             <span className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-pava-gold">
               05 — {eyebrow}
               <span aria-hidden className="lp-accent block h-px w-12 bg-pava-gold" />

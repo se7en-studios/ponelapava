@@ -18,7 +18,7 @@ export default function AboutSection({ content }: { content?: LandingAbout }) {
   return (
     <section id="nosotros" className="grain-overlay relative overflow-hidden bg-pava-green text-pava-cream">
       <div className="relative z-[2] mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-24">
-        <div className="lp-reveal relative aspect-[4/5] overflow-hidden rounded-control bg-pava-green-dark shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] ring-1 ring-pava-cream/10 sm:aspect-[4/3] lg:aspect-[4/5]">
+        <div className="lp-reveal relative aspect-[4/3] overflow-hidden rounded-control bg-pava-green-dark shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] ring-1 ring-pava-cream/10 lg:aspect-[4/5]">
           <Image
             src={image}
             alt="Local Poné La Pava en Catriel, Río Negro"

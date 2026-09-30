@@ -22,9 +22,11 @@ export default async function FeaturedProducts() {
           description="Yerbas, mates y accesorios elegidos para usar todos los días."
           href="/catalogo"
         />
-        <div className="lp-stagger grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-4 lg:grid-cols-4 lg:gap-y-10">
+        <div className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 lg:gap-y-10">
           {displayed.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <div key={product.id} className="w-[46vw] max-w-[15rem] shrink-0 snap-start sm:w-auto sm:max-w-none">
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
       </div>

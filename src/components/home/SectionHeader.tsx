@@ -19,7 +19,7 @@ export default function SectionHeader({
   index?: string;
 }) {
   const dark = tone === "dark";
-  const linkClass = `group hidden shrink-0 items-center gap-2 rounded-full border px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors sm:inline-flex ${
+  const linkClass = `group inline-flex shrink-0 items-center gap-2 rounded-full border px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors ${
     dark
       ? "border-pava-cream/30 text-pava-cream hover:bg-pava-cream hover:text-pava-green"
       : "border-pava-brown/20 text-pava-brown hover:bg-pava-brown hover:text-pava-cream"
@@ -34,7 +34,7 @@ export default function SectionHeader({
   );
 
   return (
-    <div className="lp-reveal mb-10 flex items-end justify-between gap-6 sm:mb-14">
+    <div className="lp-reveal mb-8 flex flex-col items-start gap-5 sm:mb-14 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
       <div className="max-w-2xl">
         {index && (
           <span
