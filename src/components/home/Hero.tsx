@@ -55,6 +55,13 @@ export default function Hero({ content }: { content?: LandingHero }) {
 
       <div className="lp-hero-out relative z-10 mt-auto w-full px-5 pb-12 pt-40 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20">
         <div className="mx-auto max-w-7xl">
+          <a
+            href="#resenas"
+            className="lp-rise mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/35"
+          >
+            <span aria-hidden className="tracking-[0.1em] text-pava-gold">★★★★★</span>
+            5,0 en Google · Local en Catriel
+          </a>
           <h1 className="lp-rise font-display max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
             {title || "El ritual del mate es tuyo."}
           </h1>

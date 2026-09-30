@@ -10,6 +10,8 @@ import LocalSection from "@/components/home/LocalSection";
 import InstagramSection from "@/components/home/InstagramSection";
 import ShopTheLook from "@/components/home/ShopTheLook";
 import ProductSpread from "@/components/home/ProductSpread";
+import BenefitsStrip from "@/components/home/BenefitsStrip";
+import WhatsAppCTA from "@/components/home/WhatsAppCTA";
 import RecentlyViewed from "@/components/home/RecentlyViewed";
 import { getLandingContent } from "@/lib/landing";
 import { getProducts } from "@/lib/products";
@@ -36,6 +38,7 @@ export default async function HomePage() {
       <div aria-hidden className="lp-progress" />
       <Hero content={landing.hero} />
       <TrustBar announcements={landing.announcements} />
+      <BenefitsStrip />
       <FeaturedProducts />
       <Categories />
       <ProductSpread />
@@ -46,6 +49,7 @@ export default async function HomePage() {
       <InstagramSection posts={landing.galleryPosts} />
       <RecentlyViewed products={products} />
       <FAQSection faqs={landing.faqs} />
+      <WhatsAppCTA />
     </>
   );
 }

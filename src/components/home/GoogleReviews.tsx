@@ -79,7 +79,7 @@ export default function GoogleReviews({
   const items: Review[] = reviews && reviews.length > 0 ? reviews : DEFAULT_REVIEWS;
 
   return (
-    <section className="bg-pava-cream py-16 sm:py-20 lg:py-24">
+    <section id="resenas" className="scroll-mt-24 bg-pava-cream py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
           title="5,0 en Google"
