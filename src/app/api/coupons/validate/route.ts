@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkCoupon } from "@/lib/coupons";
+import { isRateLimited, tooManyRequests } from "@/lib/rateLimit";
 
 export const dynamic = "force-dynamic";
 
@@ -7,6 +8,9 @@ export const dynamic = "force-dynamic";
 // shown in the cart is the same one the order is priced with.
 export async function POST(req: NextRequest) {
   try {
+    if (await isRateLimited(req, "coupons")) {
+      return tooManyRequests({ valid: false });
+    }
     const body = (await req.json().catch(() => null)) as {
       code?: unknown;
     } | null;

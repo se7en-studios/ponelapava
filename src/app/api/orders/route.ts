@@ -6,6 +6,7 @@ import {
 } from "@/lib/orders";
 import { recordFailedOrder } from "@/lib/failedOrders";
 import { markCartRecovered } from "@/lib/abandonedCarts";
+import { isRateLimited, tooManyRequests } from "@/lib/rateLimit";
 
 // Public endpoint — hit from /carrito when a customer checks out via WhatsApp.
 //
@@ -20,6 +21,14 @@ import { markCartRecovered } from "@/lib/abandonedCarts";
 // failed_orders (o, si esa tabla todavía no existe, en los logs del servidor)
 // antes de responder.
 export async function POST(request: NextRequest) {
+  // Sin registro en failed_orders a propósito: el límite existe justamente
+  // para que un script no llene esa tabla. 10 pedidos / 10 min por IP sobra
+  // para un cliente real.
+  if (await isRateLimited(request, "orders")) {
+    console.warn("[api] POST /api/orders rate-limited");
+    return tooManyRequests();
+  }
+
   const body = (await request.json().catch(() => null)) as
     | (Omit<Partial<CreateOrderInput>, "items"> & {
         items?: {
