@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
-import { Order, OrderItem } from "@/types";
+import { OrderItem } from "@/types";
+import { isRateLimited, tooManyRequests } from "@/lib/rateLimit";
 
 // Public endpoint, so the lookup key has to be something only the customer
 // knows. Two changes from the first version, both about not handing strangers
@@ -23,8 +24,22 @@ function redactComment(comment: string | null): string | undefined {
   );
 }
 
+// Sólo lo que /seguimiento muestra: sin nombre ni teléfono del cliente, y
+// cada línea reducida a producto, cantidad y precio.
+interface TrackingOrder {
+  id: string;
+  items: Pick<OrderItem, "productName" | "quantity" | "price">[];
+  total: number;
+  comment?: string;
+  status: string;
+  createdAt: string;
+}
+
 export async function GET(request: NextRequest) {
   try {
+    // El lookup por teléfono es enumerable; el límite por IP lo vuelve caro.
+    if (await isRateLimited(request, "tracking")) return tooManyRequests();
+
     const q = request.nextUrl.searchParams.get("q")?.trim() ?? "";
     const digits = q.replace(/\D/g, "");
     const looksLikePhone = /^[0-9+\s()-]+$/.test(q) && digits.length > 0;
@@ -48,7 +63,7 @@ export async function GET(request: NextRequest) {
     let query = admin
       .from("orders")
       .select(
-        "id, customer_name, items, subtotal, total, comment, status, created_at",
+        "id, items, total, comment, status, created_at",
       );
 
     query = looksLikePhone
@@ -67,11 +82,13 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const orders: Order[] = (data ?? []).map((row) => ({
+    const orders: TrackingOrder[] = (data ?? []).map((row) => ({
       id: row.id,
-      customerName: row.customer_name,
-      items: row.items as OrderItem[],
-      subtotal: row.subtotal,
+      items: ((row.items as OrderItem[]) ?? []).map((item) => ({
+        productName: item.productName,
+        quantity: item.quantity,
+        price: item.price,
+      })),
       total: row.total,
       comment: redactComment(row.comment),
       status: row.status,
