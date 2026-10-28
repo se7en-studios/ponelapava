@@ -4,6 +4,10 @@ import SectionHeader from "@/components/home/SectionHeader";
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from "@/lib/site";
 import { LandingGalleryPost } from "@/types/landing";
 
+const TILT = ["-2.5deg", "1.8deg", "-1.2deg", "2.4deg"];
+const TAPE = ["-rotate-6", "rotate-3", "rotate-[8deg]", "-rotate-2"];
+
+// Posts reales de Instagram como polaroids pegadas con cinta.
 export default function InstagramSection({
   posts = [],
 }: {
@@ -12,7 +16,8 @@ export default function InstagramSection({
   if (posts.length === 0) return null;
 
   return (
-    <section className="bg-pava-cream py-16 sm:py-20 lg:py-24">
+    <section id="instagram" className="paper-cream relative scroll-mt-24 py-20 sm:py-24 lg:py-28">
+      <span aria-hidden className="torn-edge paper-cream absolute inset-x-0 -top-[21px] z-10" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
           index="06 — Instagram"
@@ -21,25 +26,32 @@ export default function InstagramSection({
           linkLabel={`@${INSTAGRAM_HANDLE}`}
           external
         />
-        <div className="lp-stagger grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          {posts.slice(0, 4).map((post) => (
+        <div className="lp-stagger grid grid-cols-2 gap-x-5 gap-y-8 sm:gap-x-6 lg:grid-cols-4">
+          {posts.slice(0, 4).map((post, i) => (
             <a
               key={post.id}
               href={post.link || INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative block aspect-square overflow-hidden rounded-control bg-pava-cream-dark"
+              style={{ transform: `rotate(${TILT[i % TILT.length]})` }}
+              className="group relative block bg-[#fbf8f1] p-2 pb-10 shadow-[3px_5px_0_rgba(31,58,43,0.28)] transition-transform duration-300 hover:!rotate-0 hover:-translate-y-1.5 sm:p-2.5 sm:pb-12"
               aria-label={post.alt}
             >
-              <Image
-                src={post.image}
-                alt={post.alt}
-                fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                sizes="(max-width: 1024px) 50vw, 25vw"
-              />
-              <span className="absolute inset-0 flex items-center justify-center bg-pava-green-dark/0 text-white opacity-0 transition-all duration-500 group-hover:bg-pava-green-dark/45 group-hover:opacity-100">
-                <InstagramIcon size={26} />
+              <span aria-hidden className={`tape -top-3 left-1/2 w-20 -translate-x-1/2 ${TAPE[i % TAPE.length]}`} />
+              <span className="relative block aspect-square overflow-hidden bg-pava-cream-dark">
+                <Image
+                  src={post.image}
+                  alt={post.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                />
+              </span>
+              <span className="font-script absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between gap-1.5 text-[13px] text-pava-ink/80 sm:bottom-3 sm:left-3 sm:right-3 sm:text-lg">
+                <span className="min-w-0 truncate">@{INSTAGRAM_HANDLE}</span>
+                <span className="shrink-0 text-pava-leaf transition-transform duration-300 group-hover:rotate-12">
+                  <InstagramIcon size={17} />
+                </span>
               </span>
             </a>
           ))}

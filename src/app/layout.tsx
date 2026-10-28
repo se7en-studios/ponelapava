@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Playfair_Display, Caveat } from "next/font/google";
+import { Figtree, Londrina_Solid, Gochi_Hand } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { FavoritesProvider } from "@/context/FavoritesContext";
@@ -12,24 +12,26 @@ import { SITE_URL } from "@/lib/site";
 import { getSiteSettings } from "@/lib/settings";
 import { generateOpeningHoursSchema } from "@/lib/hours";
 
-const montserrat = Montserrat({
+// Rediseño artesanal: Londrina Solid replica las letras recortadas del logo y
+// del cartel del local; Figtree para lectura; Gochi Hand para anotaciones.
+const figtree = Figtree({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-figtree",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const londrina = Londrina_Solid({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-londrina",
   display: "swap",
-  style: ["normal", "italic"],
+  weight: ["400", "900"],
 });
 
-const caveat = Caveat({
+const gochi = Gochi_Hand({
   subsets: ["latin"],
-  variable: "--font-caveat",
+  variable: "--font-gochi",
   display: "swap",
-  weight: ["500", "600", "700"],
+  weight: "400",
 });
 
 // Address (used in JSON-LD below) comes from Supabase and is editable from
@@ -64,7 +66,7 @@ export const metadata: Metadata = {
       "Especialistas en la cultura del mate. Todo lo que necesitás para el mate perfecto.",
     images: [
       {
-        url: "/hero_background_1786545961305.png",
+        url: "/redesign/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Poné La Pava",
@@ -96,7 +98,7 @@ export default async function RootLayout({
     description:
       "Especialistas en la cultura del mate. Yerbas seleccionadas, mates artesanales, termos y bombillas.",
     url: SITE_URL,
-    image: `${SITE_URL}/hero_background_1786545961305.png`,
+    image: `${SITE_URL}/redesign/og-image.jpg`,
     telephone: settings.whatsappDisplay,
     priceRange: "$$",
     address: {
@@ -112,7 +114,7 @@ export default async function RootLayout({
   return (
     <html
       lang="es"
-      className={`${montserrat.variable} ${playfair.variable} ${caveat.variable}`}
+      className={`${figtree.variable} ${londrina.variable} ${gochi.variable}`}
     >
       <body className="antialiased">
         <script

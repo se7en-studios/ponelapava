@@ -1,52 +1,69 @@
 @import "tailwindcss";
 @import "./animations-extra.css";
+@import "./artesanal.css";
 
 @theme inline {
-  /* ── Brand Colors — from the Poné La Pava brand book ────
-     pava-brown keeps its historical role (darkest surface /
-     headline accent) but now holds the brand's actual dark
-     green, #26402E, instead of a generic near-black. */
-  --color-pava-green: #26402e;
-  --color-pava-green-light: #35573c;
-  --color-pava-green-dark: #182a1c;
+  /* ── Brand Colors — rediseño artesanal (2026-10) ────────
+     La web toma la identidad real de la marca: el logo de letras
+     recortadas y el cartel del local. Verde del logo como color
+     principal, papel crema y kraft como superficies, mostaza de acento.
+     Los nombres históricos (green/cream/gold…) se mantienen para no
+     romper componentes; cambian los valores. */
+  --color-pava-leaf: #4b8056;
+  --color-pava-leaf-dark: #3b6a45;
+  --color-pava-leaf-light: #6d9a74;
+  --color-pava-sage: #a9bf9f;
+  --color-pava-kraft: #c69c6d;
+  --color-pava-kraft-dark: #8a6440;
+  --color-pava-paper: #f1eadb;
+  --color-pava-ink: #1f3a2b;
+
+  --color-pava-green: #1f3a2b;
+  --color-pava-green-light: #4b8056;
+  --color-pava-green-dark: #1a3324;
   --color-pava-olive: #6b7b4f;
   --color-pava-olive-light: #8b9a6e;
-  --color-pava-cream: #e9e2d1;
-  --color-pava-cream-dark: #ddd3bc;
-  --color-pava-terracotta: #7a5a3a;
-  --color-pava-terracotta-light: #96775a;
-  --color-pava-brown: #26402e;
+  --color-pava-cream: #f1eadb;
+  --color-pava-cream-dark: #e4d8bf;
+  --color-pava-terracotta: #b5532f;
+  --color-pava-terracotta-light: #cf7350;
+  --color-pava-brown: #1f3a2b;
   --color-pava-brown-mid: #4a3728;
-  --color-pava-gold: #c7a67a;
-  --color-pava-gold-light: #d8c093;
-  /* Dorado para superficies claras: #c7a67a rinde 4.94:1 sobre verde pero
-     solo 1.5–2.3:1 sobre blanco/crema. Esta variante profunda pasa AA en
-     las tres superficies claras (blanco 6.72, crema 5.20, crema-dark 4.52). */
-  --color-pava-gold-deep: #775530;
+  /* "gold" pasa a ser mostaza: el acento cálido de los paquetes de yerba. */
+  --color-pava-gold: #e0a43a;
+  --color-pava-gold-light: #efc067;
+  /* Mostaza profunda para texto sobre superficies claras (AA sobre crema). */
+  --color-pava-gold-deep: #7f5413;
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1ebe5d;
 
   /* ── Typography ───────────────────────────────── */
-  --font-display: var(--font-playfair);
-  --font-body: var(--font-montserrat);
-  --font-script: var(--font-caveat);
+  --font-display: var(--font-londrina);
+  --font-body: var(--font-figtree);
+  --font-script: var(--font-gochi);
 
   /* ── Spacing Scale ────────────────────────────── */
   --spacing-section: 6rem;
   --spacing-section-sm: 4rem;
 
-  /* ── Shadows ──────────────────────────────────── */
-  --shadow-card: 0 16px 40px -20px rgba(38, 64, 46, 0.5);
-  --shadow-card-hover: 0 22px 48px -22px rgba(38, 64, 46, 0.65);
+  /* ── Shadows ──────────────────────────────────────
+     Sombras de papel: duras y cortas, como una pieza recortada
+     apoyada sobre otra, en vez del difuminado "glass". */
+  --shadow-card: 0 1px 0 rgba(31, 58, 43, 0.08), 0 10px 22px -16px rgba(31, 58, 43, 0.55);
+  --shadow-card-hover: 0 1px 0 rgba(31, 58, 43, 0.08), 0 18px 30px -18px rgba(31, 58, 43, 0.6);
+  --shadow-paper: 3px 4px 0 rgba(31, 58, 43, 0.9);
 
-  /* ── Radii ────────────────────────────────────────
-     Escala aprobada 2026-08-13 (ver CLAUDE.md): card para
-     objetos grandes, control para botones/inputs/miniaturas,
-     chip para badges/tags y mini-controles. Nada estructural
-     ni pegado a un borde del viewport lleva radio. */
+  /* ── Radii ──────────────────────────────────────── */
   --radius-card: 14px;
   --radius-control: 8px;
   --radius-chip: 4px;
+}
+
+/* Alias para componentes (admin, login) que todavía piden las fuentes viejas. */
+:root {
+  --font-playfair: var(--font-londrina);
+  --font-montserrat: var(--font-figtree);
+  --font-caveat: var(--font-gochi);
 }
 
 /* ── Base Reset ───────────────────────────────────── */
@@ -70,17 +87,33 @@ html {
 }
 
 body {
-  background-color: #e9e2d1;
-  color: #26402e;
-  font-family: var(--font-montserrat), "Montserrat", system-ui, sans-serif;
+  background-color: #f1eadb;
+  background-image: url("/redesign/papel-crema.webp");
+  background-size: 1400px auto;
+  color: #1f3a2b;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
 /* ── Typography Utilities ─────────────────────────── */
+/* Londrina Solid solo tiene 400 y 900, y no tiene itálica: se fija el peso
+   regular (el de las letras del logo) y se anula la itálica sintética.
+   Va sin @layer a propósito para ganarle a font-semibold/italic. */
 .font-display {
-  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
+  font-family: var(--font-londrina), "Londrina Solid", "Arial Black", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+.font-display .italic,
+.font-display.italic,
+.font-display em,
+.font-display i {
+  font-style: normal;
+}
+.font-script {
+  font-family: var(--font-gochi), "Gochi Hand", "Comic Sans MS", cursive;
 }
 
 /* ── Scrollbar ────────────────────────────────────── */
@@ -97,8 +130,8 @@ body {
 
 /* ── Selection ────────────────────────────────────── */
 ::selection {
-  background: #26402e;
-  color: #e9e2d1;
+  background: #4b8056;
+  color: #f1eadb;
 }
 
 /* ══════════════════════════════════════════════════

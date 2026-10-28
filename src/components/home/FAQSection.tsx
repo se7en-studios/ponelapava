@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { ChevronDown } from "lucide-react";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
 
@@ -75,6 +74,9 @@ function buildFaqs(settings: { paymentMethods?: string[] }): FAQItem[] {
 }
 
 import { LandingFAQItem } from "@/types/landing";
+import CutText from "@/components/ui/CutText";
+
+const STRIP_TILT = ["-0.5deg", "0.4deg", "-0.3deg", "0.6deg"];
 
 export default function FAQSection({ faqs: customFaqs }: { faqs?: LandingFAQItem[] }) {
   const settings = useSiteSettings();
@@ -92,37 +94,52 @@ export default function FAQSection({ faqs: customFaqs }: { faqs?: LandingFAQItem
   };
 
   return (
-    <section id="preguntas-frecuentes" className="bg-pava-cream-dark py-16 sm:py-20 lg:py-24">
+    <section id="preguntas-frecuentes" className="paper-cream relative py-20 sm:py-24 lg:py-28">
+      <span aria-hidden className="torn-edge paper-cream absolute inset-x-0 -top-[21px] z-10" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:px-10">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:px-10">
         <div className="lg:col-span-4">
-          <h2 className="font-display text-3xl font-semibold tracking-tight text-pava-brown sm:text-4xl">
-            Preguntas frecuentes
+          <span className="font-script inline-block -rotate-2 text-2xl text-pava-leaf">dudas ↓</span>
+          <h2 className="font-display mt-1 text-[2.8rem] uppercase leading-[0.92] text-pava-ink sm:text-6xl">
+            <CutText text="Preguntas frecuentes" seed={7} />
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-pava-brown-mid/75">
+          <p className="mt-4 max-w-xs text-[16px] leading-relaxed text-pava-ink/70">
             Pagos, envíos y cuidado de tus mates. ¿Otra duda?
           </p>
           <a
             href={whatsappChatUrl(settings.whatsappNumber, "¡Hola Poné La Pava! Tengo una consulta sobre sus productos")}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center rounded-control border border-pava-brown/20 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-pava-brown transition-colors hover:bg-pava-brown hover:text-pava-cream"
+            className="btn-paper btn-paper--leaf mt-8"
           >
-            Escribinos por WhatsApp
+            Escribinos por WhatsApp <span aria-hidden>→</span>
           </a>
         </div>
         {/* <details> nativo: accesible y sin estado */}
-        <div className="border-t border-pava-brown/15 lg:col-span-8">
-          {faqs.map((faq) => (
-            <details key={faq.question} className="group border-b border-pava-brown/15">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-[15px] font-medium text-pava-brown transition-colors hover:text-pava-green group-open:text-pava-green [&::-webkit-details-marker]:hidden">
-                {faq.question}
-                <ChevronDown size={16} className="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+        <div className="space-y-3.5 lg:col-span-8">
+          {faqs.map((faq, i) => (
+            <details
+              key={faq.question}
+              className="group bg-[#fbf8f1] shadow-[3px_4px_0_rgba(31,58,43,0.22)] transition-transform duration-200 open:shadow-[4px_5px_0_rgba(31,58,43,0.3)]"
+              style={{ transform: `rotate(${STRIP_TILT[i % STRIP_TILT.length]})` }}
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left [&::-webkit-details-marker]:hidden sm:px-6">
+                <span className="font-display text-[1.3rem] uppercase leading-tight text-pava-ink transition-colors group-hover:text-pava-leaf sm:text-[1.45rem]">
+                  {faq.question}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="font-display flex size-10 shrink-0 items-center justify-center rounded-full bg-pava-gold pb-0.5 text-[2rem] leading-none text-pava-ink shadow-[2px_2px_0_#1f3a2b] transition-transform duration-200 group-open:rotate-[135deg]"
+                >
+                  +
+                </span>
               </summary>
-              <p className="pb-5 pr-8 text-sm leading-relaxed text-pava-brown-mid/85">{faq.answer}</p>
+              <p className="border-t-2 border-dashed border-pava-ink/15 px-5 pb-5 pt-4 text-[15px] leading-relaxed text-pava-ink/80 sm:px-6">
+                {faq.answer}
+              </p>
             </details>
           ))}
         </div>

@@ -105,7 +105,7 @@ export default function TopAnnouncementBar() {
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="focus-ring-gold relative z-50 bg-[#132519] text-pava-cream border-b border-pava-gold/20 px-2 py-1 text-xs font-medium sm:px-3 sm:py-2 select-none shadow-sm transition-colors"
+      className="focus-ring-gold paper-leaf relative z-50 text-pava-paper border-b-2 border-pava-ink/40 px-2 py-1 text-xs font-medium sm:px-3 sm:py-1.5 select-none transition-colors"
       role="region"
       aria-label="Anuncios destacados"
     >
@@ -118,7 +118,7 @@ export default function TopAnnouncementBar() {
         {/* Prev button */}
         <button
           onClick={handlePrev}
-          className="tap-44 flex items-center justify-center w-7 h-7 rounded-full text-pava-cream/70 hover:text-pava-gold hover:bg-white/10 transition-colors shrink-0"
+          className="tap-44 flex items-center justify-center w-7 h-7 rounded-full text-pava-paper/80 hover:text-pava-gold hover:bg-pava-ink/20 transition-colors shrink-0"
           aria-label="Anuncio anterior"
         >
           <ChevronLeft size={15} />
@@ -130,14 +130,18 @@ export default function TopAnnouncementBar() {
             href={current.link || "/catalogo"}
             className="focus-ring-inset group flex items-center justify-center gap-2 text-center transition-all duration-300 max-w-full hover:opacity-95"
           >
-            <span className="hidden sm:flex items-center justify-center w-5 h-5 rounded-full bg-pava-gold/20 text-pava-gold shrink-0 transition-transform duration-200 group-hover:scale-110">
+            <span className="hidden sm:flex items-center justify-center w-5 h-5 rounded-full bg-pava-paper/15 text-pava-gold shrink-0 transition-transform duration-200 group-hover:scale-110">
               <Icon size={12} />
             </span>
-            <div className="flex min-w-0 items-center gap-1.5 justify-center text-[11px] sm:flex-wrap sm:text-xs leading-tight">
-              <span className="hidden sm:inline-block rounded bg-pava-gold/15 border border-pava-gold/30 px-1.5 py-0.5 font-bold text-pava-gold tracking-wide uppercase text-[10px] sm:text-[11px]">
-                {current.badge}
+            <div className="flex min-w-0 items-center gap-2 justify-center text-[12px] sm:flex-wrap sm:text-[13px] leading-tight">
+              {/* .paper-chip fija display sin @layer y le gana a `hidden`: el
+                  wrapper es el que se oculta en celular. */}
+              <span className="hidden shrink-0 sm:inline-block">
+                <span className="paper-chip font-display -rotate-2 whitespace-nowrap bg-pava-gold px-2 py-0 text-pava-ink uppercase text-[14px] leading-tight tracking-[0.03em]">
+                  {current.badge}
+                </span>
               </span>
-              <span className="truncate text-pava-cream/90 font-normal">
+              <span className="truncate text-pava-paper font-medium">
                 {current.text}
               </span>
             </div>
@@ -157,7 +161,7 @@ export default function TopAnnouncementBar() {
                 className={`h-1.5 rounded-full transition-all duration-300 ${
                   idx === currentIndex
                     ? "w-4 bg-pava-gold"
-                    : "w-1.5 bg-white/20 hover:bg-white/40"
+                    : "w-1.5 bg-pava-paper/35 hover:bg-pava-paper/60"
                 }`}
                 aria-label={`Ir al anuncio ${idx + 1}`}
               />
@@ -166,7 +170,7 @@ export default function TopAnnouncementBar() {
 
           <button
             onClick={handleNext}
-            className="tap-44 flex items-center justify-center w-7 h-7 rounded-full text-pava-cream/70 hover:text-pava-gold hover:bg-white/10 transition-colors shrink-0"
+            className="tap-44 flex items-center justify-center w-7 h-7 rounded-full text-pava-paper/80 hover:text-pava-gold hover:bg-pava-ink/20 transition-colors shrink-0"
             aria-label="Siguiente anuncio"
           >
             <ChevronRight size={15} />

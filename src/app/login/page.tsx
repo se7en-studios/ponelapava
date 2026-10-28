@@ -70,7 +70,7 @@ export default function LoginPage() {
             }}
           >
             <Image
-              src="/logo.png"
+              src="/redesign/logo-circle-512.png"
               alt=""
               fill
               sizes="56px"

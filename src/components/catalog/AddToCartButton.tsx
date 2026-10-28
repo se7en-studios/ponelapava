@@ -43,8 +43,8 @@ export default function AddToCartButton({
     return (
       <button
         disabled
-        className={`flex w-full items-center justify-center gap-2 rounded-control border border-pava-brown/10 py-3 text-xs font-medium tracking-[0.08em] text-pava-brown-mid/50 cursor-not-allowed ${
-          overlay ? "bg-pava-cream/80 backdrop-blur-sm" : "bg-pava-cream-dark"
+        className={`font-display flex w-full items-center justify-center gap-2 rounded-[6px] border-2 border-dashed border-pava-ink/30 py-2.5 text-[15px] uppercase tracking-[0.04em] text-pava-ink/45 cursor-not-allowed ${
+          overlay ? "bg-pava-paper/90" : "bg-pava-cream-dark"
         }`}
       >
         Sin stock
@@ -56,10 +56,10 @@ export default function AddToCartButton({
     return (
       <button
         onClick={handleAdd}
-        className={`flex h-9 w-9 items-center justify-center rounded-full shadow-sm transition-colors ${
+        className={`flex h-10 w-10 items-center justify-center rounded-[6px] border-2 border-pava-ink shadow-[2px_2px_0_#1f3a2b] transition-colors active:translate-x-px active:translate-y-px active:shadow-none ${
           added
-            ? "bg-pava-green text-pava-cream"
-            : "bg-white/95 text-pava-green"
+            ? "bg-pava-leaf text-pava-paper"
+            : "bg-pava-gold text-pava-ink"
         }`}
         aria-label={
           added
@@ -76,10 +76,10 @@ export default function AddToCartButton({
     return (
       <button
         onClick={handleAdd}
-        className={`flex w-full items-center justify-center gap-2 rounded-control py-2.5 text-[12px] font-semibold tracking-wide transition-all duration-200 active:scale-[0.98] ${
+        className={`font-display flex w-full items-center justify-center gap-2 rounded-[6px] border-2 border-pava-ink py-2 text-[16px] uppercase tracking-[0.04em] shadow-[2px_3px_0_#1f3a2b] transition-all duration-200 active:translate-x-px active:translate-y-px active:shadow-none ${
           added
-            ? "bg-pava-green text-pava-cream"
-            : "bg-pava-cream/95 text-pava-green hover:bg-pava-gold hover:text-pava-brown backdrop-blur-sm"
+            ? "bg-pava-leaf text-pava-paper"
+            : "bg-pava-gold text-pava-ink hover:bg-pava-leaf hover:text-pava-paper"
         }`}
         aria-label={
           added
@@ -105,13 +105,13 @@ export default function AddToCartButton({
   return (
     <button
       onClick={handleAdd}
-      className={`w-full flex items-center justify-center gap-2 rounded-control ${
-        size === "sm" ? "py-3 text-xs" : "py-3.5 text-sm"
-      } border border-pava-green font-semibold tracking-[0.08em] transition-all duration-200 ${
+      className={`font-display w-full flex items-center justify-center gap-2 rounded-[6px] ${
+        size === "sm" ? "py-2.5 text-[16px]" : "py-3 text-[18px]"
+      } border-2 border-pava-ink uppercase tracking-[0.04em] shadow-[3px_3px_0_#1f3a2b] transition-all duration-200 ${
         added
-          ? "bg-pava-green text-pava-cream border-pava-green"
-          : "bg-transparent text-pava-green hover:bg-pava-green hover:text-pava-cream"
-      } active:scale-[0.98]`}
+          ? "bg-pava-leaf text-pava-paper"
+          : "bg-pava-paper text-pava-ink hover:bg-pava-leaf hover:text-pava-paper"
+      } active:translate-x-0.5 active:translate-y-0.5 active:shadow-none`}
       aria-label={
         added
           ? "Producto agregado al carrito"
