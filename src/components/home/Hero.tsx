@@ -1,10 +1,9 @@
-"use client";
-
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { LandingHero } from "@/types/landing";
 import { DEFAULT_LANDING_CONTENT } from "@/lib/landing";
+import CutText from "@/components/ui/CutText";
 
 export interface HeroSpotlight {
   id: string;
@@ -13,9 +12,10 @@ export interface HeroSpotlight {
   image: string;
 }
 
-// Hero editorial: foto a sangre a pantalla completa, título gigante línea por
-// línea (la última en itálica dorada) y un producto real flotando a la derecha.
-// El H1 es el elemento LCP: animación CSS pura, se pinta sin esperar hidratación.
+// Hero artesanal: mesa de kraft con mate, pava y yerba (foto generada en
+// Google Flow) y el título armado con letras recortadas, como el logo.
+// En celular la foto va arriba y el texto abajo, para que no se pisen.
+// El H1 es el elemento LCP: animación CSS pura y corta, sin esperar hidratación.
 export default function Hero({
   content,
   spotlight,
@@ -24,165 +24,141 @@ export default function Hero({
   spotlight?: HeroSpotlight | null;
 }) {
   const hero = content || DEFAULT_LANDING_CONTENT.hero;
-  const [allowVideo, setAllowVideo] = useState(false);
-
-  // Video solo desde tablet, sin Save-Data y después del load: en celu eran
-  // 2 MB compitiendo con el primer render.
-  useEffect(() => {
-    const conn = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
-    ).connection;
-    const ok =
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-      window.matchMedia("(min-width: 768px)").matches &&
-      !conn?.saveData;
-    if (!ok) return;
-    const start = () => setAllowVideo(true);
-    if (document.readyState === "complete") start();
-    else window.addEventListener("load", start, { once: true });
-    return () => window.removeEventListener("load", start);
-  }, []);
-
-  const lines = [hero.titleLine1, hero.titleLine2, hero.titleLine3].filter(
-    Boolean,
-  );
-  const titleLines =
-    lines.length > 0 ? lines : ["El ritual", "del mate", "es tuyo."];
+  const lines = [hero.titleLine1, hero.titleLine2, hero.titleLine3].filter(Boolean);
+  const titleLines = lines.length > 0 ? lines : ["El ritual", "del mate", "es tuyo."];
+  const last = titleLines.length - 1;
+  let letterOffset = 0;
 
   return (
     <section
       id="inicio"
-      className="focus-ring-gold relative flex min-h-[100svh] flex-col overflow-hidden bg-pava-green-dark"
+      className="paper-kraft paper-kraft--cover relative flex flex-col overflow-hidden lg:min-h-[100svh]"
       aria-label="Bienvenida a Poné La Pava"
     >
-      <div className="lp-hero-img-out absolute inset-0">
-        {/* Imagen siempre montada debajo del video (ver CLAUDE.md: nunca poster) */}
+      <div className="relative h-[68vw] max-h-[460px] w-full lg:absolute lg:inset-0 lg:h-auto lg:max-h-none">
         <Image
-          src={hero.backgroundImage || "/hero_background_1786545961305.png"}
-          alt=""
+          src="/redesign/hero-kraft.jpg"
+          alt="Mate de cuero con bombilla, pava de aluminio y yerba suelta sobre papel kraft"
           fill
           priority
-          quality={92}
-          className="lp-kenburns object-cover object-center"
+          quality={82}
+          className="object-cover object-[82%_50%] lg:object-[70%_50%]"
           sizes="100vw"
         />
-        {allowVideo && hero.videoUrl && (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          >
-            <source src={hero.videoUrl} type="video/mp4" />
-          </video>
-        )}
+        {/* Funde la foto con el papel de abajo en celular */}
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#c69c6d] to-transparent lg:hidden" />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-black/10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
 
-      <div className="lp-hero-out relative z-10 mt-auto w-full px-5 pb-14 pt-40 sm:px-8 sm:pb-20 lg:px-10 lg:pb-24">
-        <div className="mx-auto flex max-w-7xl items-end justify-between gap-10">
-          <div className="max-w-4xl">
+      <div className="relative z-10 w-full px-5 pb-16 pt-2 sm:px-8 lg:mt-auto lg:px-10 lg:pb-24 lg:pt-36">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-[40rem]">
             <a
               href="#resenas"
-              className="lp-rise mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3.5 py-1.5 text-[11px] font-medium text-white backdrop-blur-md transition-colors hover:bg-black/35"
+              style={{ "--r": "-3deg", "--d": "80ms" } as CSSProperties}
+              className="sticker-in cutout font-script mb-5 inline-flex items-center gap-2 rounded-[4px] bg-pava-paper px-3 py-1.5 text-[15px] text-pava-ink"
             >
-              <span aria-hidden className="tracking-[0.1em] text-pava-gold">
+              <span aria-hidden className="tracking-[0.08em] text-pava-gold">
                 ★★★★★
               </span>
-              5,0 en Google · Local en Catriel
+              5,0 en Google · local en Catriel
             </a>
-            <h1 className="font-display text-[3.4rem] font-semibold leading-[0.92] tracking-[-0.02em] text-white sm:text-7xl lg:text-[7.5rem]">
-              {titleLines.map((line, i) => (
-                <span key={i} className="block overflow-hidden pb-[0.08em]">
-                  <span
-                    className={`hero-line-in block ${i === titleLines.length - 1 && titleLines.length > 1 ? "italic text-pava-gold" : ""}`}
-                    style={{ animationDelay: `${i * 120}ms` }}
-                  >
-                    {line}
+
+            <h1 className="font-display text-[3.5rem] uppercase leading-[0.9] text-pava-ink sm:text-[5.2rem] lg:text-[6.6rem] xl:text-[7.4rem]">
+              {titleLines.map((line, i) => {
+                const start = letterOffset;
+                letterOffset += line.length;
+                const isLast = i === last && titleLines.length > 1;
+                return (
+                  <span key={i} className="block">
+                    {isLast ? (
+                      <span
+                        className="paper-chip mt-2 bg-pava-leaf text-pava-paper"
+                        style={{ transform: "rotate(-2.5deg)" }}
+                      >
+                        <CutText text={line} animate seed={start} delayMs={start * 28} />
+                      </span>
+                    ) : (
+                      <CutText text={line} animate seed={start} delayMs={start * 28} />
+                    )}
                   </span>
-                </span>
-              ))}
+                );
+              })}
             </h1>
-            <p
-              style={{ animationDelay: "380ms" }}
-              className="lp-rise mt-6 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg"
-            >
+
+            <p className="font-script mt-4 hidden items-center gap-2 text-2xl text-pava-ink/85 lg:inline-flex">
+              y de toda la ronda
+              <svg width="88" height="34" viewBox="0 0 88 34" fill="none" aria-hidden>
+                <path
+                  d="M2 22c18-14 40-19 66-9"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M60 5l10 8-11 6"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </p>
+
+            <p className="mt-5 max-w-md text-[17px] leading-relaxed text-pava-ink/85 lg:mt-3 lg:text-lg">
               {hero.subtitle ||
                 "Yerbas seleccionadas, mates artesanales y accesorios para acompañar cada ronda."}
             </p>
-            <div
-              style={{ animationDelay: "500ms" }}
-              className="lp-rise mt-9 flex flex-wrap items-center gap-4"
-            >
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 href={hero.ctaPrimaryLink || "/catalogo"}
                 id="hero-cta-catalogo"
-                className="group inline-flex items-center gap-3 rounded-full bg-pava-cream py-2 pl-7 pr-2 text-xs font-semibold uppercase tracking-[0.14em] text-pava-green transition-colors hover:bg-white"
+                className="btn-paper btn-paper--leaf"
               >
                 {hero.ctaPrimaryText || "Comprar ahora"}
-                <span
-                  aria-hidden
-                  className="flex size-9 items-center justify-center rounded-full bg-pava-green text-pava-cream transition-transform duration-300 group-hover:-rotate-45"
-                >
-                  →
-                </span>
+                <span aria-hidden>→</span>
               </Link>
               {hero.ctaSecondaryText && (
                 <Link
                   href={hero.ctaSecondaryLink || "/#el-local"}
                   id="hero-cta-secundario"
-                  className="inline-flex items-center rounded-full border border-white/35 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-sm transition-colors hover:bg-white/10"
+                  className="btn-paper btn-paper--cream"
                 >
                   {hero.ctaSecondaryText}
                 </Link>
               )}
             </div>
           </div>
-
-          {spotlight && (
-            <Link
-              href={`/producto/${spotlight.id}`}
-              style={{ animationDelay: "650ms" }}
-              className="lp-rise group hidden w-64 shrink-0 rounded-2xl border border-white/15 bg-white/10 p-3 text-white backdrop-blur-xl transition-colors hover:bg-white/15 lg:block"
-            >
-              <span className="relative block aspect-[4/3] overflow-hidden rounded-xl bg-pava-cream-dark">
-                <Image
-                  src={spotlight.image}
-                  alt={spotlight.name}
-                  fill
-                  sizes="256px"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </span>
-              <span className="mt-3 flex items-end justify-between gap-3 px-1 pb-1">
-                <span className="min-w-0">
-                  <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-pava-gold">
-                    Elegido de la semana
-                  </span>
-                  <span className="mt-1 block truncate text-sm font-medium">
-                    {spotlight.name}
-                  </span>
-                </span>
-                <span className="shrink-0 text-sm font-semibold">
-                  {spotlight.price}
-                </span>
-              </span>
-            </Link>
-          )}
         </div>
       </div>
 
-      <div
-        aria-hidden
-        className="lp-hero-out absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/60 sm:flex"
-      >
-        Scroll
-        <span className="block h-10 w-px overflow-hidden bg-white/20">
-          <span className="lp-scroll-cue block h-1/2 w-full bg-white/80" />
-        </span>
-      </div>
+      {spotlight && (
+        <Link
+          href={`/producto/${spotlight.id}`}
+          style={{ "--r": "4deg", "--d": "700ms" } as CSSProperties}
+          className="sticker-in group absolute bottom-[9%] left-[50%] z-10 hidden w-52 bg-[#fbf8f1] p-2.5 pb-3 shadow-[3px_6px_0_rgba(31,58,43,0.28)] transition-transform hover:-translate-y-1 lg:block xl:left-[48%]"
+        >
+          <span aria-hidden className="tape -top-3 left-1/2 -translate-x-1/2 -rotate-3" />
+          <span className="relative block aspect-square overflow-hidden bg-pava-cream-dark">
+            <Image
+              src={spotlight.image}
+              alt={spotlight.name}
+              fill
+              sizes="208px"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </span>
+          <span className="font-script mt-2 block text-[15px] leading-tight text-pava-leaf-dark">
+            elegido de la semana
+          </span>
+          <span className="mt-0.5 flex items-end justify-between gap-2 text-pava-ink">
+            <span className="truncate text-[13px] font-medium">{spotlight.name}</span>
+            <span className="font-display shrink-0 text-lg leading-none">{spotlight.price}</span>
+          </span>
+        </Link>
+      )}
+
+      <span aria-hidden className="torn-edge paper-cream absolute inset-x-0 bottom-0 z-20" />
     </section>
   );
 }

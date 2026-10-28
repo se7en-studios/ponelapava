@@ -46,8 +46,8 @@ export default function ProductCard({
 
   if (view === "list") {
     return (
-      <article className="group flex gap-4 rounded-card border border-pava-brown/8 bg-white p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)] sm:p-5">
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-control">
+      <article className="group flex gap-4 rounded-[6px] border-2 border-pava-ink/85 bg-[#fbf8f1] p-4 shadow-[3px_4px_0_rgba(31,58,43,0.85)] transition-transform duration-300 hover:-translate-y-0.5 hover:-rotate-[0.4deg] sm:p-5">
+        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[4px] border border-pava-ink/15">
           <Image
             src={product.images[0]}
             alt={product.name}
@@ -56,8 +56,8 @@ export default function ProductCard({
             sizes="96px"
           />
           {isOutOfStock && (
-            <div className="absolute inset-0 bg-pava-brown/50 flex items-center justify-center">
-              <span className="text-[10px] text-white font-semibold">
+            <div className="absolute inset-0 flex items-center justify-center bg-pava-paper/55">
+              <span className="font-display -rotate-12 rounded-[3px] border-2 border-pava-terracotta px-1.5 text-[13px] uppercase leading-tight text-pava-terracotta">
                 Agotado
               </span>
             </div>
@@ -96,7 +96,7 @@ export default function ProductCard({
               </button>
             </div>
             <Link href={`/producto/${product.id}`}>
-              <h3 className="font-medium text-pava-brown hover:text-pava-green transition-colors leading-tight">
+              <h3 className="font-semibold text-pava-ink hover:text-pava-leaf transition-colors leading-tight">
                 {product.name}
               </h3>
             </Link>
@@ -106,7 +106,7 @@ export default function ProductCard({
           </div>
           <div className="flex items-center justify-between mt-3">
             <span>
-              <span className="font-display text-lg font-bold text-pava-green block">
+              <span className="font-display block text-2xl leading-none text-pava-ink">
                 {formatPrice(product.price)}
               </span>
             </span>
@@ -125,8 +125,8 @@ export default function ProductCard({
 
   // Grid view — tarjeta de tienda: foto grande, nombre y precio en texto chico.
   return (
-    <article className="product-card group relative">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-control bg-pava-cream-dark transition-shadow duration-500 group-hover:shadow-[0_22px_40px_-24px_rgba(38,64,46,0.55)]">
+    <article className="product-card group relative rounded-[6px] border-2 border-pava-ink/85 bg-[#fbf8f1] p-2 shadow-[3px_4px_0_rgba(31,58,43,0.85)] transition-transform duration-300 hover:-translate-y-1 hover:rotate-[-0.6deg] sm:p-2.5">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-pava-cream-dark">
         <Link
           href={`/producto/${product.id}`}
           aria-label={`Ver ${product.name}`}
@@ -154,11 +154,14 @@ export default function ProductCard({
           )}
         </Link>
 
-        {(isOutOfStock || isLowStock) && (
-          <span
-            className={`absolute left-2.5 top-2.5 rounded-chip px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] backdrop-blur-sm ${isOutOfStock ? "bg-pava-brown/85 text-pava-cream" : "bg-pava-gold text-pava-brown"}`}
-          >
-            {isOutOfStock ? "Agotado" : `Últimas ${product.stock}`}
+        {isOutOfStock && (
+          <span className="font-display pointer-events-none absolute left-3 top-4 -rotate-[14deg] rounded-[3px] border-[3px] border-pava-terracotta bg-pava-paper/80 px-2 py-0.5 text-[18px] uppercase leading-none tracking-[0.06em] text-pava-terracotta">
+            Agotado
+          </span>
+        )}
+        {isLowStock && (
+          <span className="paper-chip font-display absolute left-2.5 top-2.5 -rotate-3 bg-pava-gold px-2 text-[15px] uppercase leading-tight text-pava-ink">
+            Últimas {product.stock}
           </span>
         )}
 
@@ -171,11 +174,11 @@ export default function ProductCard({
                 : `Agregar ${product.name} a favoritos`
             }
             aria-pressed={favorite}
-            className={`flex h-8 w-8 items-center justify-center rounded-full bg-white/90 transition-opacity duration-200 ${
+            className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-pava-ink bg-pava-paper transition-opacity duration-200 ${
               favorite
                 ? "text-pava-terracotta opacity-100"
                 : // Invisible no puede ser clickeable; con foco de teclado se muestra.
-                  "text-pava-brown opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus-visible:opacity-100 focus-visible:pointer-events-auto"
+                  "text-pava-ink opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus-visible:opacity-100 focus-visible:pointer-events-auto"
             }`}
           >
             <Heart
@@ -193,8 +196,8 @@ export default function ProductCard({
             title={comparing ? "En comparador" : "Comparar producto"}
             className={`flex h-8 w-8 items-center justify-center rounded-full transition-opacity duration-200 ${
               comparing
-                ? "bg-pava-green text-white opacity-100"
-                : "bg-white/90 text-pava-brown opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus-visible:opacity-100 focus-visible:pointer-events-auto"
+                ? "border-2 border-pava-ink bg-pava-leaf text-pava-paper opacity-100"
+                : "border-2 border-pava-ink bg-pava-paper text-pava-ink opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus-visible:opacity-100 focus-visible:pointer-events-auto"
             }`}
           >
             <Scale size={13} />
@@ -202,7 +205,7 @@ export default function ProductCard({
           <button
             onClick={() => setQuickViewOpen(true)}
             aria-label={`Vista rápida de ${product.name}`}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-pava-brown opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto focus-visible:opacity-100 focus-visible:pointer-events-auto"
+            className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-pava-ink bg-pava-paper text-pava-ink opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto focus-visible:opacity-100 focus-visible:pointer-events-auto"
           >
             <Eye size={14} />
           </button>
@@ -216,7 +219,7 @@ export default function ProductCard({
             )}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute inset-x-2.5 bottom-2.5 flex items-center justify-center gap-1.5 rounded-full bg-pava-cream/95 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-pava-green shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
+            className="font-display absolute inset-x-2.5 bottom-2.5 flex items-center justify-center gap-1.5 rounded-[6px] border-2 border-pava-ink bg-pava-paper px-3 py-1.5 text-[15px] uppercase tracking-[0.04em] text-pava-ink shadow-[2px_3px_0_#1f3a2b] transition-colors hover:bg-pava-gold"
           >
             <Bell size={12} aria-hidden="true" />
             Avisame
@@ -237,22 +240,22 @@ export default function ProductCard({
         )}
       </div>
 
-      <div className="mt-3 flex flex-col gap-0.5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-pava-brown-mid/60">
-          {getCategoryLabel(product.category)}
+      <div className="flex flex-col gap-1 px-1 pb-1 pt-2.5">
+        <span className="font-script self-start text-[14px] leading-none text-pava-leaf">
+          {getCategoryLabel(product.category).toLowerCase()}
         </span>
         <Link
           href={`/producto/${product.id}`}
-          className="line-clamp-2 text-[13px] font-medium leading-snug text-pava-brown transition-colors hover:text-pava-green sm:text-sm"
+          className="line-clamp-2 text-[13px] font-semibold leading-snug text-pava-ink transition-colors hover:text-pava-leaf sm:text-[14px]"
         >
           {product.name}
         </Link>
-        <span className="mt-0.5 text-[13px] font-semibold text-pava-green sm:text-sm">
-          {formatPrice(product.price)}
+        <span className="mt-0.5 flex flex-wrap items-baseline gap-x-2">
+          <span className="font-display text-[22px] leading-none text-pava-ink sm:text-[24px]">
+            {formatPrice(product.price)}
+          </span>
           {perUnit && (
-            <span className="ml-1.5 text-[11px] font-normal text-pava-brown-mid/60">
-              {perUnit}
-            </span>
+            <span className="text-[11px] text-pava-ink/55">{perUnit}</span>
           )}
         </span>
       </div>

@@ -21,7 +21,7 @@ export default async function FeaturedProducts() {
   return (
     <section
       id="productos-destacados"
-      className="bg-pava-cream py-16 sm:py-20 lg:py-24"
+      className="paper-cream relative pb-20 pt-14 sm:pb-24 sm:pt-16 lg:pb-28 lg:pt-20"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
@@ -30,9 +30,13 @@ export default async function FeaturedProducts() {
           description="Yerbas, mates y accesorios elegidos para usar todos los días."
           href="/catalogo"
         />
-        <div className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 lg:gap-y-10">
-          {displayed.map((product) => (
-            <div key={product.id} className="w-[46vw] max-w-[15rem] shrink-0 snap-start sm:w-auto sm:max-w-none">
+        <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-4 pt-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 lg:gap-y-12">
+          {displayed.map((product, i) => (
+            <div
+              key={product.id}
+              className="w-[48vw] max-w-[15rem] shrink-0 snap-start sm:w-auto sm:max-w-none"
+              style={{ transform: `rotate(${["-0.8deg", "0.6deg", "-0.4deg", "0.9deg"][i % 4]})` }}
+            >
               <ProductCard product={product} />
             </div>
           ))}

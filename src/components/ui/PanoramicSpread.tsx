@@ -12,6 +12,7 @@ import {
   type MotionValue,
 } from "motion/react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import CutText from "@/components/ui/CutText";
 
 // Reduced-motion leído así hidrata con el valor del server (false) y después
 // se actualiza; useReducedMotion de motion lo lee en el primer render y rompe
@@ -130,12 +131,14 @@ const easeInOutCubic = (p: number) =>
 
 function SpreadCard({
   item,
+  index,
   layout,
   z,
   progress,
   load,
 }: {
   item: SpreadItem;
+  index: number;
   layout: Layout;
   z: number;
   progress: MotionValue<number>;
@@ -179,9 +182,16 @@ function SpreadCard({
       >
         <Link
           href={item.href}
-          className="group flex h-full w-full flex-col rounded-md bg-white p-2 pb-0 shadow-2xl shadow-pava-brown/20 ring-1 ring-pava-brown/10 transition-shadow duration-500 hover:shadow-pava-brown/35 max-md:p-1.5 max-md:pb-0"
+          className="group relative flex h-full w-full flex-col bg-[#fbf8f1] p-2 pb-0 shadow-[3px_5px_0_rgba(31,58,43,0.38)] transition-transform duration-300 hover:-translate-y-1 max-md:p-1.5 max-md:pb-0"
         >
-          <span className="relative block flex-1 overflow-hidden rounded-sm bg-pava-cream-dark">
+          {index % 2 === 0 && (
+            <span
+              aria-hidden
+              className="tape -top-2.5 left-1/2 !h-5 !w-16 -translate-x-1/2"
+              style={{ transform: `translateX(-50%) rotate(${index % 4 ? 4 : -5}deg)` }}
+            />
+          )}
+          <span className="relative block flex-1 overflow-hidden bg-pava-cream-dark">
             {load && (
             <Image
               src={item.src}
@@ -197,10 +207,10 @@ function SpreadCard({
             )}
           </span>
           <span className="flex items-baseline justify-between gap-2 px-1 py-2 max-md:py-1.5">
-            <span className="truncate text-[11px] font-medium text-pava-brown md:text-xs">
+            <span className="font-script truncate text-[13px] leading-none text-pava-ink md:text-[15px]">
               {item.label}
             </span>
-            <span className="shrink-0 text-[11px] font-semibold text-pava-green md:text-xs">
+            <span className="font-display shrink-0 text-[14px] leading-none text-pava-leaf-dark md:text-[17px]">
               {item.price}
             </span>
           </span>
@@ -279,7 +289,7 @@ export default function PanoramicSpread({
     <section
       ref={wrapRef}
       aria-label={title}
-      className={`relative w-full bg-pava-cream text-pava-brown ${reduce ? "h-[100svh]" : "h-[220vh] md:h-[300vh]"}`}
+      className={`paper-kraft paper-kraft--cover relative w-full text-pava-ink ${reduce ? "h-[100svh]" : "h-[160vh] md:h-[170vh]"}`}
     >
       <div
         className="sticky top-0 flex h-[100svh] w-full items-center justify-center overflow-hidden"
@@ -299,6 +309,7 @@ export default function PanoramicSpread({
               <SpreadCard
                 key={item.href}
                 item={item}
+                index={i}
                 layout={isMobile ? mobile : desktop}
                 z={z}
                 progress={progress}
@@ -312,13 +323,13 @@ export default function PanoramicSpread({
           className="pointer-events-none absolute z-[5] flex flex-col items-center px-6 text-center"
           style={{ y: textY, scale: textScale, opacity: textOpacity }}
         >
-          <span className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-pava-gold-deep">
-            {eyebrow}
+          <span className="font-script mb-2 -rotate-2 text-xl text-pava-ink/80 sm:text-2xl">
+            {eyebrow.toLowerCase()} ↓
           </span>
-          <h2 className="font-display text-4xl font-semibold leading-none tracking-tight sm:text-5xl lg:text-6xl">
-            {title}
+          <h2 className="font-display text-5xl uppercase leading-[0.9] sm:text-6xl lg:text-7xl">
+            <CutText text={title} seed={7} />
           </h2>
-          <p className="mt-4 max-w-[52ch] text-sm leading-relaxed text-pava-brown-mid/80 sm:text-base">
+          <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-pava-ink/80 sm:text-base">
             {description}
           </p>
         </motion.div>
@@ -327,17 +338,9 @@ export default function PanoramicSpread({
           className="absolute bottom-10 z-20 sm:bottom-14"
           style={{ opacity: textOpacity }}
         >
-          <Link
-            href={ctaHref}
-            className="group inline-flex items-center gap-2 rounded-control bg-pava-green px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-pava-cream transition-colors hover:bg-pava-green-light"
-          >
+          <Link href={ctaHref} className="btn-paper btn-paper--leaf">
             {ctaLabel}
-            <span
-              aria-hidden
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            >
-              →
-            </span>
+            <span aria-hidden>→</span>
           </Link>
         </motion.div>
       </div>

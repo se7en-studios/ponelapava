@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
 import WordBand from "@/components/home/WordBand";
+import BrandsStrip from "@/components/home/BrandsStrip";
 import { formatPrice } from "@/lib/utils";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Categories from "@/components/home/Categories";
@@ -47,6 +48,7 @@ export default async function HomePage() {
       <Categories />
       <ProductSpread />
       <WordBand />
+      <BrandsStrip />
       <ShopTheLook products={products} />
       <AboutSection content={landing.about} />
       <GoogleReviews reviews={landing.reviews} />

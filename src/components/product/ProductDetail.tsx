@@ -128,7 +128,7 @@ export default function ProductDetail({
           {/* Images */}
           <div>
             {/* Main image */}
-            <div className="relative aspect-square overflow-hidden rounded-card bg-white mb-3">
+            <div className="relative mb-3 aspect-square overflow-hidden rounded-[4px] border-[10px] border-[#fbf8f1] bg-white shadow-[3px_5px_0_rgba(31,58,43,0.25)]">
               <Image
                 src={product.images[activeImage] ?? product.images[0]}
                 alt={product.name}
@@ -222,15 +222,15 @@ export default function ProductDetail({
             </div>
 
             {/* Name */}
-            <h1 className="font-display text-3xl lg:text-4xl font-bold text-pava-brown leading-tight mb-4">
+            <h1 className="font-display mb-4 text-4xl uppercase leading-[0.95] text-pava-ink lg:text-5xl">
               {product.name}
             </h1>
 
             {/* Price & Payment Options */}
-            <div className="mb-6 rounded-card bg-white border border-pava-brown/10 p-4.5 shadow-sm">
+            <div className="mb-6 rotate-[-0.6deg] rounded-[6px] border-2 border-pava-ink/80 bg-[#fbf8f1] p-4.5 shadow-[3px_4px_0_#1f3a2b]">
               <div className="flex items-baseline justify-between gap-3 mb-2">
                 <div className="flex items-baseline gap-2.5">
-                  <span className="font-display text-3.5xl lg:text-4xl font-bold text-pava-green">
+                  <span className="font-display text-4xl text-pava-leaf lg:text-5xl">
                     {formatPrice(product.price)}
                   </span>
                   {perUnit && (
@@ -299,7 +299,7 @@ export default function ProductDetail({
               {product.category === "yerbas" && (
                 <div className="space-y-3 pt-2">
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className="bg-white/80 rounded-control p-3 border border-pava-brown/10">
+                    <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-3">
                       <div className="flex justify-between font-semibold mb-1">
                         <span className="text-pava-brown">Intensidad</span>
                         <span className="text-pava-green font-bold">Media / Intensa</span>
@@ -315,7 +315,7 @@ export default function ProductDetail({
                         ))}
                       </div>
                     </div>
-                    <div className="bg-white/80 rounded-control p-3 border border-pava-brown/10">
+                    <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-3">
                       <div className="flex justify-between font-semibold mb-1">
                         <span className="text-pava-brown">Rendimiento</span>
                         <span className="text-pava-green font-bold">+1.5L de agua</span>
@@ -342,14 +342,14 @@ export default function ProductDetail({
               {product.category === "termos" && (
                 <div className="space-y-3 pt-2">
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className="bg-white/80 rounded-control p-3 border border-pava-brown/10 flex items-center gap-3">
+                    <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-3 flex items-center gap-3">
                       <span className="text-2xl">🔥</span>
                       <div>
                         <span className="text-[10px] uppercase font-bold text-pava-gold-deep block">Agua Caliente</span>
                         <span className="text-sm font-bold text-pava-brown">+24 Horas</span>
                       </div>
                     </div>
-                    <div className="bg-white/80 rounded-control p-3 border border-pava-brown/10 flex items-center gap-3">
+                    <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-3 flex items-center gap-3">
                       <span className="text-2xl">❄️</span>
                       <div>
                         <span className="text-[10px] uppercase font-bold text-sky-700 block">Agua Fría / Hielo</span>
@@ -367,15 +367,15 @@ export default function ProductDetail({
               {product.category === "mates" && (
                 <div>
                   <div className="grid grid-cols-3 gap-2 text-xs mb-3">
-                    <div className="bg-white/80 rounded-lg p-2.5 border border-pava-brown/10 text-center">
+                    <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-2.5 text-center">
                       <span className="text-[10px] text-pava-brown/60 block uppercase font-bold">Cuerpo</span>
                       <span className="font-bold text-pava-brown text-[11px]">Calabaza / Cuero</span>
                     </div>
-                    <div className="bg-white/80 rounded-lg p-2.5 border border-pava-brown/10 text-center">
+                    <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-2.5 text-center">
                       <span className="text-[10px] text-pava-brown/60 block uppercase font-bold">Virola</span>
                       <span className="font-bold text-pava-brown text-[11px]">Alpaca Maciza</span>
                     </div>
-                    <div className="bg-white/80 rounded-lg p-2.5 border border-pava-brown/10 text-center">
+                    <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-2.5 text-center">
                       <span className="text-[10px] text-pava-brown/60 block uppercase font-bold">Capacidad</span>
                       <span className="font-bold text-pava-brown text-[11px]">35g - 45g</span>
                     </div>
@@ -486,11 +486,7 @@ export default function ProductDetail({
                 <button
                   onClick={handleAddToCart}
                   disabled={added}
-                  className={`flex-1 flex items-center justify-center gap-2 rounded-control px-6 py-3 text-sm font-semibold tracking-wide border-2 transition-all duration-200 active:scale-[0.98] ${
-                    added
-                      ? "bg-pava-green text-pava-cream border-pava-green"
-                      : "bg-pava-green text-pava-cream border-pava-green hover:bg-pava-green-light hover:border-pava-green-light"
-                  }`}
+                  className="btn-paper btn-paper--leaf flex-1 justify-center"
                 >
                   <ShoppingBag size={16} />
                   {added ? "¡Agregado!" : "Agregar al carrito"}
@@ -512,7 +508,7 @@ export default function ProductDetail({
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full rounded-control py-3 bg-whatsapp text-white text-sm font-semibold border-2 border-whatsapp hover:bg-whatsapp-dark hover:border-whatsapp-dark transition-colors duration-200"
+              className="btn-paper w-full justify-center bg-whatsapp text-white hover:bg-whatsapp-dark"
             >
               <MessageCircle size={16} />
               Consultar por WhatsApp
@@ -523,7 +519,7 @@ export default function ProductDetail({
                 inventadas en el código. La info verdadera está en los badges. */}
 
             {/* Value proposition badges */}
-            <div className="mt-8 grid grid-cols-1 gap-3 rounded-card border border-pava-brown/10 bg-white/70 p-4 sm:grid-cols-2">
+            <div className="mt-8 grid grid-cols-1 gap-3 rounded-[6px] border-2 border-dashed border-pava-ink/30 bg-[#fbf8f1]/80 p-4 sm:grid-cols-2">
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-pava-green/10 text-pava-green">
                   <Truck size={17} />
@@ -577,8 +573,8 @@ export default function ProductDetail({
         {related.length > 0 && (
           <div className="mt-20 lg:mt-28">
             <div className="flex items-center gap-3 mb-8">
-              <span className="w-8 h-px bg-pava-green" />
-              <h2 className="font-display text-2xl lg:text-3xl font-bold text-pava-brown">
+              <span className="font-script -rotate-3 text-xl text-pava-leaf">psst ↓</span>
+              <h2 className="font-display text-3xl uppercase text-pava-ink lg:text-4xl">
                 También te puede gustar
               </h2>
             </div>

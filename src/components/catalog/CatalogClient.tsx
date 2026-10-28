@@ -49,6 +49,7 @@ export default function CatalogClient({
   const initialMinPrice = searchParams.get("min") ?? "";
   const initialMaxPrice = searchParams.get("max") ?? "";
 
+  const [showFilters, setShowFilters] = useState(false);
   const [search, setSearch] = useState(initialSearch);
   const [activeCategory, setActiveCategory] = useState<ProductCategory | "all">(
     initialCategory,
@@ -262,7 +263,7 @@ export default function CatalogClient({
             placeholder="Buscar yerbas, mates, termos..."
             value={search}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="w-full pl-10 pr-9 py-3 rounded-control bg-white border border-pava-brown/15 text-pava-brown placeholder-pava-brown/40 text-sm focus:outline-none focus:border-pava-green transition-colors"
+            className="w-full pl-10 pr-9 py-3 rounded-control bg-[#fbf8f1] border-2 border-pava-ink/70 shadow-[2px_2px_0_rgba(31,58,43,0.85)] text-pava-brown placeholder-pava-brown/40 text-sm focus:outline-none focus:border-pava-green transition-colors"
           />
           {search && (
             <button
@@ -276,6 +277,23 @@ export default function CatalogClient({
           )}
         </div>
 
+        {/* En celular, precio/stock/favoritos van plegados para que los
+            productos aparezcan en la primera pantalla. */}
+        <button
+          type="button"
+          onClick={() => setShowFilters((v) => !v)}
+          aria-expanded={showFilters}
+          aria-controls="catalog-filters"
+          className="font-display inline-flex items-center justify-center gap-2 rounded-control border-2 border-pava-ink/70 bg-pava-gold px-4 py-2.5 text-lg uppercase text-pava-ink shadow-[2px_2px_0_#1f3a2b] sm:hidden"
+        >
+          <SlidersHorizontal size={16} />
+          {showFilters ? "Ocultar filtros" : "Filtros"}
+        </button>
+
+        <div
+          id="catalog-filters"
+          className={`${showFilters ? "flex" : "hidden"} flex-wrap items-center gap-3 sm:flex sm:flex-nowrap`}
+        >
         {/* Price range */}
         <div className="flex items-center gap-1.5">
           <input
@@ -286,7 +304,7 @@ export default function CatalogClient({
             min={0}
             value={minPrice}
             onChange={(e) => handlePriceChange("min", e.target.value)}
-            className="w-24 rounded-control bg-white border border-pava-brown/15 text-pava-brown placeholder-pava-brown/40 text-sm px-3 py-3 focus:outline-none focus:border-pava-green transition-colors"
+            className="w-24 rounded-control bg-[#fbf8f1] border-2 border-pava-ink/70 shadow-[2px_2px_0_rgba(31,58,43,0.85)] text-pava-brown placeholder-pava-brown/40 text-sm px-3 py-3 focus:outline-none focus:border-pava-green transition-colors"
           />
           <span className="text-pava-brown/40 text-sm">–</span>
           <input
@@ -297,7 +315,7 @@ export default function CatalogClient({
             min={0}
             value={maxPrice}
             onChange={(e) => handlePriceChange("max", e.target.value)}
-            className="w-24 rounded-control bg-white border border-pava-brown/15 text-pava-brown placeholder-pava-brown/40 text-sm px-3 py-3 focus:outline-none focus:border-pava-green transition-colors"
+            className="w-24 rounded-control bg-[#fbf8f1] border-2 border-pava-ink/70 shadow-[2px_2px_0_rgba(31,58,43,0.85)] text-pava-brown placeholder-pava-brown/40 text-sm px-3 py-3 focus:outline-none focus:border-pava-green transition-colors"
           />
           {(minPrice || maxPrice) && (
             <button
@@ -314,10 +332,10 @@ export default function CatalogClient({
         <button
           onClick={() => setInStockOnly((prev) => !prev)}
           aria-pressed={inStockOnly}
-          className={`inline-flex items-center gap-1.5 rounded-control px-4 py-3 text-sm font-medium border transition-colors ${
+          className={`inline-flex items-center gap-1.5 rounded-control px-4 py-3 text-sm font-semibold border-2 transition-colors ${
             inStockOnly
-              ? "bg-pava-green text-white border-pava-green"
-              : "bg-white text-pava-brown border-pava-brown/15 hover:border-pava-green hover:text-pava-green"
+              ? "bg-pava-leaf text-white border-pava-ink shadow-[2px_2px_0_#1f3a2b]"
+              : "bg-[#fbf8f1] text-pava-ink border-pava-ink/70 shadow-[2px_2px_0_rgba(31,58,43,0.85)] hover:text-pava-leaf"
           }`}
         >
           <span className={`w-2 h-2 rounded-full ${inStockOnly ? "bg-white" : "bg-emerald-500"}`} />
@@ -328,15 +346,16 @@ export default function CatalogClient({
         <button
           onClick={() => setFavoritesOnly((prev) => !prev)}
           aria-pressed={favoritesOnly}
-          className={`inline-flex items-center gap-1.5 rounded-control px-4 py-3 text-sm font-medium border transition-colors ${
+          className={`inline-flex items-center gap-1.5 rounded-control px-4 py-3 text-sm font-semibold border-2 transition-colors ${
             favoritesOnly
               ? "bg-pava-terracotta text-white border-pava-terracotta"
-              : "bg-white text-pava-brown border-pava-brown/15 hover:border-pava-terracotta hover:text-pava-terracotta"
+              : "bg-[#fbf8f1] text-pava-ink border-pava-ink/70 shadow-[2px_2px_0_rgba(31,58,43,0.85)] hover:text-pava-terracotta"
           }`}
         >
           <Heart size={15} className={favoritesOnly ? "fill-white" : ""} />
           Favoritos
         </button>
+        </div>
 
         {/* Sort */}
         <div className="flex items-center gap-2">
@@ -349,7 +368,7 @@ export default function CatalogClient({
             aria-label="Ordenar productos"
             value={sort}
             onChange={(e) => handleSortChange(e.target.value as SortOption)}
-            className="rounded-control bg-white border border-pava-brown/15 text-pava-brown text-sm px-3 py-3 focus:outline-none focus:border-pava-green transition-colors cursor-pointer"
+            className="rounded-control bg-[#fbf8f1] border-2 border-pava-ink/70 shadow-[2px_2px_0_rgba(31,58,43,0.85)] text-pava-brown text-sm px-3 py-3 focus:outline-none focus:border-pava-green transition-colors cursor-pointer"
           >
             <option value="default">Destacados</option>
             <option value="price-asc">Precio: menor a mayor</option>
@@ -433,8 +452,8 @@ export default function CatalogClient({
 
       {/* Brand quick filter chips + In-Stock filter */}
       {availableBrands.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 mb-8 py-2.5 px-3.5 bg-pava-cream-dark/30 rounded-control border border-pava-brown/10">
-          <span className="text-xs font-bold uppercase tracking-wider text-pava-gold-deep mr-1">
+        <div className={`${showFilters ? "flex" : "hidden"} mb-8 flex-wrap items-center gap-2 rounded-control border-2 border-dashed border-pava-ink/35 px-3.5 py-2.5 sm:flex`}>
+          <span className="font-display mr-1 text-lg uppercase leading-none text-pava-leaf">
             Marca:
           </span>
           <button
