@@ -156,23 +156,29 @@ export default async function Footer() {
       {/* Payment & Shipping trust bar */}
       <div className="relative border-t-2 border-dashed border-pava-paper/20 py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-pava-paper/75 text-center md:text-left">
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-              <span className="font-script mr-1 text-lg text-pava-paper">Medios de pago:</span>
-              {(settings.paymentMethods?.includes("transfer") ?? true) && (
-                <span className="rounded-[4px] bg-pava-paper px-2.5 py-1 text-[12px] font-medium text-pava-ink shadow-[2px_2px_0_rgba(0,0,0,0.35)]">Transferencia</span>
-              )}
-              {(settings.paymentMethods?.includes("card") ?? true) && (
-                <span className="rounded-[4px] bg-pava-paper px-2.5 py-1 text-[12px] font-medium text-pava-ink shadow-[2px_2px_0_rgba(0,0,0,0.35)]">Mercado Pago</span>
-              )}
-              {(settings.paymentMethods?.includes("cash") ?? true) && (
-                <span className="rounded-[4px] bg-pava-paper px-2.5 py-1 text-[12px] font-medium text-pava-ink shadow-[2px_2px_0_rgba(0,0,0,0.35)]">Efectivo en local</span>
-              )}
+          {/* Título a mano arriba y etiquetas abajo, alineado a la izquierda
+              como el resto del footer; en desktop, los dos grupos en una fila. */}
+          <div className="grid gap-5 md:flex md:items-center md:justify-between">
+            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3">
+              <span className="font-script text-xl leading-none text-pava-gold">Medios de pago</span>
+              <ul className="flex flex-wrap gap-2">
+                {(settings.paymentMethods?.includes("transfer") ?? true) && (
+                  <li className="rounded-full border-2 border-dashed border-pava-paper/40 px-3 py-1 text-[13px] leading-none text-pava-paper">Transferencia</li>
+                )}
+                {(settings.paymentMethods?.includes("card") ?? true) && (
+                  <li className="rounded-full border-2 border-dashed border-pava-paper/40 px-3 py-1 text-[13px] leading-none text-pava-paper">Mercado Pago</li>
+                )}
+                {(settings.paymentMethods?.includes("cash") ?? true) && (
+                  <li className="rounded-full border-2 border-dashed border-pava-paper/40 px-3 py-1 text-[13px] leading-none text-pava-paper">Efectivo en el local</li>
+                )}
+              </ul>
             </div>
-            <div className="flex flex-wrap items-center justify-center md:justify-end gap-2">
-              <span className="font-script mr-1 text-lg text-pava-paper">Entrega:</span>
-              <span className="rounded-[4px] bg-pava-paper px-2.5 py-1 text-[12px] font-medium text-pava-ink shadow-[2px_2px_0_rgba(0,0,0,0.35)]">Envíos a todo el país</span>
-              <span className="rounded-[4px] bg-pava-paper px-2.5 py-1 text-[12px] font-medium text-pava-ink shadow-[2px_2px_0_rgba(0,0,0,0.35)]">Retiro en Catriel</span>
+            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3">
+              <span className="font-script text-xl leading-none text-pava-gold">Entrega</span>
+              <ul className="flex flex-wrap gap-2">
+                <li className="rounded-full border-2 border-dashed border-pava-paper/40 px-3 py-1 text-[13px] leading-none text-pava-paper">Envíos a todo el país</li>
+                <li className="rounded-full border-2 border-dashed border-pava-paper/40 px-3 py-1 text-[13px] leading-none text-pava-paper">Retiro en Catriel</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -181,12 +187,12 @@ export default async function Footer() {
       {/* Bottom bar */}
       <div className="relative border-t-2 border-dashed border-pava-paper/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-pava-paper/65 text-center md:text-left">
+          <div className="flex flex-col items-start justify-between gap-3 md:flex-row md:items-center md:gap-4">
+            <p className="text-xs text-pava-paper/65">
               © {currentYear} Poné La Pava. Todos los derechos reservados.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-pava-paper/65">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-pava-paper/65">
               <span>Hecho con mate 🧉 en Río Negro, Argentina</span>
               <span className="text-pava-paper/30 hidden sm:inline">•</span>
               <div className="inline-flex items-center gap-1.5 text-pava-paper/75">
