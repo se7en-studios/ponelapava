@@ -300,7 +300,7 @@ export default function ProductDetail({
                 <div className="space-y-3 pt-2">
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-3">
-                      <div className="flex justify-between font-semibold mb-1">
+                      <div className="mb-1.5 flex flex-col gap-0.5 font-semibold sm:flex-row sm:justify-between sm:gap-2">
                         <span className="text-pava-brown">Intensidad</span>
                         <span className="text-pava-green font-bold">Media / Intensa</span>
                       </div>
@@ -316,7 +316,7 @@ export default function ProductDetail({
                       </div>
                     </div>
                     <div className="rounded-control border-2 border-dashed border-pava-ink/25 bg-[#fbf8f1] p-3">
-                      <div className="flex justify-between font-semibold mb-1">
+                      <div className="mb-1.5 flex flex-col gap-0.5 font-semibold sm:flex-row sm:justify-between sm:gap-2">
                         <span className="text-pava-brown">Rendimiento</span>
                         <span className="text-pava-green font-bold">+1.5L de agua</span>
                       </div>
@@ -486,7 +486,7 @@ export default function ProductDetail({
                 <button
                   onClick={handleAddToCart}
                   disabled={added}
-                  className="btn-paper btn-paper--leaf flex-1 justify-center"
+                  className="btn-paper btn-paper--leaf flex-1 justify-center whitespace-nowrap px-4 text-base sm:text-[1.15rem]"
                 >
                   <ShoppingBag size={16} />
                   {added ? "¡Agregado!" : "Agregar al carrito"}
@@ -578,7 +578,7 @@ export default function ProductDetail({
                 También te puede gustar
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
               {related.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
@@ -589,9 +589,9 @@ export default function ProductDetail({
 
       {/* Sticky Mobile Buy Bar */}
       {!isOutOfStock && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-pava-cream/95 backdrop-blur-md border-t border-pava-brown/15 p-3 px-4 shadow-2xl flex items-center justify-between gap-3">
+        <div className="paper-cream fixed bottom-0 left-0 right-0 z-40 flex items-center justify-between gap-3 border-t-2 border-pava-ink/20 p-3 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
-            <div className="relative w-11 h-11 shrink-0 overflow-hidden rounded-control bg-white border border-pava-brown/10">
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-[3px] border-[3px] border-[#fbf8f1] bg-white shadow-[1px_2px_0_rgba(31,58,43,0.3)]">
               <Image
                 src={product.images[0]}
                 alt={product.name}
@@ -601,18 +601,16 @@ export default function ProductDetail({
               />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-pava-brown truncate">{product.name}</p>
+              <p className="truncate text-xs font-semibold text-pava-ink">{product.name}</p>
               <div className="flex items-baseline gap-1.5">
-                <span className="font-display text-sm font-bold text-pava-green">{formatPrice(product.price)}</span>
+                <span className="font-display text-lg leading-none text-pava-leaf">{formatPrice(product.price)}</span>
               </div>
             </div>
           </div>
           <button
             onClick={handleAddToCart}
             disabled={added}
-            className={`flex items-center justify-center gap-1.5 rounded-control px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-pava-cream transition-all duration-200 active:scale-95 cursor-pointer shrink-0 shadow-sm ${
-              added ? "bg-pava-green" : "bg-pava-green hover:bg-pava-green-light shadow-pava-green/20"
-            }`}
+            className="btn-paper btn-paper--leaf shrink-0 px-4 py-2.5 text-base"
           >
             <ShoppingBag size={14} />
             {added ? "¡Listo!" : "Agregar"}

@@ -35,7 +35,7 @@ export default function Hero({
       className="paper-kraft paper-kraft--cover relative flex flex-col overflow-hidden lg:min-h-[100svh]"
       aria-label="Bienvenida a Poné La Pava"
     >
-      <div className="relative h-[68vw] max-h-[460px] w-full lg:absolute lg:inset-0 lg:h-auto lg:max-h-none">
+      <div className="relative mt-[108px] h-[74vw] max-h-[460px] w-full lg:absolute lg:mt-0 lg:inset-0 lg:h-auto lg:max-h-none">
         <Image
           src="/redesign/hero-kraft.jpg"
           alt="Mate de cuero con bombilla, pava de aluminio y yerba suelta sobre papel kraft"
@@ -45,8 +45,9 @@ export default function Hero({
           className="object-cover object-[82%_50%] lg:object-[70%_50%]"
           sizes="100vw"
         />
-        {/* Funde la foto con el papel de abajo en celular */}
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#c69c6d] to-transparent lg:hidden" />
+        {/* En celular la foto termina en un borde de papel rasgado, como un
+            recorte pegado sobre el kraft, en vez de un corte recto. */}
+        <span aria-hidden className="torn-edge paper-kraft absolute inset-x-0 -bottom-px z-10 lg:hidden" />
       </div>
 
       <div className="relative z-10 w-full px-5 pb-16 pt-2 sm:px-8 lg:mt-auto lg:px-10 lg:pb-24 lg:pt-36">
@@ -55,7 +56,7 @@ export default function Hero({
             <a
               href="#resenas"
               style={{ "--r": "-3deg", "--d": "80ms" } as CSSProperties}
-              className="sticker-in cutout font-script mb-5 inline-flex items-center gap-2 rounded-[4px] bg-pava-paper px-3 py-1.5 text-[15px] text-pava-ink"
+              className="sticker-in cutout font-script relative z-20 -mt-4 mb-5 inline-flex lg:mt-0 items-center gap-2 rounded-[4px] bg-pava-paper px-3 py-1.5 text-[15px] text-pava-ink"
             >
               <span aria-hidden className="tracking-[0.08em] text-pava-gold">
                 ★★★★★
@@ -63,7 +64,7 @@ export default function Hero({
               5,0 en Google · local en Catriel
             </a>
 
-            <h1 className="font-display text-[3.5rem] uppercase leading-[0.9] text-pava-ink sm:text-[5.2rem] lg:text-[6.6rem] xl:text-[7.4rem]">
+            <h1 className="font-display text-[4.25rem] uppercase leading-[0.88] text-pava-ink min-[400px]:text-[4.6rem] sm:text-[5.2rem] lg:text-[6.6rem] xl:text-[7.4rem]">
               {titleLines.map((line, i) => {
                 const start = letterOffset;
                 letterOffset += line.length;
@@ -109,11 +110,11 @@ export default function Hero({
                 "Yerbas seleccionadas, mates artesanales y accesorios para acompañar cada ronda."}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               <Link
                 href={hero.ctaPrimaryLink || "/catalogo"}
                 id="hero-cta-catalogo"
-                className="btn-paper btn-paper--leaf"
+                className="btn-paper btn-paper--leaf justify-center sm:justify-start"
               >
                 {hero.ctaPrimaryText || "Comprar ahora"}
                 <span aria-hidden>→</span>
@@ -122,7 +123,7 @@ export default function Hero({
                 <Link
                   href={hero.ctaSecondaryLink || "/#el-local"}
                   id="hero-cta-secundario"
-                  className="btn-paper btn-paper--cream"
+                  className="btn-paper btn-paper--cream justify-center sm:justify-start"
                 >
                   {hero.ctaSecondaryText}
                 </Link>

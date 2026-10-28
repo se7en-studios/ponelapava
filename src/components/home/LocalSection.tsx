@@ -140,7 +140,7 @@ export default async function LocalSection({
                 <span className={infoIcon}>
                   <MapPin size={19} aria-hidden="true" />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <span className="font-script text-lg leading-none text-pava-leaf-dark">dirección</span>
                   <p className="font-display mt-1 text-xl uppercase leading-tight">{settings.addressLine}</p>
                   <p className="text-sm text-pava-ink/70">{settings.addressCity}</p>
@@ -150,7 +150,7 @@ export default async function LocalSection({
                 <span className={infoIcon}>
                   <Clock size={19} aria-hidden="true" />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <span className="font-script text-lg leading-none text-pava-leaf-dark">horarios</span>
                   <div className="mt-1 space-y-0.5">
                     {formatScheduleSummary(settings)
@@ -174,7 +174,7 @@ export default async function LocalSection({
                 <span className={infoIcon}>
                   <MessageCircle size={19} aria-hidden="true" />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <span className="font-script text-lg leading-none text-pava-leaf-dark">whatsapp</span>
                   <a
                     href={whatsappChatUrl(settings.whatsappNumber)}

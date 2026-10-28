@@ -80,7 +80,7 @@ export default function GoogleReviews({
   const items: Review[] = reviews && reviews.length > 0 ? reviews : DEFAULT_REVIEWS;
 
   return (
-    <section id="resenas" className="paper-kraft paper-kraft--cover relative scroll-mt-24 py-20 sm:py-24 lg:py-28">
+    <section id="resenas" className="paper-kraft paper-kraft--cover relative scroll-mt-24 overflow-x-clip py-16 sm:py-24 lg:py-28">
       <span aria-hidden className="torn-edge paper-kraft absolute inset-x-0 -top-[21px] z-10" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
@@ -112,8 +112,22 @@ export default function GoogleReviews({
             </div>
           </div>
           <div className="min-w-0 lg:col-span-7">
+            {/* Celular: una tira horizontal a todo el ancho. La columna
+                vertical quedaba angosta y con mucho kraft vacío alrededor. */}
+            <div className="-mx-5 sm:hidden" aria-label="Reseñas de clientes en Google">
+              <Marquee
+                pauseOnHover
+                repeat={3}
+                style={{ "--duration": "40s", "--gap": "1.25rem" } as React.CSSProperties}
+                className="py-6"
+              >
+                {items.map((r, i) => (
+                  <ReviewCard key={r.id} review={r} index={i} />
+                ))}
+              </Marquee>
+            </div>
             <div
-              className="relative flex h-[24rem] w-full justify-center gap-3 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,#000_14%,#000_86%,transparent)] sm:h-[34rem]"
+              className="relative hidden h-[24rem] w-full justify-center sm:flex gap-3 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,#000_14%,#000_86%,transparent)] sm:h-[34rem]"
               aria-label="Reseñas de clientes en Google"
             >
               {COLUMNS.map((col, c) => (

@@ -286,10 +286,57 @@ export default function PanoramicSpread({
   const textOpacity = useTransform(progress, [0.4, 0.9], [0, 1]);
 
   return (
+    <>
+    {/* Celular: sin scroll fijo. La animación en arco no entra en 390 px y
+        dejaba casi dos pantallas de papel vacío; acá es una fila de polaroids
+        que se desliza con el dedo. */}
+    <section
+      aria-label={title}
+      className="paper-kraft paper-kraft--cover relative w-full py-16 text-pava-ink md:hidden"
+    >
+      <div className="px-5">
+        <span className="font-script mb-1 inline-block -rotate-2 text-xl text-pava-ink/80">
+          {eyebrow.toLowerCase()} ↓
+        </span>
+        <h2 className="font-display text-[2.8rem] uppercase leading-[0.9]">
+          <CutText text={title} seed={7} />
+        </h2>
+        <p className="mt-3 text-[15px] leading-relaxed text-pava-ink/80">{description}</p>
+      </div>
+      <ul className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 pt-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {items.map((item, i) => (
+          <li key={item.href} className="w-[62vw] max-w-[260px] shrink-0 snap-center">
+            <Link
+              href={item.href}
+              style={{ rotate: `${i % 2 ? 2 : -2}deg` }}
+              className="relative flex flex-col bg-[#fbf8f1] p-2 pb-0 shadow-[3px_5px_0_rgba(31,58,43,0.38)]"
+            >
+              {i % 2 === 0 && (
+                <span aria-hidden className="tape -top-2.5 left-1/2 !h-5 !w-16 -translate-x-1/2 -rotate-3" />
+              )}
+              <span className="relative block aspect-[4/5] overflow-hidden bg-pava-cream-dark">
+                <Image src={item.src} alt={item.alt} fill sizes="62vw" className="object-cover" />
+              </span>
+              <span className="flex items-baseline justify-between gap-2 px-1 py-2">
+                <span className="font-script truncate text-[15px] leading-none text-pava-ink">{item.label}</span>
+                <span className="font-display shrink-0 text-[17px] leading-none text-pava-leaf-dark">{item.price}</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4 px-5">
+        <Link href={ctaHref} className="btn-paper btn-paper--leaf">
+          {ctaLabel}
+          <span aria-hidden>→</span>
+        </Link>
+      </div>
+    </section>
+
     <section
       ref={wrapRef}
       aria-label={title}
-      className={`paper-kraft paper-kraft--cover relative w-full text-pava-ink ${reduce ? "h-[100svh]" : "h-[160vh] md:h-[170vh]"}`}
+      className={`paper-kraft paper-kraft--cover relative hidden w-full text-pava-ink md:block ${reduce ? "h-[100svh]" : "h-[170vh]"}`}
     >
       <div
         className="sticky top-0 flex h-[100svh] w-full items-center justify-center overflow-hidden"
@@ -345,5 +392,6 @@ export default function PanoramicSpread({
         </motion.div>
       </div>
     </section>
+    </>
   );
 }

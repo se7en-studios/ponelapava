@@ -47,9 +47,9 @@ export default function InstagramSection({
                   sizes="(max-width: 1024px) 50vw, 25vw"
                 />
               </span>
-              <span className="font-script absolute bottom-2 left-3 right-3 flex items-center justify-between text-base text-pava-ink/80 sm:bottom-3 sm:text-lg">
-                @{INSTAGRAM_HANDLE}
-                <span className="text-pava-leaf transition-transform duration-300 group-hover:rotate-12">
+              <span className="font-script absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between gap-1.5 text-[13px] text-pava-ink/80 sm:bottom-3 sm:left-3 sm:right-3 sm:text-lg">
+                <span className="min-w-0 truncate">@{INSTAGRAM_HANDLE}</span>
+                <span className="shrink-0 text-pava-leaf transition-transform duration-300 group-hover:rotate-12">
                   <InstagramIcon size={17} />
                 </span>
               </span>

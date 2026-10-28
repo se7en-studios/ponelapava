@@ -5,6 +5,10 @@
    de papel generados en Google Flow (public/redesign/).
    ══════════════════════════════════════════════════ */
 
+/* Todo el sistema vive en la capa "components": las utilidades de Tailwind
+   (hidden, text-*, w-*, por breakpoint) pueden pisar estas clases cuando
+   hace falta un ajuste puntual. */
+@layer components {
 /* ── Superficies de papel ─────────────────────────── */
 .paper-cream {
   background-color: #f1eadb;
@@ -222,3 +226,21 @@
   opacity: 1;
   transform: rotate(-2deg) scale(1.04);
 }
+
+/* ── header sobre el hero ──
+   En desktop el header arranca transparente sobre la foto del hero. En
+   celular la foto va arriba y los íconos quedaban encima de la pava, así
+   que ahí el header es papel desde el principio. */
+.header-top {
+  background: transparent;
+}
+@media (max-width: 1023px) {
+  .header-top {
+    background-color: #f1eadb;
+    background-image: url("/redesign/papel-crema.jpg");
+    background-size: 1400px auto;
+    border-bottom: 2px solid rgba(31, 58, 43, 0.15);
+  }
+}
+
+} /* @layer components */

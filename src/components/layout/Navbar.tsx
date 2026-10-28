@@ -76,7 +76,7 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           atTop
-            ? "bg-transparent text-pava-ink"
+            ? "header-top text-pava-ink"
             : "paper-cream border-b-2 border-pava-ink/15 text-pava-ink shadow-[0_6px_0_-3px_rgba(31,58,43,0.12)]",
         )}
       >
@@ -85,7 +85,7 @@ export default function Navbar() {
           <div
             className={cn(
               "flex items-center justify-between transition-all duration-300",
-              atTop ? "h-20 lg:h-22" : "h-16 lg:h-[4.25rem]",
+              atTop ? "h-16 lg:h-22" : "h-16 lg:h-[4.25rem]",
             )}
           >
             {/* Logo */}
