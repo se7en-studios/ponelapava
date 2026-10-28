@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ShoppingBag, Search, Heart } from "lucide-react";
@@ -38,6 +38,54 @@ export default function Navbar() {
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasHero]);
+
+  // Logo del hero en celular: arriba de todo se ve grande sobre el kraft de
+  // la foto y, al scrollear, se achica y sube hasta su lugar en el header.
+  // Se anima el span interno; el <Link> no se transforma, así su caja sirve
+  // de referencia para medir el lugar final.
+  const logoSlotRef = useRef<HTMLAnchorElement>(null);
+  const logoRef = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const slot = logoSlotRef.current;
+    const logo = logoRef.current;
+    if (!hasHero || !slot || !logo) return;
+    const mobile = window.matchMedia("(max-width: 1023px)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const BIG = 132; // px del logo grande
+    const RANGE = 170; // px de scroll que tarda en llegar al header
+    let frame = 0;
+    const apply = () => {
+      frame = 0;
+      if (!mobile.matches || reduce.matches) {
+        logo.style.transform = "none";
+        return;
+      }
+      const header = slot.closest("header");
+      const r = slot.getBoundingClientRect();
+      const headerBottom = header ? header.getBoundingClientRect().bottom : r.bottom;
+      const p = Math.min(1, Math.max(0, window.scrollY / RANGE));
+      const k = 1 - (1 - p) ** 3; // ease-out
+      const dx = (22 - r.left) * (1 - k);
+      const dy = (headerBottom + 26 - r.top) * (1 - k);
+      const scale = 1 + (BIG / r.width - 1) * (1 - k);
+      const rot = -6 * (1 - k);
+      logo.style.transform = `translate(${dx}px, ${dy}px) scale(${scale}) rotate(${rot}deg)`;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+    apply();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    mobile.addEventListener("change", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      mobile.removeEventListener("change", onScroll);
+      logo.style.transform = "";
+    };
   }, [hasHero]);
 
   useEffect(() => {
@@ -90,11 +138,23 @@ export default function Navbar() {
           >
             {/* Logo */}
             <Link
+              ref={logoSlotRef}
               href="/"
               className="group flex items-center gap-2.5 shrink-0"
               aria-label="Poné La Pava — Inicio"
             >
-              <BrandCircle size={44} className="shrink-0 transition-transform duration-300 group-hover:-rotate-6 lg:hidden" />
+              <span
+                ref={logoRef}
+                className={cn(
+                  "block shrink-0 origin-top-left will-change-transform lg:hidden",
+                  hasHero && "hero-logo-start",
+                )}
+              >
+                <BrandCircle
+                  size={44}
+                  className="drop-shadow-[2px_3px_0_rgba(31,58,43,0.25)] transition-transform duration-300 group-hover:-rotate-6"
+                />
+              </span>
               <BrandWordmark className="hidden text-[17px] text-pava-ink lg:flex" />
             </Link>
 

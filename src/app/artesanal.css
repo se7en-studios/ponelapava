@@ -243,4 +243,12 @@
   }
 }
 
+/* Posición inicial del logo grande del hero en celular, antes de que el JS
+   del header tome el control (evita el salto en la primera pintada). */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .hero-logo-start {
+    transform: translate(6px, 80px) scale(3) rotate(-6deg);
+  }
+}
+
 } /* @layer components */
