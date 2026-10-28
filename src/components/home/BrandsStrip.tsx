@@ -8,6 +8,7 @@ const BRANDS = [
   { name: "Playadito", src: "/brands/playadito.png", h: 50, badge: true },
   { name: "Stanley", src: "/brands/stanley.svg", h: 34 },
   { name: "Amanda", src: "/brands/amanda.png", h: 30 },
+  { name: "Taragüí", src: "/brands/taragui.png", h: 30, badge: true },
   { name: "CBSé", src: "/brands/cbse.png", h: 34 },
   { name: "Lumilagro", src: "/brands/lumilagro.svg", h: 44, badge: true },
   { name: "Canarias", src: "/brands/canarias.svg", h: 38 },

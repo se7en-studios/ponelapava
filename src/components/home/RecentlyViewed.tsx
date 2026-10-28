@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useSyncExternalStore } from "react";
 import { Product } from "@/types";
 import ProductCard from "@/components/catalog/ProductCard";
+import CutText from "@/components/ui/CutText";
 
 const KEY = "plp:recently-viewed";
 const MAX = 8;
@@ -67,15 +68,18 @@ export default function RecentlyViewed({
 
   return (
     <section
-      className="bg-pava-cream py-16 sm:py-20"
+      className="paper-cream py-16 sm:py-20"
       aria-labelledby="recent-title"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <span className="font-script mb-1 inline-block -rotate-2 text-xl text-pava-leaf">
+          lo que estuviste mirando ↓
+        </span>
         <h2
           id="recent-title"
-          className="font-display mb-8 text-2xl font-semibold tracking-tight text-pava-brown sm:text-3xl"
+          className="font-display mb-8 text-4xl uppercase leading-[0.92] text-pava-ink sm:text-5xl"
         >
-          Vistos recientemente
+          <CutText text="Vistos recientemente" seed={4} />
         </h2>
         <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-4 lg:grid-cols-4">
           {items.map((p) => (

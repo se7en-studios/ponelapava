@@ -67,14 +67,16 @@ function layoutFor(i: number, total: number) {
       rotateY: 0,
       scale: 1,
     },
+    // Giro 3D leve: con rotateY de ±42° las cartas de las puntas quedaban
+    // aplastadas y deformadas. El arco ahora lo dan la altura y el ángulo.
     panoramic: {
-      x: offset * 12,
-      y: abs * 3,
-      rotateZ: offset * 1.5,
-      rotateY: offset * -12,
-      scale: 1 - abs * 0.05,
+      x: offset * 11.5,
+      y: abs * 2.2,
+      rotateZ: offset * 1.2,
+      rotateY: offset * -4,
+      scale: 1 - abs * 0.035,
     },
-    size: { w: "15vw", h: "22vw", ml: "-7.5vw", mt: "-11vw" },
+    size: { w: "12.5vw", h: "17.5vw", ml: "-6.25vw", mt: "-8.75vw" },
   };
   const mobile: Layout = {
     stacked: {
