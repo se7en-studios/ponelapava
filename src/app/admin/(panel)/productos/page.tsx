@@ -250,7 +250,7 @@ export default function AdminProductosPage() {
               }`}
             >
               <span>Todos</span>
-              <span className="text-xs bg-[var(--dash-surface-elevated)] px-1.5 py-0.5 rounded">
+              <span className="text-xs bg-[var(--dash-surface-3)] text-[var(--dash-text)] px-1.5 py-0.5 rounded">
                 {products.length}
               </span>
             </button>
@@ -302,7 +302,7 @@ export default function AdminProductosPage() {
             >
               <CheckCircle2 size={13} className="text-[var(--dash-success)]" />
               <span>En Stock</span>
-              <span className="text-xs bg-[var(--dash-surface-elevated)] px-1.5 py-0.5 rounded">
+              <span className="text-xs bg-[var(--dash-surface-3)] text-[var(--dash-text)] px-1.5 py-0.5 rounded">
                 {inStockCount}
               </span>
             </button>

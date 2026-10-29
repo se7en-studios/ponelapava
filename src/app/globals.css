@@ -788,28 +788,31 @@ iframe:focus,
 }
 
 /* ══════════════════════════════════════════════════
-   ADMIN DASHBOARD — dark shell, scoped to .pava-admin
-   so it never bleeds into the public cream/green site.
-   Same warm brand family as the storefront (brown/gold)
-   inverted to a dark "control room" palette.
+   ADMIN DASHBOARD — scoped to .pava-admin.
+   Same "mesa de trabajo" as the storefront: cream paper
+   surfaces, green ink, mustard highlights. The sidebar
+   flips to the dark green paper via .admin-ink, which
+   only re-points the tokens below.
    ══════════════════════════════════════════════════ */
 /* Tokens live on their own selector so the toast portal (mounted
    directly on document.body, outside the .pava-admin subtree) can pick
    them up too without inheriting .pava-admin's background/min-height. */
 .pava-admin,
 .admin-toast-root {
-  /* Surfaces & backgrounds - Deep Minimalist Obsidian & Slate */
-  --dash-bg: #0b0d11;
-  --dash-surface: #12151b;
-  --dash-surface-2: #181d24;
-  --dash-surface-3: #212732;
-  --dash-border: rgba(255, 255, 255, 0.08);
-  --dash-border-subtle: rgba(255, 255, 255, 0.04);
+  /* Surfaces — paper sheets stacked on the kraft-cream table */
+  --dash-bg: #efe7d6;
+  --dash-surface: #fbf8f1;
+  --dash-surface-1: #fbf8f1;
+  --dash-surface-elevated: #fffdf8;
+  --dash-surface-2: #f3ecdf;
+  --dash-surface-3: #e8dec9;
+  --dash-border: rgba(31, 58, 43, 0.2);
+  --dash-border-subtle: rgba(31, 58, 43, 0.09);
 
-  /* Typography & text colors - Clean Slate & Crisp White */
-  --dash-text: #f8fafc;
-  --dash-muted: #8b95a5;
-  --dash-muted-light: #cbd5e1;
+  /* Text — green ink */
+  --dash-text: #1f3a2b;
+  --dash-muted: #5b6b5f;
+  --dash-muted-light: #3d5446;
 
   /* Typographic scale (minimum 12px anywhere in admin) */
   --dash-text-xs: 12px;
@@ -833,58 +836,126 @@ iframe:focus,
   --dash-space-6: 24px;
   --dash-space-8: 32px;
 
-  /* Shadows - Minimalist Deep Diffusion */
-  --dash-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --dash-shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
+  /* Shadows — hard offset, like paper cut-outs on the table */
+  --dash-shadow-sm: 2px 3px 0 rgba(31, 58, 43, 0.12);
+  --dash-shadow-md: 3px 5px 0 rgba(31, 58, 43, 0.16);
 
-  /* Brand Accents - Refined Champagne Gold (Poné La Pava) */
-  --dash-accent: #cfa86e;
-  --dash-accent-hover: #dfba82;
-  --dash-accent-bg: rgba(207, 168, 110, 0.12);
-  --dash-accent-subtle: rgba(207, 168, 110, 0.16);
-  --dash-accent-border: rgba(207, 168, 110, 0.28);
+  /* Brand accent — leaf green (cream text on top stays readable) */
+  --dash-accent: #3b6a45;
+  --dash-accent-hover: #4b8056;
+  --dash-accent-bg: rgba(75, 128, 86, 0.12);
+  --dash-accent-subtle: rgba(75, 128, 86, 0.16);
+  --dash-accent-border: rgba(59, 106, 69, 0.35);
+  --dash-on-accent: #fbf8f1;
+  --dash-highlight: #e0a43a;
 
-  /* Semantics - High-end Crisp Minimalist */
-  --dash-danger: #f87171;
-  --dash-danger-bg: rgba(239, 68, 68, 0.12);
-  --dash-danger-border: rgba(239, 68, 68, 0.25);
+  /* Semantics — ink tones that hold up on cream paper */
+  --dash-danger: #b2452c;
+  --dash-danger-bg: rgba(178, 69, 44, 0.1);
+  --dash-danger-border: rgba(178, 69, 44, 0.32);
 
-  --dash-success: #34d399;
-  --dash-success-bg: rgba(16, 185, 129, 0.12);
-  --dash-success-border: rgba(16, 185, 129, 0.25);
+  --dash-success: #2f7a45;
+  --dash-success-bg: rgba(47, 122, 69, 0.11);
+  --dash-success-border: rgba(47, 122, 69, 0.3);
 
-  --dash-warning: #fbbf24;
-  --dash-warning-bg: rgba(245, 158, 11, 0.12);
-  --dash-warning-border: rgba(245, 158, 11, 0.25);
+  --dash-warning: #93600f;
+  --dash-warning-bg: rgba(224, 164, 58, 0.2);
+  --dash-warning-border: rgba(176, 120, 22, 0.38);
 
-  --dash-info: #60a5fa;
-  --dash-info-bg: rgba(59, 130, 246, 0.12);
-  --dash-info-border: rgba(59, 130, 246, 0.25);
+  --dash-info: #2f6190;
+  --dash-info-bg: rgba(47, 97, 144, 0.1);
+  --dash-info-border: rgba(47, 97, 144, 0.3);
 }
 .pava-admin {
-  background: var(--dash-bg);
+  background: var(--dash-bg) url("/redesign/papel-crema.webp") repeat;
+  background-size: 640px auto;
   color: var(--dash-text);
   min-height: 100vh;
   font-size: var(--dash-text-base);
   letter-spacing: -0.01em;
 }
 
-.admin-input {
-  width: 100%;
-  background: var(--dash-surface-2);
-  border: 1px solid var(--dash-border);
-  border-radius: var(--dash-radius-md);
-  padding: 10px 12px;
+/* Dark green paper zones (sidebar, mobile sheet header). Only re-points
+   tokens, so every child keeps using the same var(--dash-*) classes. */
+.pava-admin .admin-ink {
+  --dash-surface: transparent;
+  --dash-surface-2: rgba(241, 234, 219, 0.09);
+  --dash-surface-3: rgba(241, 234, 219, 0.16);
+  --dash-border: rgba(241, 234, 219, 0.16);
+  --dash-border-subtle: rgba(241, 234, 219, 0.08);
+  --dash-text: #f1eadb;
+  --dash-muted: rgba(241, 234, 219, 0.66);
+  --dash-accent: #e0a43a;
+  --dash-accent-bg: rgba(224, 164, 58, 0.16);
+  --dash-accent-subtle: rgba(224, 164, 58, 0.2);
+  --dash-accent-border: rgba(224, 164, 58, 0.45);
+  --dash-danger: #f0a58e;
+  --dash-danger-bg: rgba(240, 165, 142, 0.12);
+  --dash-on-accent: #1f3a2b;
+  background-color: #1f3a2b;
+  background-image: url("/redesign/papel-verde.webp");
+  background-size: 520px auto;
   color: var(--dash-text);
-  font-size: var(--dash-text-base);
-  outline: none;
-  box-sizing: border-box;
-  font-family: inherit;
-  transition: border-color 0.15s, box-shadow 0.15s;
 }
-.admin-input:focus {
-  border-color: var(--dash-accent);
-  box-shadow: 0 0 0 1px var(--dash-accent);
+
+/* AdminModal portals to <body> with .pava-admin for the tokens — keep
+   its backdrop see-through instead of inheriting the paper table. */
+.pava-admin.admin-modal-backdrop {
+  background: rgba(31, 58, 43, 0.45);
+  min-height: 0;
+}
+.admin-modal-dialog {
+  border: 2px solid #1f3a2b !important;
+  box-shadow: 5px 7px 0 rgba(31, 58, 43, 0.25);
+}
+.admin-modal-dialog h2 {
+  font-family: var(--font-londrina), var(--font-figtree), sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* Titles in the storefront's cut-paper display face. */
+.pava-admin h1,
+.pava-admin .font-serif,
+.pava-admin .admin-display {
+  font-family: var(--font-londrina), var(--font-figtree), sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.pava-admin .admin-kpi-number {
+  font-family: var(--font-londrina), var(--font-figtree), sans-serif;
+  font-weight: 400;
+  font-size: 2.35rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+.pava-admin h1 {
+  text-transform: uppercase;
+  line-height: 0.95;
+  font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem);
+}
+
+/* Layered so per-field utilities (pl-9 next to an icon, text-xs) win. */
+@layer components {
+  .admin-input {
+    width: 100%;
+    background: var(--dash-surface-elevated);
+    border: 1.5px solid var(--dash-border);
+    border-radius: var(--dash-radius-md);
+    padding: 10px 12px;
+    color: var(--dash-text);
+    font-size: var(--dash-text-base);
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .admin-input:focus {
+    border-color: var(--dash-accent);
+    box-shadow: 2px 3px 0 var(--dash-accent);
+  }
 }
 
 /* Single focus-visible rule for the whole admin — every button/link/input
@@ -984,14 +1055,12 @@ iframe:focus,
   }
 }
 
-/* Dark scrollbar for the admin shell — overrides the storefront's
-   cream/green scrollbar, which looked broken against .pava-admin's
-   dark surfaces. */
+/* Paper-toned scrollbar so it doesn't look grafted on. */
 .pava-admin ::-webkit-scrollbar-track {
   background: var(--dash-bg);
 }
 .pava-admin ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(31, 58, 43, 0.22);
   border-radius: 4px;
 }
 .pava-admin ::-webkit-scrollbar-thumb:hover {
@@ -1011,7 +1080,7 @@ iframe:focus,
 /* ── Cards ─────────────────────────────────────────── */
 .admin-card {
   background: var(--dash-surface);
-  border: 1px solid var(--dash-border);
+  border: 1.5px solid var(--dash-border);
   border-radius: var(--dash-radius-lg);
   padding: 20px;
   box-shadow: var(--dash-shadow-sm);
@@ -1026,9 +1095,9 @@ iframe:focus,
     box-shadow 0.2s ease;
 }
 .admin-card--interactive:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transform: translate(-1px, -2px) rotate(-0.25deg);
+  border-color: rgba(31, 58, 43, 0.45);
+  box-shadow: 4px 6px 0 rgba(31, 58, 43, 0.18);
 }
 
 /* ── Buttons ───────────────────────────────────────── */
@@ -1049,7 +1118,8 @@ iframe:focus,
     transform 0.1s ease;
 }
 .admin-btn:hover:not(:disabled) {
-  filter: brightness(1.1);
+  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 .admin-btn:active:not(:disabled) {
   transform: scale(0.97);
@@ -1073,13 +1143,19 @@ iframe:focus,
 }
 .admin-btn--primary {
   background: var(--dash-accent);
-  color: #0b0d11;
+  color: var(--dash-on-accent);
   font-weight: 600;
+  border: 1.5px solid #1f3a2b;
+  box-shadow: 2px 3px 0 #1f3a2b;
+}
+.admin-btn--primary:active:not(:disabled) {
+  box-shadow: 1px 1px 0 #1f3a2b;
 }
 .admin-btn--secondary {
-  background: var(--dash-surface-2);
+  background: var(--dash-surface-elevated);
   color: var(--dash-text);
-  border: 1px solid var(--dash-border);
+  border: 1.5px solid var(--dash-border);
+  box-shadow: var(--dash-shadow-sm);
 }
 .admin-btn--ghost {
   background: transparent;
@@ -1154,8 +1230,8 @@ iframe:focus,
 .admin-drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(4px);
+  background: rgba(31, 58, 43, 0.45);
+  backdrop-filter: blur(3px);
   z-index: 80;
   display: flex;
   justify-content: flex-end;
@@ -1216,7 +1292,7 @@ iframe:focus,
   color: var(--dash-text);
 }
 .admin-tab-item--active {
-  background: var(--dash-surface-3);
+  background: var(--dash-surface-elevated);
   color: var(--dash-text);
   font-weight: 600;
   box-shadow: var(--dash-shadow-sm);
@@ -1226,7 +1302,8 @@ iframe:focus,
 .admin-datatable-wrapper {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid var(--dash-border);
+  border: 1.5px solid var(--dash-border);
+  box-shadow: var(--dash-shadow-sm);
   border-radius: var(--dash-radius-lg);
   background: var(--dash-surface);
 }
@@ -1293,10 +1370,11 @@ iframe:focus,
    Extracted from repeated inline style objects across DashboardStats,
    OrdersTable and friends — same look, one definition. */
 .admin-section-title {
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-family: var(--font-londrina), var(--font-figtree), sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   margin-bottom: 14px;
   color: var(--dash-text);
 }
@@ -1323,12 +1401,12 @@ iframe:focus,
 }
 .admin-toolbar-pill:hover {
   color: var(--dash-text);
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(31, 58, 43, 0.4);
 }
 .admin-toolbar-pill--active {
   border-color: var(--dash-accent);
   background: var(--dash-accent);
-  color: #0b0d11;
+  color: var(--dash-on-accent);
   font-weight: 600;
 }
 
@@ -1409,8 +1487,8 @@ iframe:focus,
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: #fffdf8;
+  box-shadow: 1px 1px 0 rgba(31, 58, 43, 0.35);
   transition: transform 0.18s ease;
 }
 .admin-toggle input:checked + .admin-toggle-track {
@@ -1451,8 +1529,11 @@ iframe:focus,
 }
 .admin-nav-item[aria-current="page"] {
   background: var(--dash-accent);
-  color: #1e1b15;
+  color: var(--dash-on-accent);
   font-weight: 600;
+  border-color: transparent;
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.22);
+  transform: rotate(-0.8deg);
 }
 
 /* ── KPI grid — one grid definition instead of the same
@@ -1639,7 +1720,7 @@ iframe:focus,
   background: var(--dash-surface-2);
   border: 1px solid var(--dash-border);
   color: var(--dash-text);
-  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 4px 0 rgba(31, 58, 43, 0.18);
   animation: adminToastIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .admin-toast--leaving {
