@@ -84,7 +84,7 @@ export function ReviewsSettingsSection({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
             <h2 className="admin-section-title flex items-center gap-2">
-              <Star size={18} className="text-amber-400 fill-amber-400" />
+              <Star size={18} className="text-[#c4861a] fill-amber-400" />
               <span>Reseñas y Testimonios de Clientes</span>
             </h2>
             <p className="text-xs text-[var(--dash-muted)] mt-1">
@@ -109,7 +109,7 @@ export function ReviewsSettingsSection({
                     <span className="text-xs font-bold text-[var(--dash-accent)]">
                       Reseña #{idx + 1}
                     </span>
-                    <div className="flex text-amber-400">
+                    <div className="flex text-[#c4861a]">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
@@ -169,7 +169,7 @@ export function ReviewsSettingsSection({
                       onChange={(e) =>
                         handleUpdate(idx, { rating: parseInt(e.target.value, 10) })
                       }
-                      className="admin-input text-xs font-bold text-amber-400"
+                      className="admin-input text-xs font-bold text-[#c4861a]"
                     >
                       <option value="5">★★★★★ (5 estrellas)</option>
                       <option value="4">★★★★☆ (4 estrellas)</option>

@@ -50,9 +50,10 @@ export function PageHeader({
           </nav>
         )}
 
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--dash-text)]">
+        <h1 className="text-[var(--dash-text)]">
           {title}
         </h1>
+        <span aria-hidden className="block h-[5px] w-16 -rotate-1 rounded-full bg-[var(--dash-highlight)]" />
 
         {subtitle && (
           <p className="text-sm text-[var(--dash-muted)]">

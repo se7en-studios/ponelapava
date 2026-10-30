@@ -190,9 +190,7 @@
 
 /* ── Card glow on hover ─────────────────────────── */
 .admin-card--glow:hover {
-  box-shadow:
-    0 8px 30px -4px rgba(199,166,122,0.18),
-    inset 0 0 0 1px rgba(199,166,122,0.12);
+  box-shadow: 4px 6px 0 rgba(31,58,43,0.18);
 }
 
 /* ── Button shimmer on hover ────────────────────── */

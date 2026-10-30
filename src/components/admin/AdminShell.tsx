@@ -29,6 +29,7 @@ import {
 } from "@/lib/admin-nav";
 import { getAdminHeaderScheduleBadge } from "@/lib/hours";
 import type { SiteSettings } from "@/lib/settings";
+import { BrandCircle } from "@/components/ui/BrandMark";
 
 export type { AdminNavItem };
 
@@ -223,7 +224,7 @@ export default function AdminShell({
       style={{ "--admin-sidebar-w": sidebarWidth } as React.CSSProperties}
     >
       {/* ── MOBILE TOP BAR ── */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-[var(--dash-surface)]/95 backdrop-blur-md border-b border-[var(--dash-border)] z-40 flex items-center justify-between px-3 shadow-sm">
+      <header className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-[var(--dash-surface)] border-b-2 border-[#1f3a2b] z-40 flex items-center justify-between px-3 shadow-[0_3px_0_rgba(31,58,43,0.12)]">
         <div className="flex items-center gap-2 min-w-0">
           <button
             onClick={() => setMobileOpen((v) => !v)}
@@ -234,7 +235,8 @@ export default function AdminShell({
           </button>
 
           <div className="flex items-center gap-1.5 min-w-0">
-            <span className="font-bold text-sm text-[var(--dash-text)] truncate max-w-[130px]">
+            <BrandCircle size={30} className="size-[30px] shrink-0 -rotate-6" />
+            <span className="admin-display text-[17px] uppercase text-[var(--dash-text)] truncate max-w-[130px]">
               {activeItem.label}
             </span>
             {isOwner && (
@@ -289,22 +291,20 @@ export default function AdminShell({
       {/* ── MOBILE DRAWER / SHEET MENU ── */}
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col justify-end"
+          className="lg:hidden fixed inset-0 z-50 bg-[#1f3a2b]/45 backdrop-blur-[3px] flex flex-col justify-end"
           onClick={() => setMobileOpen(false)}
         >
           <div
-            className="w-full max-h-[85vh] bg-[var(--dash-surface)] border-t border-[var(--dash-border)] rounded-t-2xl p-5 overflow-y-auto space-y-5 shadow-2xl animate-sheet-in"
+            className="w-full max-h-[85vh] bg-[var(--dash-surface)] border-t-2 border-[#1f3a2b] rounded-t-2xl p-5 overflow-y-auto space-y-5 shadow-2xl animate-sheet-in"
             onClick={(e) => e.stopPropagation()}
           >
             {/* User Profile & Store Status Header */}
             <div className="flex items-center justify-between pb-3.5 border-b border-[var(--dash-border)]">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-[var(--dash-surface-3)] border border-[var(--dash-accent-border)] flex items-center justify-center text-[var(--dash-accent)] font-bold text-base shadow-sm shrink-0">
-                  {isOwner ? "👑" : "P"}
-                </div>
+                <BrandCircle size={44} className="size-11 shrink-0 -rotate-6" />
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-serif font-bold text-base text-[var(--dash-text)]">
+                    <span className="font-serif text-xl uppercase text-[var(--dash-text)]">
                       Poné La Pava
                     </span>
                     <span className="px-1.5 py-0.2 rounded text-[10px] font-extrabold uppercase bg-[var(--dash-accent-bg)] text-[var(--dash-accent)] border border-[var(--dash-accent-border)]">
@@ -352,7 +352,7 @@ export default function AdminShell({
             <div className="space-y-4">
               {visibleNavGroups.map((group) => (
                 <div key={group.name} className="space-y-1">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--dash-muted)] px-3 mb-1">
+                  <h4 className="font-script text-base text-[var(--dash-accent)] px-3">
                     {group.name}
                   </h4>
                   {group.items.map((item) => {
@@ -403,7 +403,7 @@ export default function AdminShell({
       )}
 
       {/* ── MOBILE BOTTOM NAVIGATION BAR ── */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-30 h-16 bg-[var(--dash-surface)]/95 border-t border-[var(--dash-border)] flex items-center justify-around px-2 backdrop-blur-md pb-[max(env(safe-area-inset-bottom),0.25rem)] shadow-2xl">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-30 h-16 bg-[var(--dash-surface)] border-t-2 border-[#1f3a2b] flex items-center justify-around px-2 pb-[max(env(safe-area-inset-bottom),0.25rem)] shadow-[0_-3px_0_rgba(31,58,43,0.1)]">
         {mobileMainItems.map((item) => {
           const isActive = item.href === activeItem.href;
           return (
@@ -413,7 +413,7 @@ export default function AdminShell({
               aria-current={isActive ? "page" : undefined}
               className={`flex-1 min-h-[48px] flex flex-col items-center justify-center gap-0.5 transition-all rounded-xl py-1 ${
                 isActive
-                  ? "text-[var(--dash-accent)] bg-[var(--dash-surface-2)] font-semibold shadow-inner"
+                  ? "text-[var(--dash-on-accent)] bg-[var(--dash-accent)] font-semibold -rotate-1 shadow-[2px_3px_0_#1f3a2b]"
                   : "text-[var(--dash-muted)] hover:text-[var(--dash-text)]"
               }`}
             >
@@ -442,22 +442,23 @@ export default function AdminShell({
 
       {/* ── DESKTOP GROUPED SIDEBAR ── */}
       <aside
-        className={`hidden lg:flex lg:flex-col fixed top-0 left-0 bottom-0 z-40 bg-[var(--dash-surface)] border-r border-[var(--dash-border)] transition-all duration-200 overflow-hidden ${
+        className={`hidden lg:flex lg:flex-col admin-ink fixed top-0 left-0 bottom-0 z-40 border-r-2 border-[#1f3a2b] shadow-[3px_0_0_rgba(31,58,43,0.15)] transition-all duration-200 overflow-hidden ${
           collapsed ? "w-16" : "w-60"
         }`}
       >
         {/* Brand header */}
-        <div className="h-16 px-4 flex items-center justify-between border-b border-[var(--dash-border)] shrink-0">
+        <div className="h-20 px-4 flex items-center justify-between border-b border-dashed border-[var(--dash-border)] shrink-0">
           {!collapsed && (
-            <div>
-              <span className="block font-serif font-bold text-base text-[var(--dash-text)] leading-tight">
-                Poné La Pava
-              </span>
-              {clockTime && (
-                <span className="block text-xs text-[var(--dash-muted)] tabular-nums mt-0.5">
-                  {clockTime}
+            <div className="flex items-center gap-2.5 min-w-0">
+              <BrandCircle size={46} className="size-[46px] shrink-0 -rotate-6" />
+              <div className="min-w-0">
+                <span className="block font-serif text-[22px] uppercase text-[var(--dash-text)] leading-none">
+                  Poné La Pava
                 </span>
-              )}
+                <span className="font-script block text-[15px] leading-tight text-[var(--dash-accent)] -rotate-1">
+                  {clockTime ? `panel · ${clockTime}` : "panel del local"}
+                </span>
+              </div>
             </div>
           )}
           <button
@@ -500,7 +501,7 @@ export default function AdminShell({
           {visibleNavGroups.map((group) => (
             <div key={group.name} className="space-y-1">
               {!collapsed && (
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--dash-muted)] px-3 py-1 opacity-70">
+                <h4 className="font-script text-[15px] normal-case text-[var(--dash-accent)] px-3 pt-1">
                   {group.name}
                 </h4>
               )}
@@ -589,14 +590,14 @@ export default function AdminShell({
       {/* ── MAIN CONTENT AREA ── */}
       <main className="flex-1 min-w-0 min-h-screen pt-16 pb-24 px-3 sm:px-6 lg:pt-6 lg:pb-12 lg:px-8">
         {/* Desktop Sticky Header Bar */}
-        <header className="hidden lg:flex items-center justify-between sticky top-4 z-30 mb-8 px-5 py-3 rounded-xl bg-[var(--dash-surface)]/90 backdrop-blur-md border border-[var(--dash-border)] shadow-md">
+        <header className="hidden lg:flex items-center justify-between sticky top-4 z-30 mb-8 px-5 py-3 rounded-xl bg-[var(--dash-surface)] border-2 border-[#1f3a2b] shadow-[3px_4px_0_rgba(31,58,43,0.18)]">
           {/* Breadcrumb + Status Badge */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-xs text-[var(--dash-muted)]">
               <span>Admin</span>
               <span>/</span>
-              <span className="flex items-center gap-1.5 font-semibold text-[var(--dash-text)]">
-                <activeItem.icon size={14} className="text-[var(--dash-accent)]" />
+              <span className="admin-display flex items-center gap-1.5 text-[17px] uppercase text-[var(--dash-text)]">
+                <activeItem.icon size={15} className="text-[var(--dash-accent)]" />
                 {activeItem.label}
               </span>
             </div>
